@@ -1,0 +1,58 @@
+################################### coverage ###################################
+[tool.coverage]
+[tool.coverage.run]
+branch = true
+cover_pylib = false
+source = ["app/"]
+omit = ["manage.py", "app/migrations/*"]
+
+[tool.coverage.paths]
+source = ["momoichigo"]
+
+#################################### pytest ####################################
+[tool.pytest]
+[tool.pytest.ini_options]
+minversion = "6.0"
+addopts = [
+    "-ra",
+    "--cov",
+]
+testpaths = ["tests"]
+required_plugins = [
+    "pytest-django",
+    "pytest-cov",
+]
+DJANGO_SETTINGS_MODULE = "momoichigo.settings"
+
+#################################### poerty ####################################
+[tool.poetry]
+name = "momoichigo"
+version = "0.0.1"
+description = "ICHIGO KOHINATA"
+authors = ["nothink <gakongakon@gmail.com>"]
+license = "MIT"
+
+[tool.poetry.dependencies]
+python = "^3.9"
+Django = "^3.2.4"
+djangorestframework = "^3.12.4"
+django-model-utils = "^4.1.1"
+
+[tool.poetry.dev-dependencies]
+pytest = "^6.2.4"
+pytest-cov = "^2.12.1"
+pytest-django = "^4.4.0"
+coverage = {extras = ["toml"], version = "^5.5"}
+black = "^21.6b0"
+isort = {extras = ["pyproject"], version = "^5.8.0"}
+flake8 = "^3.9.2"
+flake8-django = "^1.1.2"
+flake8-black = "^0.2.1"
+flake8-isort = "^4.0.0"
+flake8-print = "^4.0.0"
+flake8-annotations = "^2.6.2"
+flake8-docstrings = "^1.6.0"
+
+[build-system]
+requires = ["poetry-core>=1.0.0"]
+build-backend = "poetry.core.masonry.api"
