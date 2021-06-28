@@ -3,8 +3,8 @@
 [tool.coverage.run]
 branch = true
 cover_pylib = false
-source = ["app/"]
-omit = ["manage.py", "app/migrations/*"]
+source = ["momoichigo/app/"]
+omit = ["manage.py", "momoichigo/app/migrations/*"]
 
 [tool.coverage.paths]
 source = ["momoichigo"]
