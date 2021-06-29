@@ -1,4 +1,5 @@
 """models."""
+from __future__ import annotations
 
 from django.core.validators import RegexValidator
 from django.db import models
@@ -19,6 +20,6 @@ class Resource(models.Model):
     fetched = models.BooleanField(default=False)
     created = models.DateField(auto_now_add=True)
 
-    def __str__(self: object) -> str:
+    def __str__(self: Resource) -> str:
         """Return desscriptive string."""
-        return super().__str__()
+        return self.source
