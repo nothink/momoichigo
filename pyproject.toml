@@ -37,6 +37,8 @@ python = "^3.9"
 Django = "^3.2.4"
 djangorestframework = "^3.12.4"
 django-model-utils = "^4.1.1"
+PyYAML = "^5.4.1"
+uritemplate = "^3.0.1"
 
 [tool.poetry.dev-dependencies]
 pytest = "^6.2.4"

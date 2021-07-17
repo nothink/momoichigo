@@ -15,7 +15,11 @@ class Resource(models.Model):
     )
 
     source = models.URLField(
-        unique=True, null=False, blank=False, validators=[validate_vcard_host]
+        unique=True,
+        null=False,
+        blank=False,
+        validators=[validate_vcard_host],
+        max_length=1024,
     )
     fetched = models.BooleanField(default=False)
     created = models.DateField(auto_now_add=True)
