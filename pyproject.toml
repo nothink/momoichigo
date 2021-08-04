@@ -1,13 +1,37 @@
+#################################### black ####################################
+[tool.black]
+target-version = ['py39']
+exclude = '''
+(
+    migrations
+    | .mypy_cache
+    | .pytest_cache
+    | .venv
+)
+'''
+
 ################################### coverage ###################################
 [tool.coverage]
 [tool.coverage.run]
 branch = true
 cover_pylib = false
 source = ["momoichigo/app/"]
-omit = ["manage.py", "momoichigo/app/migrations/*"]
+omit = [
+    ".venv/*",
+    ".pytest_cache/*",
+    "*/__pycache__/*",
+    "tests/*",
+    "momoichigo/app/migrations/*",
+]
 
 [tool.coverage.paths]
 source = ["momoichigo"]
+
+#################################### isort #####################################
+[tool.isort]
+profile = "black"
+src_paths = ["momoichigo"]
+skip = ["migrations"]
 
 #################################### pytest ####################################
 [tool.pytest]
@@ -43,7 +67,6 @@ uritemplate = "^3.0.1"
 pytest = "^6.2"
 pytest-cov = "^2.12"
 pytest-django = "^4.4"
-coverage = {extras = ["toml"], version = "^5.5"}
 black = "*"
 isort = {extras = ["pyproject"], version = "^5.9"}
 flake8 = "^3.9"
@@ -53,6 +76,7 @@ flake8-isort = "^4.0"
 flake8-print = "^4.0"
 flake8-annotations = "^2.6"
 flake8-docstrings = "^1.6"
+pre-commit = "^2.13"
 
 [build-system]
 requires = ["poetry-core>=1.0.0"]

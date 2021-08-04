@@ -1,4 +1,8 @@
 [flake8]
+max-complexity = 10
+# https://black.readthedocs.io/en/stable/the_black_code_style.html#line-length
+max-line-length = 88
+extend-ignore = E203
 exclude =
     .git,
     __pycache__,
@@ -6,9 +10,5 @@ exclude =
     dist,
     .venv,
     .pytest_cache,
-    .coverage
+    .coverage,
     migrations
-max-complexity = 10
-# https://black.readthedocs.io/en/stable/the_black_code_style.html#line-length
-max-line-length = 88
-extend-ignore = E203
