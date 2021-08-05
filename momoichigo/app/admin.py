@@ -2,7 +2,7 @@
 
 from django.contrib import admin
 
-from momoichigo.app.models import Resource
+from momoichigo.app import models
 
 # Register your models here.
-admin.site.register(Resource)
+admin.site.register(models.Resource)

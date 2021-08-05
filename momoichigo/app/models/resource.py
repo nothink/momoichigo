@@ -26,6 +26,8 @@ class Resource(models.Model):
         validators=[validate_vcard_host],
         max_length=1024,
     )
+    # sa: https://docs.djangoproject.com/ja/3.2/topics/files/
+    # sa: https://django-storages.readthedocs.io/en/latest/backends/amazon-S3.html#model
     file = models.FileField()
     created = models.DateTimeField(auto_now_add=True)
 
