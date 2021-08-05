@@ -1,4 +1,4 @@
-"""views."""
+"""momoichigo views."""
 from __future__ import annotations
 
 from typing import Any
@@ -7,8 +7,7 @@ from django.core.exceptions import ValidationError
 from django.http import QueryDict
 from rest_framework import mixins, request, response, status, viewsets
 
-from momoichigo.app.models import Resource
-from momoichigo.app.serializers import ResourceSerializer
+from momoichigo.app import models, serializers
 
 
 class ResourceViewSet(
@@ -22,8 +21,8 @@ class ResourceViewSet(
     Allow: Create(POST), List(Get), Retrieve(Get)
     """
 
-    queryset = Resource.objects.all().order_by("source")
-    serializer_class = ResourceSerializer
+    queryset = models.Resource.objects.all().order_by("source")
+    serializer_class = serializers.ResourceSerializer
 
     def create(self: ResourceViewSet, request: request.Request) -> response.Response:
         """Overwrite to 'create' method."""

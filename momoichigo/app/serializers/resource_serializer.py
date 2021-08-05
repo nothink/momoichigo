@@ -6,10 +6,7 @@ from momoichigo.app import models
 
 
 class ResourceSerializer(serializers.HyperlinkedModelSerializer):
-    """Serializer for Resource models.
-
-    sa: https://github.com/miki725/django-rest-framework-bulk
-    """
+    """Serializer for Resource models."""
 
     class Meta:
         """Meta class for ResourceSerializer."""
