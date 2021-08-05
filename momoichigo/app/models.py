@@ -6,7 +6,12 @@ from django.db import models
 
 
 class Resource(models.Model):
-    """Resource models."""
+    """Resource models.
+
+    fields:
+        source: URL of original sources
+        created: created timestamp
+    """
 
     # validator: the source url is a resources at https://vcard.ameba.jp/
     validate_vcard_host = RegexValidator(
@@ -21,8 +26,8 @@ class Resource(models.Model):
         validators=[validate_vcard_host],
         max_length=1024,
     )
-    fetched = models.BooleanField(default=False)
-    created = models.DateField(auto_now_add=True)
+    file = models.FileField()
+    created = models.DateTimeField(auto_now_add=True)
 
     def __str__(self: Resource) -> str:
         """Return desscriptive string."""

@@ -14,9 +14,12 @@ env
 .venv
 db.sqlite3
 
+.coverage
+.deepsource.toml
 .dockerignore
 .flake8
 .gitignore
+.pre-commit-config.yaml
 Dockerfile
 README.md
 tests

@@ -2,10 +2,10 @@
 
 from rest_framework import serializers
 
-from momoichigo.app.models import Resource
+from momoichigo.app import models
 
 
-class ResourceSerializer(serializers.ModelSerializer):
+class ResourceSerializer(serializers.HyperlinkedModelSerializer):
     """Serializer for Resource models.
 
     sa: https://github.com/miki725/django-rest-framework-bulk
@@ -14,5 +14,5 @@ class ResourceSerializer(serializers.ModelSerializer):
     class Meta:
         """Meta class for ResourceSerializer."""
 
-        model = Resource
-        fields = ["source"]
+        model = models.Resource
+        fields = ["source", "created"]
