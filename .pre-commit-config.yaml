@@ -24,4 +24,3 @@ repos:
     hooks:
       - id: flake8
         exclude: migrations
-        max-complexity: 10
