@@ -1,4 +1,4 @@
 """momoichigo views."""
-from .resource_view_set import ResourceViewSet
+from .resource_view import ResourceViewSet
 
 __all__ = ["ResourceViewSet"]

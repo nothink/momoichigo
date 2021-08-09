@@ -12,4 +12,5 @@ class ResourceSerializer(serializers.HyperlinkedModelSerializer):
         """Meta class for ResourceSerializer."""
 
         model = models.Resource
-        fields = ["source", "created"]
+        fields = ["source", "file", "created"]
+        read_only_fields = ["file", "created"]

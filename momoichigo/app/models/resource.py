@@ -1,6 +1,8 @@
 """models."""
 from __future__ import annotations
 
+from urllib.parse import urlparse
+
 from django.core.validators import RegexValidator
 from django.db import models
 
@@ -34,3 +36,9 @@ class Resource(models.Model):
     def __str__(self: Resource) -> str:
         """Return desscriptive string."""
         return self.source
+
+    @property
+    def key(self: Resource) -> str:
+        """Return key from source url."""
+        url = urlparse(self.source)
+        return url.path[1:]
