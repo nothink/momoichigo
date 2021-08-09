@@ -10,6 +10,8 @@ from django.dispatch import receiver
 
 from momoichigo.app import models
 
+logger = logging.getLogger(__name__)
+
 
 @receiver(post_save, sender=models.Resource)
 def fetch_and_upload_resource(
@@ -17,24 +19,26 @@ def fetch_and_upload_resource(
     instance: models.Resource,
     created: bool,
     **kwargs: Any,
-):
-    """
-    作成されたリソースをもとにリソース回収をはかり、GCSのbucketに格納する
+) -> None:
+    """作成されたリソースをもとにリソース回収をはかり、GCSのbucketに格納する
+
     sa: https://docs.djangoproject.com/ja/3.2/ref/signals/#post-save
     """
 
     if not created:
         return
-
+    # TODO: asyncio を使う
     try:
+        # urllib.request を使って fetch
         req = urllib.request.Request(instance.source)
         with urllib.request.urlopen(req) as res:
             body = res.read()
         buf = io.BytesIO(body)
         buf.seek(0)
         instance.file.save(instance.key, buf)
-        logging.info("[fetch] " + instance.source)
+
+        logger.info("[fetch] " + instance.source)
     except Exception as e:
         # ログだけ出す
-        logging.error("[fetch failed] " + instance.source)
-        logging.exception(e)
+        logger.error("[fetch failed] " + instance.source)
+        logger.error(e)
