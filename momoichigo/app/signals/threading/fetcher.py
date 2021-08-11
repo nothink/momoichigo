@@ -12,9 +12,11 @@ from momoichigo.app import models
 logger = logging.getLogger(__name__)
 
 
-# TODO: テスト書きづらい
 class Fetcher(threading.Thread):
-    """Fetcher class."""
+    """Fetcher class.
+
+    sa: https://stackoverflow.com/questions/11899088/
+    """
 
     def __init__(self: Fetcher, resource: models.Resource, **kwargs: Any) -> None:
         """Init."""
@@ -31,7 +33,6 @@ class Fetcher(threading.Thread):
             buf = io.BytesIO(body)
             buf.seek(0)
             self.resource.file.save(self.resource.key, buf)
-            self.resource.save()
 
             logger.info("[fetch] " + self.resource.source)
         except Exception as e:
