@@ -19,17 +19,36 @@ jobs:
 
     steps:
       - uses: actions/checkout@v2
+
       - name: Set up Python ${{ matrix.python-version }}
         uses: actions/setup-python@v2
         with:
           python-version: ${{ matrix.python-version }}
+
       - name: Install Poetry
         run: |
           curl -sSL $POETRY_URL | python -
           echo "$HOME/.local/bin" >> $GITHUB_PATH
+
+      - uses: actions/cache@v2
+        with:
+          path: ~/.cache/pypoetry
+          key: ${{ runner.os }}-poetry-${{ hashFiles('**/poetry.lock') }}
+          restore-keys: |
+            ${{ runner.os }}-poetry-
+
       - name: Install Dependencies
         run: poetry install --no-interaction
+
       - name: Run Tests
         run: poetry run pytest
+
       - name: Run Lint
         run: poetry run flake8
+
+      - uses: paambaati/codeclimate-action@v2
+        env:
+          CC_TEST_REPORTER_ID: ${{ secrets.CC_TEST_REPORTER_ID }}
+        with:
+          coverageCommand: poetry run coverage report
+          debug: true
