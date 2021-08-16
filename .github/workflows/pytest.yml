@@ -29,10 +29,11 @@ jobs:
         run: |
           curl -sSL $POETRY_URL | python -
           echo "$HOME/.local/bin" >> $GITHUB_PATH
+          poetry config virtualenvs.in-project true
 
       - uses: actions/cache@v2
         with:
-          path: ~/.cache/pypoetry
+          path: ${{github.workspace}}/.venv
           key: ${{ runner.os }}-poetry-${{ hashFiles('**/poetry.lock') }}
           restore-keys: |
             ${{ runner.os }}-poetry-
@@ -50,6 +51,6 @@ jobs:
         env:
           CC_TEST_REPORTER_ID: ${{ secrets.CC_TEST_REPORTER_ID }}
         with:
-          coverageCommand: poetry run coverage report
+          coverageCommand: poetry run coverage xml
           coverageLocations: ${{github.workspace}}/*.coverage:coverage.py
           debug: true
