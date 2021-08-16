@@ -53,4 +53,3 @@ jobs:
         with:
           coverageCommand: poetry run coverage xml
           coverageLocations: ${{github.workspace}}/*coverage.xml:coverage.py
-          debug: true
