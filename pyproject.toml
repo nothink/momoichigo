@@ -39,7 +39,7 @@ skip = ["migrations"]
 minversion = "6.0"
 addopts = [
     "-ra",
-    " --cov-report=xml",
+    "--cov-report=xml",
     "--cov",
 ]
 testpaths = ["tests"]
