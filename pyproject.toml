@@ -64,6 +64,7 @@ PyYAML = "^5.4.1"
 uritemplate = "^3.0.1"
 django-environ = "^0.4"
 djoser = "^2.1"
+django-storages = {extras = ["google"], version = "^1.11.1"}
 
 [tool.poetry.dev-dependencies]
 pytest = "^6.2"
