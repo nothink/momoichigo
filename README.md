@@ -11,4 +11,9 @@ ICHIGO KOHINATA
 - Python (3.9+)
 - Poetry
 
-# Environments
+# Environment Params
+
+|              | type | default | descriptions      |
+| :----------: | :--: | :-----: | :---------------- |
+|   `DEBUG`    | bool | `FALSE` | development mode  |
+| `SECRET_KEY` | str  | random  | Django secret key |
