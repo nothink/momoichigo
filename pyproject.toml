@@ -58,13 +58,15 @@ license = "MIT"
 
 [tool.poetry.dependencies]
 python = "^3.9"
-Django = "^3.2"
+Django = {extras = ["argon2"], version = "^3.2"}
 djangorestframework = "^3.12"
 PyYAML = "^5.4.1"
 uritemplate = "^3.0.1"
 django-environ = "^0.4"
-djoser = "^2.1"
-django-storages = {extras = ["google"], version = "^1.11.1"}
+django-storages = {extras = ["google"], version = "^1.11"}
+uvicorn = "*"
+gunicorn = "^20"
+dj-rest-auth = "^2.1"
 
 [tool.poetry.dev-dependencies]
 pytest = "^6.2"

@@ -38,7 +38,6 @@ INSTALLED_APPS = [
     "django.contrib.messages",
     "django.contrib.staticfiles",
     "rest_framework",
-    "djoser",
     "momoichigo.app",
 ]
 
@@ -58,9 +57,9 @@ REST_FRAMEWORK = {
     # sa: https://www.django-rest-framework.org/api-guide/pagination/
     "DEFAULT_PAGINATION_CLASS": "rest_framework.pagination.LimitOffsetPagination",
     "PAGE_SIZE": 1000,
-    "DEFAULT_AUTHENTICATION_CLASSES": (
-        "rest_framework_simplejwt.authentication.JWTAuthentication",
-    ),
+    # "DEFAULT_AUTHENTICATION_CLASSES": (
+    #     "rest_framework_simplejwt.authentication.JWTAuthentication",
+    # ),
 }
 
 SIMPLE_JWT = {
@@ -154,3 +153,11 @@ LOGGING = {
         "level": "INFO",
     },
 }
+
+# https://docs.djangoproject.com/ja/3.2/topics/auth/passwords/#using-argon2-with-django
+PASSWORD_HASHERS = [
+    "django.contrib.auth.hashers.Argon2PasswordHasher",
+    "django.contrib.auth.hashers.PBKDF2PasswordHasher",
+    "django.contrib.auth.hashers.PBKDF2SHA1PasswordHasher",
+    "django.contrib.auth.hashers.BCryptSHA256PasswordHasher",
+]
