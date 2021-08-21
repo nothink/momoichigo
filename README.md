@@ -13,7 +13,10 @@ ICHIGO KOHINATA
 
 # Environment Params
 
-|              | type | default | descriptions      |
-| :----------: | :--: | :-----: | :---------------- |
-|   `DEBUG`    | bool | `FALSE` | development mode  |
-| `SECRET_KEY` | str  | random  | Django secret key |
+Because of using [django-environ](https://django-environ.readthedocs.io/en/latest/), you should set a `.env` file.
+
+|                | type |           default           | descriptions      |
+| :------------: | :--: | :-------------------------: | :---------------- |
+|    `DEBUG`     | bool |           `FALSE`           | development mode  |
+|  `SECRET_KEY`  | str  |           random            | Django secret key |
+| `DATABASE_URL` | str  | `sqlite:////tmp/db.sqlite3` | Database URL      |

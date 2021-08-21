@@ -12,20 +12,30 @@ https://docs.djangoproject.com/en/3.2/ref/settings/
 from datetime import timedelta
 from pathlib import Path
 
+import environ
+from django.utils.crypto import get_random_string
+
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
+# Get temporary SECRET_KEY for no environs
+__CHARS = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789!@#$%^&*(-_=+)"
+__TMP_SECRET_KEY = get_random_string(50, __CHARS)
+
+# Django environ
+env = environ.Env(
+    DEBUG=(bool, False), SECRET_KEY=(str, __TMP_SECRET_KEY), ALLOWED_HOSTS=(list, [])
+)
+env.read_env()
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/3.2/howto/deployment/checklist/
 
-# SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = "django-insecure-5mfhbj&p^p$hs(b^t7&rw+g4(lj_40hmne-v_6(r^#bjezd1!u"
+SECRET_KEY = env("SECRET_KEY")
 
-# SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = env("DEBUG")
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = env("ALLOWED_HOSTS")
 
 
 # Application definition
@@ -88,13 +98,8 @@ WSGI_APPLICATION = "momoichigo.wsgi.application"
 
 # Database
 # https://docs.djangoproject.com/en/3.2/ref/settings/#databases
-
-DATABASES = {
-    "default": {
-        "ENGINE": "django.db.backends.sqlite3",
-        "NAME": BASE_DIR / "db.sqlite3",
-    }
-}
+# https://django-environ.readthedocs.io/en/latest/#
+DATABASES = {"default": env.db("DATABASE_URL", default="sqlite:////tmp/db.sqlite3")}
 
 
 # Password validation
@@ -161,3 +166,5 @@ PASSWORD_HASHERS = [
     "django.contrib.auth.hashers.PBKDF2SHA1PasswordHasher",
     "django.contrib.auth.hashers.BCryptSHA256PasswordHasher",
 ]
+
+MEDIA_ROOT = BASE_DIR

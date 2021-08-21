@@ -39,9 +39,11 @@ skip = ["migrations"]
 minversion = "6.0"
 addopts = [
     "-ra",
+    "-vv",
     "--cov",
 ]
 testpaths = ["tests"]
+python_files = ["tests.py", "test_*.py", "*_tests.py"]
 required_plugins = [
     "pytest-django",
     "pytest-cov",
@@ -66,7 +68,7 @@ django-environ = "^0.4"
 django-storages = {extras = ["google"], version = "^1.11"}
 uvicorn = "*"
 gunicorn = "^20"
-dj-rest-auth = "^2.1"
+psycopg2 = "^2.9"
 
 [tool.poetry.dev-dependencies]
 pytest = "^6.2"
@@ -80,7 +82,7 @@ flake8-black = "^0.2"
 flake8-isort = "^4.0"
 # flake8-print = "^4.0"
 flake8-annotations = "^2.6"
-flake8-docstrings = "^1.6"
+# flake8-docstrings = "^1.6"
 pre-commit = "^2.13"
 
 [build-system]

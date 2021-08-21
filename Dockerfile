@@ -23,7 +23,7 @@ COPY --from=requirements /root/requirements.txt ./
 
 RUN --mount=type=cache,target=/var/cache/apk \
     apk update && \
-    apk add tzdata libffi libssl1.1
+    apk add tzdata libpq libffi libssl1.1
 
 
 # using cache mount (needs BuildKit)
@@ -32,15 +32,12 @@ RUN --mount=type=cache,target=/root/.cache \
     --mount=type=cache,target=/var/cache/apk \
     --mount=type=cache,target=/root/.cargo \
     # add packages for building mysqlclient
-    #    apk add --virtual .postgres-dev-packs build-base mariadb-connector-c-dev && \
+    apk add --virtual .postgres-dev-packs postgresql-dev && \
     # add packages thats needs building cryptography
     apk add --virtual .crypt-dev-packs libffi-dev openssl-dev cargo && \
     pip install -r requirements.txt && \
-    # purge packages that needs building mysqlclient, and add runtime only
-    #    apk del --purge .maria-dev-packs && \
-    #    apk add mariadb-connector-c && \
-    # purge packages that needs building cryptography
-    apk del --purge .crypt-dev-packs && \
+    # purge virtual packages
+    apk del --purge .postgres-dev-packs .crypt-dev-packs && \
     # remove all __pycache__
     find / -type d -name __pycache__ | xargs rm -rf
 
