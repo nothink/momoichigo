@@ -17,6 +17,6 @@ Because of using [django-environ](https://django-environ.readthedocs.io/en/lates
 
 |                | type |           default           | descriptions      |
 | :------------: | :--: | :-------------------------: | :---------------- |
-|    `DEBUG`     | bool |           `FALSE`           | development mode  |
+|     `DEV`      | bool |           `FALSE`           | development mode  |
 |  `SECRET_KEY`  | str  |           random            | Django secret key |
 | `DATABASE_URL` | str  | `sqlite:////tmp/db.sqlite3` | Database URL      |

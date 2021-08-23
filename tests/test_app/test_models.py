@@ -27,10 +27,13 @@ class TestResource:
             ]
         )
         emi_url = "/".join(["https://dqx9mbrpz1jhx.cloudfront.net", emi_key])
+
         m = models.Resource.objects.create(source=emi_url)
         # signals上のスレッドがFetchし終わるまで sleep()
-        time.sleep(3)
+        time.sleep(1)
+
         assert m.__str__() == emi_url
         assert m.key == emi_key
         assert m.file.path == os.path.abspath(emi_key)
+
         shutil.rmtree(os.path.join(settings.MEDIA_ROOT, "vcard"))

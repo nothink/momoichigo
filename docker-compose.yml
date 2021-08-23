@@ -1,0 +1,30 @@
+version: '3.9'
+
+services:
+  app:
+    build: .
+    container_name: app
+    restart: always
+    ports:
+      - 8000:8000
+    volumes:
+      - ./momoichigo/.env:/app/momoichigo/.env
+    environment:
+      DEV: TRUE
+    links:
+      - db:db
+
+  db:
+    image: postgres:alpine
+    container_name: db
+    restart: always
+    environment:
+      POSTGRES_DB: momoichigo
+      POSTGRES_USER: momoichigo
+      POSTGRES_PASSWORD: momoichigo
+
+  adminer:
+    image: adminer:latest
+    restart: always
+    ports:
+      - 8080:8080

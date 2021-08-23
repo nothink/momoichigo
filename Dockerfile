@@ -31,21 +31,16 @@ RUN --mount=type=cache,target=/var/cache/apk \
 RUN --mount=type=cache,target=/root/.cache \
     --mount=type=cache,target=/var/cache/apk \
     --mount=type=cache,target=/root/.cargo \
-    # add packages for building mysqlclient
     apk add --virtual .postgres-dev-packs postgresql-dev && \
-    # add packages thats needs building cryptography
     apk add --virtual .crypt-dev-packs libffi-dev openssl-dev cargo && \
     pip install -r requirements.txt && \
-    # purge virtual packages
     apk del --purge .postgres-dev-packs .crypt-dev-packs && \
-    # remove all __pycache__
     find / -type d -name __pycache__ | xargs rm -rf
 
-COPY ./manage.py /app/
+COPY ./manage.py ./entrypoint.sh /app/
 COPY ./momoichigo/ /app/momoichigo/
-
 
 # use uvicorn worker over the gunicorn
 # https://docs.djangoproject.com/en/3.2/howto/deployment/asgi/uvicorn/
 # https://stackoverflow.com/questions/62543342/gunicorn-gevent-workers-vs-uvicorn-asgi
-CMD ["gunicorn", "--bind", ":8000", "--workers", "4", "momoichigo.asgi:application", "-k", "uvicorn.workers.UvicornWorker"]
+CMD ["/bin/sh", "/app/entrypoint.sh"]
