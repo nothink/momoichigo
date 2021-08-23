@@ -24,7 +24,9 @@ class ResourceViewSet(
     queryset = models.Resource.objects.all().order_by("source")
     serializer_class = serializers.ResourceSerializer
 
-    def create(self: ResourceViewSet, request: request.Request) -> response.Response:
+    def create(
+        self: ResourceViewSet, request: request.Request, *args: Any, **kwargs: Any
+    ) -> response.Response:
         """Overwrite to 'create' method."""
         if isinstance(request.data, list):
             is_created = False
@@ -37,9 +39,8 @@ class ResourceViewSet(
                     pass
             if is_created:
                 return response.Response(status=status.HTTP_201_CREATED)
-            else:
-                # 1件も作成されなかったら HTTP 204: No Content.
-                return response.Response(status=status.HTTP_204_NO_CONTENT)
+            # 1件も作成されなかったら HTTP 204: No Content.
+            return response.Response(status=status.HTTP_204_NO_CONTENT)
         else:
             try:
                 self.__create_one(request.data)
