@@ -3,7 +3,6 @@ from __future__ import annotations
 
 from typing import Any
 
-from django.core.exceptions import ValidationError
 from django.http import QueryDict
 from rest_framework import mixins, request, response, status, viewsets
 

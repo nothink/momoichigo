@@ -1,4 +1,4 @@
-name: Pytest
+name: test
 
 on:
   push:
@@ -7,7 +7,6 @@ on:
     branches: [main]
 
 env:
-  POETRY_VERSION: 1.1.7
   POETRY_URL: https://raw.githubusercontent.com/python-poetry/poetry/master/install-poetry.py
 
 jobs:
@@ -44,12 +43,42 @@ jobs:
       - name: Run Tests
         run: poetry run pytest
 
-      - name: Run Lint
-        run: poetry run flake8
-
       - uses: paambaati/codeclimate-action@v2.7.5
         env:
           CC_TEST_REPORTER_ID: ${{ secrets.CC_TEST_REPORTER_ID }}
         with:
           coverageCommand: poetry run coverage xml
           coverageLocations: ${{github.workspace}}/*coverage.xml:coverage.py
+
+  flake8:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        python-version: [3.9]
+
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: Set up Python ${{ matrix.python-version }}
+        uses: actions/setup-python@v2
+        with:
+          python-version: ${{ matrix.python-version }}
+
+      - name: Install Poetry
+        run: |
+          curl -sSL $POETRY_URL | python -
+          echo "$HOME/.local/bin" >> $GITHUB_PATH
+          poetry config virtualenvs.in-project true
+
+      - uses: actions/cache@v2
+        with:
+          path: ${{github.workspace}}/.venv
+          key: ${{ runner.os }}-poetry-${{ hashFiles('**/poetry.lock') }}
+          restore-keys: |
+            ${{ runner.os }}-poetry-
+
+      - name: Install Dependencies
+        run: poetry install --no-interaction
+
+      - name: Run Lint
+        run: poetry run flake8
