@@ -28,31 +28,27 @@ class ResourceViewSet(
         self: ResourceViewSet, request: request.Request, *args: Any, **kwargs: Any
     ) -> response.Response:
         """Overwrite to 'create' method."""
+        response_list = []
         if isinstance(request.data, list):
-            is_created = False
-            # 1件でも被るとコケて仕様を満たさないので、many=Trueは使えない
-            for item in request.data:
-                try:
-                    self.__create_one(item)
-                    is_created = True
-                except ValidationError:
-                    pass
-            if is_created:
-                return response.Response(status=status.HTTP_201_CREATED)
-            # 1件も作成されなかったら HTTP 204: No Content.
-            return response.Response(status=status.HTTP_204_NO_CONTENT)
+            # multi records
+            request_list = request.data
         else:
-            try:
-                self.__create_one(request.data)
-                return response.Response(status=status.HTTP_201_CREATED)
-            except ValidationError:
-                return response.Response(status=status.HTTP_204_NO_CONTENT)
+            # single record
+            request_list = [request.data]
+        # 1件でも被るとコケて仕様を満たさないので、many=Trueは使えない
+        for item in request_list:
+            result = self.__create_one(item)
+            if result:
+                response_list.append(result)
+        if len(response_list) > 0:
+            return response.Response(data=response_list, status=status.HTTP_201_CREATED)
+        return response.Response(status=status.HTTP_204_NO_CONTENT)
 
-    def __create_one(self: ResourceViewSet, data: QueryDict | Any) -> None:
+    def __create_one(self: ResourceViewSet, data: QueryDict | Any) -> str | None:
         """Create a model once."""
         serializer = self.get_serializer(data=data, many=False)
         # create if valid
         if serializer.is_valid(raise_exception=False):
             self.perform_create(serializer)
-        else:
-            raise ValidationError("Duplicated source.")
+            return data["source"]
+        return None
