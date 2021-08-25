@@ -10,6 +10,7 @@ exclude = '''
 )
 '''
 
+
 ################################### coverage ###################################
 [tool.coverage]
 [tool.coverage.run]
@@ -27,11 +28,13 @@ omit = [
 [tool.coverage.paths]
 source = ["momoichigo"]
 
+
 #################################### isort #####################################
 [tool.isort]
 profile = "black"
 src_paths = ["momoichigo"]
 skip = ["migrations"]
+
 
 #################################### pytest ####################################
 [tool.pytest]
@@ -50,6 +53,22 @@ required_plugins = [
     "pytest-cov",
 ]
 DJANGO_SETTINGS_MODULE = "momoichigo.settings"
+
+
+#################################### mypy ####################################
+[tool.mypy]
+python_version = 3.9
+ignore_missing_imports = true
+disallow_untyped_defs = true
+# warn_return_any = true
+warn_unused_configs = true
+files = [
+    "momoichigo/**/*.py"
+]
+[[tool.mypy.overrides]]
+module = "momoichigo.app.migrations.*"
+ignore_errors = true
+
 
 #################################### poerty ####################################
 [tool.poetry]
@@ -85,6 +104,7 @@ flake8-isort = "^4.0"
 flake8-annotations = "^2.6"
 # flake8-docstrings = "^1.6"
 pre-commit = "^2.13"
+mypy = "*"
 
 [build-system]
 requires = ["poetry-core>=1.0.0"]
