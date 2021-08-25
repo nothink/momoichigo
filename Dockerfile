@@ -2,7 +2,7 @@
 # requirements: stage for generating requirements.txt
 FROM acidrain/python-poetry:3.9-alpine as requirements
 
-SHELL ["/bin/sh", "-o", "pipefail", "-c"]
+SHELL ["/bin/ash", "-eo", "pipefail", "-c"]
 WORKDIR /root
 
 # generate requirements.txt from poerty.lock, pyproject.toml (only productions)
@@ -17,7 +17,7 @@ FROM python:3.9-alpine as production
 # see also: https://docs.python.org/ja/3/using/cmdline.html#envvar-PYTHONUNBUFFERED
 ENV PYTHONUNBUFFERED=1
 
-SHELL ["/bin/sh", "-o", "pipefail", "-c"]
+SHELL ["/bin/ash", "-eo", "pipefail", "-c"]
 WORKDIR /app
 EXPOSE 8000/tcp
 
