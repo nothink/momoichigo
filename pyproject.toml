@@ -41,6 +41,7 @@ addopts = [
     "-ra",
     "-vv",
     "--cov",
+    "--cov-branch",
 ]
 testpaths = ["tests"]
 python_files = ["tests.py", "test_*.py", "*_tests.py"]
