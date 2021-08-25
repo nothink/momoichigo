@@ -50,6 +50,12 @@ jobs:
           coverageCommand: poetry run coverage xml
           coverageLocations: ${{github.workspace}}/*coverage.xml:coverage.py
 
+      - uses: deepsourcelabs/test-coverage-action@master
+        with:
+          key: python
+          coverage-file: coverage.xml
+          dsn: ${{ secrets.DEEPSOURCE_DSN }}
+
   flake8:
     runs-on: ubuntu-latest
     strategy:
