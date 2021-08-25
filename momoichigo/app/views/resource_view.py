@@ -4,7 +4,9 @@ from __future__ import annotations
 from typing import Any
 
 from django.http import QueryDict
-from rest_framework import mixins, request, response, status, viewsets
+from rest_framework import mixins, status, viewsets
+from rest_framework.request import Request
+from rest_framework.response import Response
 
 from momoichigo.app import models, serializers
 
@@ -24,8 +26,8 @@ class ResourceViewSet(
     serializer_class = serializers.ResourceSerializer
 
     def create(
-        self: ResourceViewSet, request: request.Request, *args: Any, **kwargs: Any
-    ) -> response.Response:
+        self: ResourceViewSet, request: Request, *args: Any, **kwargs: Any
+    ) -> Response:
         """Overwrite to 'create' method."""
         response_list = []
         if isinstance(request.data, list):
@@ -40,8 +42,8 @@ class ResourceViewSet(
             if result:
                 response_list.append(result)
         if len(response_list) > 0:
-            return response.Response(data=response_list, status=status.HTTP_201_CREATED)
-        return response.Response(status=status.HTTP_204_NO_CONTENT)
+            return Response(data=response_list, status=status.HTTP_201_CREATED)
+        return Response(status=status.HTTP_204_NO_CONTENT)
 
     def __create_one(self: ResourceViewSet, data: QueryDict | Any) -> str | None:
         """Create a model once."""
