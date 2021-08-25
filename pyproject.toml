@@ -89,6 +89,7 @@ django-storages = {extras = ["google"], version = "^1.11"}
 uvicorn = "*"
 gunicorn = "^20"
 psycopg2 = "^2.9"
+requests = "^2.26.0"
 
 [tool.poetry.dev-dependencies]
 pytest = "^6.2"

@@ -4,8 +4,9 @@ from __future__ import annotations
 import io
 import logging
 import threading
-import urllib.request
 from typing import Any
+
+import requests
 
 from momoichigo.app import models
 
@@ -25,17 +26,9 @@ class Fetcher(threading.Thread):
 
     def run(self: Fetcher) -> None:
         """Run threads."""
-        try:
-            # urllib.request を使って fetch
-            req = urllib.request.Request(self.resource.source)
-            with urllib.request.urlopen(req) as res:
-                body = res.read()
-            buf = io.BytesIO(body)
-            buf.seek(0)
-            self.resource.file.save(self.resource.key, buf)
-
+        res = requests.get(self.resource.source)
+        if res.status_code == 200 and len(res.content) > 0:
+            self.resource.file.save(self.resource.key, io.BytesIO(res.content))
             logger.info("[fetch] " + self.resource.source)
-        except Exception as e:
-            # ログだけ出す
-            logger.error("[fetch failed] " + self.resource.source)
-            logger.error(e)
+        else:
+            logger.error(f"[fetch failed: {res.status_code}] {res.url}")

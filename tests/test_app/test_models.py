@@ -32,7 +32,7 @@ class TestResource:
 
         m = models.Resource.objects.create(source=emi_url)
         # signals上のスレッドがFetchし終わるまで sleep()
-        time.sleep(1)
+        time.sleep(3)
 
         assert m.__str__() == emi_url
         assert m.key == self.emi_key
