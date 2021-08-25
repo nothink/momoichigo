@@ -24,7 +24,7 @@ __TMP_SECRET_KEY = get_random_string(50, __CHARS)
 
 # Django environ
 env = environ.Env(
-    DEV=(bool, False), SECRET_KEY=(str, __TMP_SECRET_KEY), ALLOWED_HOSTS=(list, [])
+    DEV=(bool, True), SECRET_KEY=(str, __TMP_SECRET_KEY), ALLOWED_HOSTS=(list, [])
 )
 env.read_env()
 
