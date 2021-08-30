@@ -197,5 +197,5 @@ if env("STORAGE_TYPE") == "gcs":
     GS_MAX_MEMORY_SIZE = 134217728
 
 elif env("STORAGE_TYPE") == "local":
-    MEDIA_ROOT = BASE_DIR
+    MEDIA_ROOT = str(BASE_DIR)
     FILE_OVERWRITE = True
