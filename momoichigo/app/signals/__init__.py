@@ -1,2 +1,2 @@
 """momoichigo signals."""
-from .resource_signal import *  # noqa: F401, F403
+from .resource_signal import fetch_and_upload_resource  # noqa: F401

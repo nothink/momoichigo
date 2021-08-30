@@ -1,0 +1,15 @@
+path_classifiers:
+  test:
+    - 'tests/**/test_*.py'
+  migration:
+    - 'momoichigo/app/migrations/*.py'
+
+queries:
+  - include:
+      severity: 'recommendation'
+
+extraction:
+  python:
+    index:
+      filters:
+        - exclude: 'momoichigo/app/migrations/*.py'
