@@ -8,6 +8,8 @@ on:
 
 env:
   POETRY_URL: https://raw.githubusercontent.com/python-poetry/poetry/master/install-poetry.py
+  DEV: true
+  STORAGE_TYPE: local
 
 jobs:
   pytest:
