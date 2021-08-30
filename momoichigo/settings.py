@@ -14,6 +14,7 @@ from pathlib import Path
 
 import environ
 from django.utils.crypto import get_random_string
+from google.oauth2 import service_account
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -24,7 +25,12 @@ __TMP_SECRET_KEY = get_random_string(50, __CHARS)
 
 # Django environ
 env = environ.Env(
-    DEV=(bool, True), SECRET_KEY=(str, __TMP_SECRET_KEY), ALLOWED_HOSTS=(list, [])
+    DEV=(bool, True),
+    SECRET_KEY=(str, __TMP_SECRET_KEY),
+    ALLOWED_HOSTS=(list, []),
+    GS_CREDENTIALS=(str, "/cred.json"),
+    GS_BUCKET_NAME=(str, "bucket"),
+    GS_PROJECT_ID=(str, "project"),
 )
 env.read_env()
 
@@ -167,4 +173,21 @@ PASSWORD_HASHERS = [
     "django.contrib.auth.hashers.BCryptSHA256PasswordHasher",
 ]
 
-MEDIA_ROOT = BASE_DIR
+# Google Cloud Storage using django-storages
+# https://django-storages.readthedocs.io/en/latest/backends/gcloud.html
+DEFAULT_FILE_STORAGE = "storages.backends.gcloud.GoogleCloudStorage"
+
+GS_PROJECT_ID = env("GS_PROJECT_ID")
+GS_CREDENTIALS = service_account.Credentials.from_service_account_file(
+    env("GS_CREDENTIALS")
+)
+GS_BUCKET_NAME = env.str("GS_BUCKET_NAME")
+GS_LOCATION = ""
+
+GS_URL = "https://storage.googleapis.com/" + str(GS_BUCKET_NAME)
+
+MEDIA_ROOT = "/"
+MEDIA_URL = GS_URL + MEDIA_ROOT
+
+GS_FILE_OVERWRITE = True
+GS_MAX_MEMORY_SIZE = 134217728

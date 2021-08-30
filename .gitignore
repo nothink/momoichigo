@@ -133,3 +133,6 @@ dmypy.json
 staticfiles
 
 .DS_Store
+
+cred.json
+pgdata
