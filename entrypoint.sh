@@ -1,6 +1,7 @@
 #!/bin/sh
 
 if [ $DEV ]; then
+    echo "DEVEROPMENT SERVER RUNNING..."
     python manage.py runserver 0.0.0.0:8000
 else
     # use uvicorn worker over the gunicorn
