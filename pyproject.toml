@@ -84,7 +84,7 @@ Django = {extras = ["argon2"], version = "^3.2"}
 djangorestframework = "^3.12"
 PyYAML = "^5.4.1"
 uritemplate = "^3.0.1"
-django-environ = "^0.4"
+django-environ-2 = "^2"
 django-storages = {extras = ["google"], version = "^1.11"}
 uvicorn = "*"
 gunicorn = "^20"
