@@ -1,5 +1,10 @@
 # momoichigo
 
+![Pytest](https://github.com/nothink/momoichigo/actions/workflows/pytest.yml/badge.svg)
+![Flake8](https://github.com/nothink/momoichigo/actions/workflows/flake8.yml/badge.svg)
+![Mypy](https://github.com/nothink/momoichigo/actions/workflows/mypy.yml/badge.svg)
+![CodeQL](https://github.com/nothink/momoichigo/actions/workflows/codeql-analysis.yml/badge.svg)
+
 [![Total alerts](https://img.shields.io/lgtm/alerts/g/nothink/momoichigo.svg?logo=lgtm&logoWidth=18)](https://lgtm.com/projects/g/nothink/momoichigo/alerts/)
 [![Language grade: Python](https://img.shields.io/lgtm/grade/python/g/nothink/momoichigo.svg?logo=lgtm&logoWidth=18)](https://lgtm.com/projects/g/nothink/momoichigo/context:python)
 
