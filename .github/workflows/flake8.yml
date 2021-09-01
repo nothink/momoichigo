@@ -1,4 +1,4 @@
-name: 'Pytest'
+name: 'Flake8'
 
 on:
   push:
@@ -10,7 +10,7 @@ env:
   STORAGE_TYPE: local
 
 jobs:
-  pytest:
+  flake8:
     runs-on: ubuntu-latest
     strategy:
       matrix:
@@ -40,18 +40,5 @@ jobs:
       - name: Install Dependencies
         run: poetry install --no-interaction
 
-      - name: Run Tests
-        run: poetry run pytest
-
-      - uses: paambaati/codeclimate-action@v2.7.5
-        env:
-          CC_TEST_REPORTER_ID: ${{ secrets.CC_TEST_REPORTER_ID }}
-        with:
-          coverageCommand: poetry run coverage xml
-          coverageLocations: ${{github.workspace}}/*coverage.xml:coverage.py
-
-      - uses: deepsourcelabs/test-coverage-action@master
-        with:
-          key: python
-          coverage-file: coverage.xml
-          dsn: ${{ secrets.DEEPSOURCE_DSN }}
+      - name: Run Lint using Flake8
+        run: poetry run flake8
