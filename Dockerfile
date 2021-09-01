@@ -1,8 +1,8 @@
 ################################################################################
 # requirements: stage for generating requirements.txt
-FROM acidrain/python-poetry:3.9-alpine as requirements
+FROM acidrain/python-poetry:3.9-slim as requirements
 
-SHELL ["/bin/ash", "-eo", "pipefail", "-c"]
+SHELL ["/bin/bash", "-o", "pipefail", "-c"]
 WORKDIR /root
 
 # generate requirements.txt from poerty.lock, pyproject.toml (only productions)
@@ -11,18 +11,21 @@ RUN poetry export -f requirements.txt --output /root/requirements.txt
 
 ################################################################################
 # production: stage for production release
-FROM python:3.9.6-alpine3.14 as production
+FROM python:3.9.6-slim-bullseye as production
 
 # surpress block buffering for stdout and stderr
 # see also: https://docs.python.org/ja/3/using/cmdline.html#envvar-PYTHONUNBUFFERED
 ENV PYTHONUNBUFFERED=1
 
-SHELL ["/bin/ash", "-eo", "pipefail", "-c"]
+SHELL ["/bin/bash", "-o", "pipefail", "-c"]
 WORKDIR /app
 EXPOSE 8000/tcp
 
-RUN --mount=type=cache,target=/var/cache/apk \
-    apk add --no-cache tzdata libpq=~13.4 libffi=~3.3 libssl1.1=~1.1
+RUN --mount=type=cache,target=/var/cache/apt \
+    --mount=type=cache,target=/var/lib/apt/lists \
+    apt-get update && \
+    apt-get install -y --no-install-recommends tzdata=2021a-\* libpq5=13.3\* libffi7=3.3\* libssl1.1=1.1.1\* && \
+    apt-get clean
 
 # copy requirements.txt from the requirements stage
 COPY --from=requirements /root/requirements.txt ./
@@ -30,11 +33,12 @@ COPY --from=requirements /root/requirements.txt ./
 # using cache mount (needs BuildKit)
 # see also: https://pythonspeed.com/articles/docker-cache-pip-downloads/
 RUN --mount=type=cache,target=/root/.cache \
-    --mount=type=cache,target=/var/cache/apk \
-    --mount=type=cache,target=/root/.cargo \
-    apk add --no-cache --virtual .dev-packs postgresql-dev=~13.4 libffi-dev=~3.3 openssl-dev=~1.1 cargo=~1.52 && \
+    --mount=type=cache,target=/var/cache/apt \
+    --mount=type=cache,target=/var/lib/apt/lists \
+    apt-get install -y --no-install-recommends build-essential=12.\* libpq-dev=13.3\* && \
     pip install -r requirements.txt && \
-    apk del --purge .dev-packs && \
+    apt-get remove --purge -y build-essential libpq-dev && \
+    apt-get autoremove -y && \
     find / -type d -name __pycache__ | xargs rm -rf
 
 COPY ./manage.py ./entrypoint.sh /app/
