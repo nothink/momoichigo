@@ -32,10 +32,9 @@ COPY --from=requirements /root/requirements.txt ./
 # see also: https://pythonspeed.com/articles/docker-cache-pip-downloads/
 RUN --mount=type=cache,target=/root/.cache \
     --mount=type=cache,target=/var/cache/apt \
-    --mount=type=cache,target=/root/.cargo \
-    apt-get install -y build-essential postgresql && \
+    apt-get install -y build-essential libpq-dev && \
     pip install -r requirements.txt && \
-    apt-get remove --purge -y build-essential postgresql && \
+    apt-get remove --purge -y build-essential libpq-dev && \
     apt-get autoremove -y && \
     find / -type d -name __pycache__ | xargs rm -rf
 
