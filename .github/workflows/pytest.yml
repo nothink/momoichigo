@@ -1,4 +1,4 @@
-name: Pytest, Flake8, and Mypy
+name: 'Pytest'
 
 on:
   push:

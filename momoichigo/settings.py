@@ -181,7 +181,6 @@ if env("STORAGE_TYPE") == "gcs":
     # https://django-storages.readthedocs.io/en/latest/backends/gcloud.html
     DEFAULT_FILE_STORAGE = "storages.backends.gcloud.GoogleCloudStorage"
 
-    GS_PROJECT_ID = env("GS_PROJECT_ID")
     GS_CREDENTIALS = service_account.Credentials.from_service_account_file(
         env("GS_CREDENTIALS")
     )
@@ -198,4 +197,3 @@ if env("STORAGE_TYPE") == "gcs":
 
 elif env("STORAGE_TYPE") == "local":
     MEDIA_ROOT = str(BASE_DIR)
-    FILE_OVERWRITE = True
