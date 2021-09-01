@@ -22,8 +22,10 @@ WORKDIR /app
 EXPOSE 8000/tcp
 
 RUN --mount=type=cache,target=/var/cache/apt \
+    --mount=type=cache,target=/var/lib/apt/lists \
     apt-get update && \
-    apt-get install -y tzdata libpq5 libffi7 libssl1.1
+    apt-get install -y --no-install-recommends tzdata libpq5=13.3\* libffi7=3.3\* libssl1.1=1.1.1\* && \
+    apt-get clean
 
 # copy requirements.txt from the requirements stage
 COPY --from=requirements /root/requirements.txt ./
@@ -32,7 +34,8 @@ COPY --from=requirements /root/requirements.txt ./
 # see also: https://pythonspeed.com/articles/docker-cache-pip-downloads/
 RUN --mount=type=cache,target=/root/.cache \
     --mount=type=cache,target=/var/cache/apt \
-    apt-get install -y build-essential libpq-dev && \
+    --mount=type=cache,target=/var/lib/apt/lists \
+    apt-get install -y --no-install-recommends build-essential=12.\* libpq-dev=13.3\* && \
     pip install -r requirements.txt && \
     apt-get remove --purge -y build-essential libpq-dev && \
     apt-get autoremove -y && \
