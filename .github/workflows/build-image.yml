@@ -59,7 +59,7 @@ jobs:
           push: true
           tags: |
             ghcr.io/${{ env.USER_NAME }}/${{ env.IMAGE_NAME }}:latest
-            ghcr.io/${{ env.USER_NAME }}/${{ env.IMAGE_NAME }}:${{ steps.current_version.outputs.VERSION }+${{ steps.time.outputs.time }}
+            ghcr.io/${{ env.USER_NAME }}/${{ env.IMAGE_NAME }}:${{ steps.current_version.outputs.VERSION }}+${{ steps.time.outputs.time }}
 
       # - name: Create Release
       #   id: create_release
