@@ -50,7 +50,10 @@ jobs:
       - name: Check that version is bumped
         id: version_is_bumped
         run: |
-          echo ::set-output name=COMPARE::`python -c "import semver; print(semver.compare('${{ steps.current_version.outputs.VERSION }}', '${{ steps.previoustag.outputs.tag }}'[1:]))`
+          pip install semver
+          compare=`python -c "import semver; print(semver.compare('${{ steps.current_version.outputs.VERSION }}', '${{ steps.previoustag.outputs.tag }}'[1:]))`
+          echo ${compare}
+          echo ::set-output name=COMPARE::${compare}
 
       - name: Set up Docker Buildx
         uses: docker/setup-buildx-action@v1
