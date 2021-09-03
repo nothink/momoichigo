@@ -51,7 +51,7 @@ jobs:
         id: version_is_bumped
         run: |
           pip install semver
-          compare=`python -c "import semver; print(semver.compare('${{ steps.current_version.outputs.VERSION }}', '${{ steps.previoustag.outputs.tag }}'[1:]))`
+          compare=`python -c "import semver; print(semver.compare('${{ steps.current_version.outputs.VERSION }}', '${{ steps.previoustag.outputs.tag }}'[1:]))"`
           echo ${compare}
           echo ::set-output name=COMPARE::${compare}
 
