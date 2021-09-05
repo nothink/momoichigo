@@ -9,6 +9,7 @@ https://docs.djangoproject.com/en/3.2/topics/settings/
 For the full list of settings and their values, see
 https://docs.djangoproject.com/en/3.2/ref/settings/
 """
+import os
 from datetime import timedelta
 from pathlib import Path
 
@@ -33,7 +34,8 @@ env = environ.Env(
     GS_BUCKET_NAME=(str, "bucket"),
     GS_PROJECT_ID=(str, "project"),
 )
-env.read_env()
+# Take environment variables from .env file
+env.read_env(os.path.join(BASE_DIR.as_posix(), ".env"))
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/3.2/howto/deployment/checklist/
