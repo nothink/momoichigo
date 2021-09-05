@@ -1,9 +1,9 @@
 name: 'Trivy'
 on:
   push:
-    branches:
-      - master
+    branches: [main]
   pull_request:
+    branches: [main]
 
 env:
   IMAGE_NAME: ghcr.io/nothink/momoichigo
@@ -26,8 +26,14 @@ jobs:
         with:
           scan-type: 'image'
           image-ref: '${{ env.IMAGE_NAME }}:${{ github.sha }}'
-          format: 'table'
-          exit-code: '1'
+          format: 'template'
+          template: '@/contrib/sarif.tpl'
+          output: 'trivy-results.sarif'
           ignore-unfixed: true
           vuln-type: 'os,library'
           severity: 'UNKNOWN,LOW,MEDIUM,HIGH,CRITICAL'
+
+      - name: Upload Trivy scan results to GitHub Security tab
+        uses: github/codeql-action/upload-sarif@v1
+        with:
+          sarif_file: 'trivy-results.sarif'
