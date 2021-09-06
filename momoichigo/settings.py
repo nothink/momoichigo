@@ -32,7 +32,6 @@ env = environ.Env(
     STORAGE_TYPE=(str, "local"),
     GS_CREDENTIALS=(str, "/cred.json"),
     GS_BUCKET_NAME=(str, "bucket"),
-    GS_PROJECT_ID=(str, "project"),
 )
 # Take environment variables from .env file
 env.read_env(os.path.join(BASE_DIR.as_posix(), ".env"))

@@ -9,12 +9,16 @@ services:
     ports:
       - 8000:8000
     volumes:
-      - ./.env:/app/.env
-      - ./cred.json:/cred.json
+      - ./config/cred.json:/cred.json
       - ./momoichigo:/app/momoichigo
     environment:
       DEV: TRUE
       GOOGLE_APPLICATION_CREDENTIALS: /cred.json
+      ALLOWED_HOSTS: localhost,127.0.0.1,0.0.0.0
+      STORAGE_TYPE: gcs
+      GS_CREDENTIALS: /cred.json
+    env_file:
+      - ./config/.env
     links:
       - db:db
       - gcs:gcs
