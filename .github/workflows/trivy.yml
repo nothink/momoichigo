@@ -9,7 +9,7 @@ env:
   IMAGE_NAME: ghcr.io/nothink/momoichigo
 
 jobs:
-  build:
+  trivy:
     name: Build
     runs-on: ubuntu-latest
     steps:
