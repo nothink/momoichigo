@@ -31,7 +31,4 @@ def factory() -> APIRequestFactory:
 @pytest.fixture
 def resource() -> Union[list[Model], Model]:
     """Bake a resource."""
-    SRC = "https://dqx9mbrpz1jhx.cloudfront.net/vcard/ratio20/images/card/8057cc6ab01af36fea16ccc4952ee910.jpg"  # noqa: E501
-
-    bakes = baker.make("app.Resource", source=SRC)
-    return bakes
+    return baker.make("app.Resource", source=SOURCE_PATHS[0])
