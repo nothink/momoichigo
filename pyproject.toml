@@ -43,8 +43,10 @@ minversion = "6.0"
 addopts = [
     "-ra",
     "-vv",
-    "--durations=10",
-    "--durations-min=0.2",
+    "-x",
+    "--lf",
+    "--durations=5",
+    "--durations-min=0.3",
     "--cov",
     "--cov-branch",
 ]
