@@ -25,7 +25,7 @@ class TestResourceSignal:
         instance = single_resource
 
         # Wait for downloading.
-        time.sleep(1)
+        time.sleep(3)
         assert instance.file.name == instance.key
 
         post_save.send(
