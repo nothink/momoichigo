@@ -4,7 +4,6 @@
 from __future__ import annotations
 
 import json
-from typing import Union
 
 import pytest
 from django.db.models import Model
@@ -23,11 +22,10 @@ class TestResourceEndpoints:
     def test_list_resources_ok(
         self: TestResourceEndpoints,
         factory: APIRequestFactory,
-        resource: Union[list[Model], Model],
+        sources: list[str],
+        resources: list[Model],
     ) -> None:
         """Test for list (GET)."""
-        SRC = "https://dqx9mbrpz1jhx.cloudfront.net/vcard/ratio20/images/card/8057cc6ab01af36fea16ccc4952ee910.jpg"  # noqa: E501
-
         request = factory.get(self.endpoint)
         response = ResourceViewSet.as_view({"get": "list"})(request)
 
@@ -36,7 +34,7 @@ class TestResourceEndpoints:
         response.render()
         response_body = json.loads(response.content)
 
-        assert response_body["count"] == 1
+        assert response_body["count"] == len(resources)
         assert response_body["next"] is None
         assert response_body["previous"] is None
-        assert response_body["results"][0]["source"] == SRC
+        assert response_body["results"][0]["source"] == sources[0]

@@ -1,6 +1,8 @@
 """tests for models."""
 from __future__ import annotations
 
+from urllib.parse import urlparse
+
 import pytest
 
 from momoichigo.app import models
@@ -22,12 +24,13 @@ class TestResource:
         ]
     )
 
-    def test_model_has_valid_str(self: TestResource) -> None:
+    def test_model_has_valid_str(self: TestResource, sources: list[str]) -> None:
         """Test that __str__ is valid."""
-        emi_url = "/".join(["https://dqx9mbrpz1jhx.cloudfront.net", self.EMI_KEY])
+        target_url = sources[0]
+        url = urlparse(target_url)
 
-        m = models.Resource.objects.create(source=emi_url)
+        m = models.Resource.objects.create(source=target_url)
         # signals上のスレッドがFetchし終わるまで sleep()
 
-        assert m.__str__() == emi_url
-        assert m.key == self.EMI_KEY
+        assert m.__str__() == target_url
+        assert m.key == url.path[1:]
