@@ -19,9 +19,8 @@ pytestmark = [pytest.mark.enable_signals, pytest.mark.django_db]
 class TestResourceSignal:
     """tests for signals."""
 
-    def test_post_save(
-        self: TestResourceSignal, sources: list[str], single_resource: Any
-    ) -> None:
+    @staticmethod
+    def test_post_save(single_resource: Any) -> None:
         """Testing signals for post_save Resource instance."""
         instance = single_resource
 
@@ -36,4 +35,5 @@ class TestResourceSignal:
         )
         assert instance.file.name == instance.key
 
+        # clean up local checked files.
         shutil.rmtree(instance.key.split("/")[0])
