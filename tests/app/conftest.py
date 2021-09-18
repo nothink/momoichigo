@@ -1,9 +1,9 @@
 """Config for All pytest fixtures."""
 
-from typing import Any, Union
+import random
+from typing import Any
 
 import pytest
-from django.db.models import Model
 from django.db.models.signals import post_save
 from model_bakery import baker
 from rest_framework.test import APIClient, APIRequestFactory
@@ -85,9 +85,12 @@ def sources() -> list[str]:
 
 
 @pytest.fixture
-def single_resource() -> Union[list[Model], Model]:
+def single_resource() -> Any:
     """Return baked Resource models."""
-    return baker.make("app.Resource", source=SOURCE_PATHS[0])
+    src_str = SOURCE_PATHS[random.randrange(len(SOURCE_PATHS))]
+    resource = baker.make("app.Resource", source=src_str)
+
+    return resource
 
 
 @pytest.fixture

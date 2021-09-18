@@ -43,8 +43,8 @@ minversion = "6.0"
 addopts = [
     "-ra",
     "-vv",
-    "-x",
-    "--lf",
+#    "-x",
+#    "--lf",
     "--durations=5",
     "--durations-min=0.3",
     "--cov",
@@ -54,6 +54,10 @@ testpaths = ["tests"]
 python_files = ["tests.py", "test_*.py", "*_tests.py"]
 markers = [
     "unit: tests that are isolated from the db, external api calls and other mockable internal code.",
+    "enable_signals: tests that are enable django signals (default:disabled)."
+]
+filterwarnings = [
+    "ignore::pytest.PytestUnhandledThreadExceptionWarning",
 ]
 required_plugins = [
     "pytest-django",
