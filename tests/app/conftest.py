@@ -91,7 +91,7 @@ def single_resource() -> Union[list[Model], Model]:
 
 
 @pytest.fixture
-def resources() -> list[Model]:
+def resources() -> list[Any]:
     """Return baked Resource models."""
     resources = []
     for url in SOURCE_PATHS:
