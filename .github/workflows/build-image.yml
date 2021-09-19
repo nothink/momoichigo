@@ -22,10 +22,14 @@ jobs:
           python-version: 3.9
 
       - name: Install Poetry
+        run: pip install poetry semver
+
+      - name: Get Current Version from pyproject.toml
+        id: current_version
         run: |
-          curl -sSL https://raw.githubusercontent.com/python-poetry/poetry/master/install-poetry.py | python -
-          echo "$HOME/.local/bin" >> $GITHUB_PATH
-          poetry config virtualenvs.in-project true
+          current=$(poetry version -s)
+          echo ${current}
+          echo ::set-output name=VERSION::${current}
 
       - name: 'Get Previous tag'
         id: previoustag
@@ -40,20 +44,26 @@ jobs:
           timeZone: 9
           format: 'YYYYMMDDHHmmss'
 
-      - name: Get Current Version
-        id: current_version
-        run: |
-          current=$(poetry version -s)
-          echo ${current}
-          echo ::set-output name=VERSION::${current}
-
       - name: Check that version is bumped
         id: version_is_bumped
         run: |
-          pip install semver
-          compare=`python -c "import semver; print(semver.compare('${{ steps.current_version.outputs.VERSION }}', '${{ steps.previoustag.outputs.tag }}'[1:]))"`
-          echo ${compare}
-          echo ::set-output name=COMPARE::${compare}
+          poetry_ver=${{ steps.current_version.outputs.VERSION }}
+          tag_ver=${{ steps.previoustag.outputs.tag }}
+          compare=`pysemver compare $poetry_ver ${tag_ver/v/}`
+          if [ $compare -gt 0 ]; then
+            echo ::set-output name=BUMPED::true
+          else
+            echo ::set-output name=BUMPED::false
+          fi
+
+      - name: Create next tag name of Docker Image
+        id: create_image_tag
+        run: |
+          if [ "${{ steps.version_is_bumped.outputs.BUMPED }}" = "true" ]; then
+            echo ::set-output name=TAG::${{ steps.current_version.outputs.VERSION }}
+          else
+            echo ::set-output name=TAG::${{ steps.current_version.outputs.VERSION }}-${{ steps.timestamp.outputs.time }}
+          fi
 
       - name: Set up Docker Buildx
         uses: docker/setup-buildx-action@v1
@@ -65,24 +75,24 @@ jobs:
           username: ${{ github.actor }}
           password: ${{ secrets.GITHUB_TOKEN }}
 
-      # Version is bumped
-      - name: Tag commit
+      # Tagging new version (when tagged)
+      - name: Commit new version tag
+        if: ${{ steps.version_is_bumped.outputs.BUMPED == "true" }}
         uses: tvdias/github-tagger@v0.0.2
         with:
           repo-token: '${{ secrets.GITHUB_TOKEN }}'
           tag: v${{ steps.current_version.outputs.VERSION }}
 
       - name: Build and Push Image
-        if: ${{ steps.version_is_bumped.outputs.COMPARE == '1' }}
         uses: docker/build-push-action@v2
         with:
           push: true
           tags: |
             ghcr.io/${{ env.USER_NAME }}/${{ env.IMAGE_NAME }}:latest
-            ghcr.io/${{ env.USER_NAME }}/${{ env.IMAGE_NAME }}:${{ steps.current_version.outputs.VERSION }}
+            ghcr.io/${{ env.USER_NAME }}/${{ env.IMAGE_NAME }}:${{ steps.create_image_tag.outputs.TAG }}
 
-      - name: Create Release
-        if: ${{ steps.version_is_bumped.outputs.COMPARE == '1' }}
+      - name: Create Release when Version is bumped
+        if: ${{ steps.version_is_bumped.outputs.BUMPED == "true" }}
         uses: actions/create-release@v1
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
@@ -91,13 +101,3 @@ jobs:
           release_name: v${{ steps.current_version.outputs.VERSION }}
           draft: false
           prerelease: false
-
-      # Version is not bumped
-      - name: Build and Push Image
-        if: ${{ steps.version_is_bumped.outputs.COMPARE == '0' }}
-        uses: docker/build-push-action@v2
-        with:
-          push: true
-          tags: |
-            ghcr.io/${{ env.USER_NAME }}/${{ env.IMAGE_NAME }}:latest
-            ghcr.io/${{ env.USER_NAME }}/${{ env.IMAGE_NAME }}:${{ steps.current_version.outputs.VERSION }}-${{ steps.timestamp.outputs.time }}

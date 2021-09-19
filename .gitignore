@@ -130,9 +130,10 @@ dmypy.json
 
 # poetry.lock
 .vscode/
-staticfiles
 
 .DS_Store
 
 cred.json
 pgdata
+gcsdata
+vcard

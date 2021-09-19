@@ -3,29 +3,36 @@ version: '3.9'
 services:
   app:
     build: .
+    image: momoichigo:dev
     container_name: app
     restart: always
     ports:
       - 8000:8000
     volumes:
-      - ./.env:/app/.env
-      - ./cred.json:/cred.json
+      - ./config/cred.json:/cred.json
+      - ./momoichigo:/app/momoichigo
     environment:
       DEV: TRUE
       GOOGLE_APPLICATION_CREDENTIALS: /cred.json
+      ALLOWED_HOSTS: localhost,127.0.0.1,0.0.0.0
+      STORAGE_TYPE: gcs
+      GS_CREDENTIALS: /cred.json
+    env_file:
+      - ./config/.env
     links:
       - db:db
+      - gcs:gcs
 
   db:
-    image: postgres:alpine
+    image: postgres:latest
     container_name: db
     restart: always
     volumes:
       - ./pgdata:/var/lib/postgresql/data
     environment:
       POSTGRES_DB: momoichigo
-      POSTGRES_USER: momoichigo
-      POSTGRES_PASSWORD: momoichigo
+      POSTGRES_USER: kohinata
+      POSTGRES_PASSWORD: Ichigo100percent
 
   adminer:
     image: adminer:latest
@@ -33,3 +40,12 @@ services:
     restart: always
     ports:
       - 8080:8080
+
+  gcs:
+    image: fsouza/fake-gcs-server
+    container_name: gcs
+    restart: always
+    volumes:
+      - ./gcsdata:/data
+    ports:
+      - 4443:4443
