@@ -77,7 +77,7 @@ jobs:
 
       # Tagging new version (when tagged)
       - name: Commit new version tag
-        if: steps.version_is_bumped.outputs.BUMPED == "true"
+        if: steps.version_is_bumped.outputs.BUMPED == 'true'
         uses: tvdias/github-tagger@v0.0.2
         with:
           repo-token: '${{ secrets.GITHUB_TOKEN }}'
@@ -92,7 +92,7 @@ jobs:
             ghcr.io/${{ env.USER_NAME }}/${{ env.IMAGE_NAME }}:${{ steps.create_image_tag.outputs.TAG }}
 
       - name: Create Release when Version is bumped
-        if: steps.version_is_bumped.outputs.BUMPED == "true"
+        if: steps.version_is_bumped.outputs.BUMPED == 'true'
         uses: actions/create-release@v1
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
