@@ -99,8 +99,8 @@ jobs:
           tags: |
             ghcr.io/${{ env.USER_NAME }}/${{ env.IMAGE_NAME }}:latest
             ghcr.io/${{ env.USER_NAME }}/${{ env.IMAGE_NAME }}:${{ steps.create_image_tag.outputs.TAG }}
-            asia.gcr.io/${{ env.GCP_PROJECT_ID }}/${{ env.IMAGE_NAME }}:latest
-            asia.gcr.io/${{ env.GCP_PROJECT_ID }}/${{ env.IMAGE_NAME }}:${{ steps.create_image_tag.outputs.TAG }}
+            asia.gcr.io/${{ secrets.GCP_PROJECT_ID }}/${{ env.IMAGE_NAME }}:latest
+            asia.gcr.io/${{ secrets.GCP_PROJECT_ID }}/${{ env.IMAGE_NAME }}:${{ steps.create_image_tag.outputs.TAG }}
 
       - name: Deploy to Cloud Run
         id: deploy
