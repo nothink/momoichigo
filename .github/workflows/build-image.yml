@@ -78,7 +78,7 @@ jobs:
       - name: Login to Google Container Registry
         uses: docker/login-action@v1
         with:
-          registry: asia.ghcr.io
+          registry: asia.gcr.io
           username: _json_key
           password: ${{ secrets.GCR_JSON_KEY }}
 
@@ -97,8 +97,8 @@ jobs:
           tags: |
             ghcr.io/${{ env.USER_NAME }}/${{ env.IMAGE_NAME }}:latest
             ghcr.io/${{ env.USER_NAME }}/${{ env.IMAGE_NAME }}:${{ steps.create_image_tag.outputs.TAG }}
-            asia.ghcr.io/${{ env.GCP_PROJECT_ID }}/${{ env.IMAGE_NAME }}:latest
-            asia.ghcr.io/${{ env.GCP_PROJECT_ID }}/${{ env.IMAGE_NAME }}:${{ steps.create_image_tag.outputs.TAG }}
+            asia.gcr.io/${{ env.GCP_PROJECT_ID }}/${{ env.IMAGE_NAME }}:latest
+            asia.gcr.io/${{ env.GCP_PROJECT_ID }}/${{ env.IMAGE_NAME }}:${{ steps.create_image_tag.outputs.TAG }}
 
       - name: Deploy to Cloud Run
         id: deploy
