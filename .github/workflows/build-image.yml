@@ -1,4 +1,4 @@
-name: Build Image
+name: Build and Release
 
 on:
   push:
@@ -99,6 +99,17 @@ jobs:
             ghcr.io/${{ env.USER_NAME }}/${{ env.IMAGE_NAME }}:${{ steps.create_image_tag.outputs.TAG }}
             asia.ghcr.io/${{ env.GCP_PROJECT_ID }}/${{ env.IMAGE_NAME }}:latest
             asia.ghcr.io/${{ env.GCP_PROJECT_ID }}/${{ env.IMAGE_NAME }}:${{ steps.create_image_tag.outputs.TAG }}
+
+      - name: Deploy to Cloud Run
+        id: deploy
+        uses: google-github-actions/deploy-cloudrun@main
+        with:
+          service: hello-cloud-run 
+          image: gcr.io/cloudrun/hello
+          credentials: ${{ secrets.GCP_SA_KEY }}
+
+      - name: Use Output
+        run: curl "${{ steps.deploy.outputs.url }}"
 
       - name: Create Release when Version is bumped
         if: steps.version_is_bumped.outputs.BUMPED == 'true'
