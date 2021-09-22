@@ -1,4 +1,4 @@
-name: Build and Release
+name: Build, Release, Deploy
 
 on:
   push:
@@ -7,7 +7,7 @@ on:
 env:
   # Name of Docker images
   USER_NAME: nothink
-  IMAGE_NAME: momoichigo
+  SERVICE_NAME: momoichigo
 
 jobs:
   build:
@@ -97,17 +97,18 @@ jobs:
         with:
           push: true
           tags: |
-            ghcr.io/${{ env.USER_NAME }}/${{ env.IMAGE_NAME }}:latest
-            ghcr.io/${{ env.USER_NAME }}/${{ env.IMAGE_NAME }}:${{ steps.create_image_tag.outputs.TAG }}
-            asia.gcr.io/${{ secrets.GCP_PROJECT_ID }}/${{ env.IMAGE_NAME }}:latest
-            asia.gcr.io/${{ secrets.GCP_PROJECT_ID }}/${{ env.IMAGE_NAME }}:${{ steps.create_image_tag.outputs.TAG }}
+            ghcr.io/${{ env.USER_NAME }}/${{ env.SERVICE_NAME }}:latest
+            ghcr.io/${{ env.USER_NAME }}/${{ env.SERVICE_NAME }}:${{ steps.create_image_tag.outputs.TAG }}
+            asia.gcr.io/${{ secrets.GCP_PROJECT_ID }}/${{ env.SERVICE_NAME }}:latest
+            asia.gcr.io/${{ secrets.GCP_PROJECT_ID }}/${{ env.SERVICE_NAME }}:${{ steps.create_image_tag.outputs.TAG }}
 
       - name: Deploy to Cloud Run
         id: deploy
         uses: google-github-actions/deploy-cloudrun@main
         with:
-          service: hello-cloud-run 
-          image: gcr.io/cloudrun/hello
+          service: momoichigo
+          image: asia.gcr.io/${{ secrets.GCP_PROJECT_ID }}/${{ env.SERVICE_NAME }}:latest
+          region: asia-northeast1
           credentials: ${{ secrets.GCP_SA_KEY }}
 
       - name: Use Output
