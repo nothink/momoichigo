@@ -41,7 +41,9 @@ jobs:
         run: poetry install --no-interaction
 
       - name: Run Tests
-        run: poetry run pytest
+        run: |
+          poetry run pytest
+          poetry run coverage xml
 
       - uses: paambaati/codeclimate-action@v2.7.5
         env:
@@ -56,7 +58,7 @@ jobs:
           coverage-file: coverage.xml
           dsn: ${{ secrets.DEEPSOURCE_DSN }}
 
-      - uses: codecov/codecov-action@v1
+      - uses: codecov/codecov-action@v2
         with:
           token: ${{ secrets.CODECOV_TOKEN }}
-          fail_ci_if_error: true
+          verbose: true
