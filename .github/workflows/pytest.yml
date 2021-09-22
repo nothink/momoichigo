@@ -2,9 +2,7 @@ name: 'Pytest'
 
 on:
   push:
-    branches: [main]
   pull_request:
-    branches: [main]
 
 env:
   DEV: true
@@ -57,8 +55,3 @@ jobs:
           key: python
           coverage-file: coverage.xml
           dsn: ${{ secrets.DEEPSOURCE_DSN }}
-
-      - uses: codecov/codecov-action@v2
-        with:
-#          token: ${{ secrets.CODECOV_TOKEN }}
-          verbose: true

@@ -2,8 +2,6 @@ name: 'Trivy'
 on:
   push:
     branches: [main]
-  pull_request:
-    branches: [main]
 
 env:
   IMAGE_NAME: ghcr.io/nothink/momoichigo
