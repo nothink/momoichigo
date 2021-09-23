@@ -1,5 +1,9 @@
 #!/bin/sh
 
+# migrations
+echo "Apply database migrations"
+python manage.py migrate
+
 if [ $DEV ]; then
     echo "DEVEROPMENT SERVER RUNNING..."
     python manage.py runserver 0.0.0.0:8000

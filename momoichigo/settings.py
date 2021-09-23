@@ -78,6 +78,12 @@ REST_FRAMEWORK = {
     # "DEFAULT_AUTHENTICATION_CLASSES": (
     #     "rest_framework_simplejwt.authentication.JWTAuthentication",
     # ),
+    "DEFAULT_RENDERER_CLASSES": [
+        # Renderers
+        # https://www.django-rest-framework.org/api-guide/renderers/
+        "rest_framework.renderers.JSONRenderer",
+        "rest_framework.renderers.BrowsableAPIRenderer",
+    ],
 }
 
 SIMPLE_JWT = {

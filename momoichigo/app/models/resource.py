@@ -1,4 +1,4 @@
-"""models."""
+"""Resource models."""
 from __future__ import annotations
 
 from urllib.parse import urlparse
@@ -12,6 +12,7 @@ class Resource(models.Model):
 
     fields:
         source: URL of original sources
+        file: FieldFile of this resource
         created: created timestamp
     """
 
