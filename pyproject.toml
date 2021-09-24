@@ -49,6 +49,7 @@ addopts = [
     "--durations-min=0.3",
     "--cov",
     "--cov-branch",
+    "--cov-report=xml"
 ]
 testpaths = ["tests"]
 python_files = ["tests.py", "test_*.py", "*_tests.py"]

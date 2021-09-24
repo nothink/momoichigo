@@ -41,7 +41,14 @@ jobs:
       - name: Run Tests
         run: |
           poetry run pytest
-          poetry run coverage xml
+
+      - name: Upload coverage to Codecov
+        uses: codecov/codecov-action@v2
+        with:
+          token: ${{ secrets.CODECOV_TOKEN }}
+          files: ./coverage.xml
+          flags: unittests
+          verbose: true
 
       - uses: paambaati/codeclimate-action@v2.7.5
         env:
