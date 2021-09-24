@@ -62,3 +62,8 @@ jobs:
           key: python
           coverage-file: coverage.xml
           dsn: ${{ secrets.DEEPSOURCE_DSN }}
+
+      - uses: codacy/codacy-coverage-reporter-action@v1
+        with:
+          api-token: ${{ secrets.CODACY_API_TOKEN }}
+          coverage-reports: coverage.xml
