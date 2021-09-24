@@ -6,6 +6,7 @@
 ![Trivy](https://github.com/nothink/momoichigo/actions/workflows/trivy.yml/badge.svg)
 ![CodeQL](https://github.com/nothink/momoichigo/actions/workflows/codeql-analysis.yml/badge.svg)
 
+[![Codacy Badge](https://api.codacy.com/project/badge/Grade/bab8892952a54604bf4100e50a1de08c)](https://app.codacy.com/gh/nothink/momoichigo?utm_source=github.com&utm_medium=referral&utm_content=nothink/momoichigo&utm_campaign=Badge_Grade_Settings)
 [![codecov](https://codecov.io/gh/nothink/momoichigo/branch/main/graph/badge.svg?token=o783r2x5Tp)](https://codecov.io/gh/nothink/momoichigo)
 [![DeepSource](https://deepsource.io/gh/nothink/momoichigo.svg/?label=active+issues&token=NhcwPGRXrmzAB8s6PLmU6fCI)](https://deepsource.io/gh/nothink/momoichigo/?ref=repository-badge)
 [![Total alerts](https://img.shields.io/lgtm/alerts/g/nothink/momoichigo.svg?logo=lgtm&logoWidth=18)](https://lgtm.com/projects/g/nothink/momoichigo/alerts/)
