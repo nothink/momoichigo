@@ -26,6 +26,7 @@ env = environ.Env(
     DEV=(bool, False),
     TZ=(str, "UTC"),
     SECRET_KEY=(str, __TMP_SECRET_KEY),
+    DATABASE_URL=(str, "sqlite:////tmp/db.sqlite3"),
     ALLOWED_HOSTS=(list, []),
     STORAGE_TYPE=(str, "local"),
     # GS_CREDENTIALS=(str, "/cred.json"),
