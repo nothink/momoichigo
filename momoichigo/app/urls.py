@@ -7,8 +7,6 @@ from momoichigo.app import views
 
 router = routers.DefaultRouter()
 router.register(r"resources", views.ResourceViewSet)
-router.register(r"girls", views.GirlViewSet)
-router.register(r"scenes", views.SceneViewSet)
 
 
 urlpatterns = [
