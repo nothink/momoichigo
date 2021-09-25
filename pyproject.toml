@@ -85,7 +85,7 @@ ignore_errors = true
 #################################### poerty ####################################
 [tool.poetry]
 name = "momoichigo"
-version = "0.0.3"
+version = "0.1.0"
 description = "ICHIGO KOHINATA"
 authors = ["nothink <gakongakon@gmail.com>"]
 license = "MIT"
@@ -102,6 +102,7 @@ uvicorn = "^0.15.0"
 gunicorn = "^20.1.0"
 psycopg2 = "^2.9.1"
 requests = "^2.26.0"
+google-cloud-secret-manager = "^2.7.1"
 
 [tool.poetry.dev-dependencies]
 pytest = "^6.2.5"

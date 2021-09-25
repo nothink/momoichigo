@@ -6,6 +6,7 @@ on:
 
 env:
   DEV: true
+  TZ: Asia/Tokyo
   STORAGE_TYPE: local
 
 jobs:
