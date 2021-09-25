@@ -46,7 +46,7 @@ class TestResourceEndpoints:
         """Test for retrieve (GET)."""
         item = resources[random.randrange(len(resources))]
         expected_json = {}
-        expected_json["created"] = item.created.isoformat().replace("+00:00", "Z")
+        expected_json["created"] = item.created.astimezone().isoformat()
         expected_json["file"] = None
         expected_json["source"] = item.source
 

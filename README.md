@@ -26,7 +26,8 @@ Because of using [django-environ](https://django-environ.readthedocs.io/en/lates
 
 |                  | type |           default           | descriptions           |
 | :--------------: | :--: | :-------------------------: | :--------------------- |
-|      `DEV`       | bool |           `FALSE`           | development mode       |
+|      `DEV`       | bool |           `FALSE`           | Development mode       |
+|      `TZ`        | str  |           `UTC`             | Timezone               |
 |   `SECRET_KEY`   | str  |           random            | Django secret key      |
 |  `DATABASE_URL`  | str  | `sqlite:////tmp/db.sqlite3` | Database URL           |
 | `ALLOWED_HOSTS`  | list |             ``              | Django's allowed hosts |
