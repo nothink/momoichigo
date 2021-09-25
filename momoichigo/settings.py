@@ -3,15 +3,19 @@ Django settings for momoichigo project.
 
 sa: https://docs.djangoproject.com/en/3.2/ref/settings/
 """
+import io
 import os
 from pathlib import Path
+from typing import Any
 
 import environ
+import google.auth
 from django.utils.crypto import get_random_string
-from google.oauth2 import service_account
+from google.cloud import secretmanager
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
+env_file = os.path.join(BASE_DIR, ".env")
 
 # Get temporary SECRET_KEY for no environs
 __CHARS = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789!@#$%^&*(-_=+)"
@@ -19,21 +23,41 @@ __TMP_SECRET_KEY = get_random_string(50, __CHARS)
 
 # Django environ
 env = environ.Env(
-    DEV=(bool, True),
+    DEV=(bool, False),
     TZ=(str, "UTC"),
     SECRET_KEY=(str, __TMP_SECRET_KEY),
     ALLOWED_HOSTS=(list, []),
     STORAGE_TYPE=(str, "local"),
-    GS_CREDENTIALS=(str, "/cred.json"),
+    # GS_CREDENTIALS=(str, "/cred.json"),
     GS_BUCKET_NAME=(str, "bucket"),
 )
-# Take environment variables from .env file
-env.read_env(os.path.join(BASE_DIR.as_posix(), ".env"))
+
+# -------- cloudrun_django_secret_config --------
+# https://cloud.google.com/python/django/run#understand_the_code
+# Attempt to load the Project ID into the environment, safely failing on error.
+try:
+    _, proj = google.auth.default()
+    if isinstance(proj, str):
+        os.environ["GOOGLE_CLOUD_PROJECT"] = proj
+except google.auth.exceptions.DefaultCredentialsError:  # type: ignore
+    pass
+
+if os.path.isfile(env_file):
+    # Use a local secret file, if provided ".env"
+    env.read_env(env_file)
+elif os.environ.get("GOOGLE_CLOUD_PROJECT", None):
+    # Pull secrets from Secret Manager
+    project_id = os.environ.get("GOOGLE_CLOUD_PROJECT")
+    client = secretmanager.SecretManagerServiceClient()
+    settings_name = os.environ.get("SETTINGS_NAME", "django_settings")
+    name = f"projects/{project_id}/secrets/{settings_name}/versions/latest"
+    version = client.access_secret_version(name=name)  # type: ignore
+    payload = version.payload.data.decode("UTF-8")
+    env.read_env(io.StringIO(payload))
 
 SECRET_KEY = env("SECRET_KEY")
 DEBUG = env("DEV")
 ALLOWED_HOSTS = env("ALLOWED_HOSTS")
-
 
 # Application definition
 
@@ -92,10 +116,12 @@ WSGI_APPLICATION = "momoichigo.wsgi.application"
 
 
 # Database
-# https://docs.djangoproject.com/en/3.2/ref/settings/#databases
-# https://django-environ.readthedocs.io/en/latest/#
-DATABASES = {"default": env.db("DATABASE_URL", default="sqlite:////tmp/db.sqlite3")}
-
+# https://django-environ.readthedocs.io/en/latest/
+DATABASES: dict[str, dict[str, Any]] = {"default": env.db()}
+# If the flag as been set, configure to use proxy
+if os.getenv("USE_CLOUD_SQL_AUTH_PROXY", None):
+    DATABASES["default"]["HOST"] = "127.0.0.1"
+    DATABASES["default"]["PORT"] = 5432
 
 # Password validation
 AUTH_PASSWORD_VALIDATORS = [
@@ -161,20 +187,17 @@ if env("STORAGE_TYPE") == "gcs":
     # Google Cloud Storage using django-storages
     # https://django-storages.readthedocs.io/en/latest/backends/gcloud.html
     DEFAULT_FILE_STORAGE = "storages.backends.gcloud.GoogleCloudStorage"
+    STATICFILES_STORAGE = "storages.backends.gcloud.GoogleCloudStorage"
 
-    GS_CREDENTIALS = service_account.Credentials.from_service_account_file(
-        env("GS_CREDENTIALS")
-    )
     GS_BUCKET_NAME = env.str("GS_BUCKET_NAME")
-    GS_LOCATION = ""
-
-    GS_URL = "https://storage.googleapis.com/" + str(GS_BUCKET_NAME)
-
-    MEDIA_ROOT = "/"
-    MEDIA_URL = GS_URL + MEDIA_ROOT
-
+    GS_DEFAULT_ACL = "publicRead"
     GS_FILE_OVERWRITE = True
     GS_MAX_MEMORY_SIZE = 134217728
+
+    # if need
+    # MEDIA_ROOT = "/"
+    # GS_URL = "https://storage.googleapis.com/" + str(GS_BUCKET_NAME)
+    # MEDIA_URL = GS_URL + MEDIA_ROOT
 
 elif env("STORAGE_TYPE") == "local":
     MEDIA_ROOT = str(BASE_DIR)
