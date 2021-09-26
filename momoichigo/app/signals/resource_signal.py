@@ -21,5 +21,4 @@ def add_resource_queue(
     """
     if created:
         # Resource Queue に追加
-        queue = models.ResourceQueue(resource=instance)
-        queue.save()
+        models.ResourceQueue.objects.create(resource=instance)
