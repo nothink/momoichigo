@@ -36,15 +36,14 @@ class ResourceQueueViewSet(
             return Response(status=status.HTTP_204_NO_CONTENT)
 
         for queue in all_queues:
+            # get method で対象リソースをfetchして格納
             res = requests.get(queue.resource.source)
             if res.status_code == 200 and len(res.content) > 0:
                 queue.resource.file.save(queue.resource.key, io.BytesIO(res.content))
                 logger.info("[fetch] " + queue.resource.source)
                 queue.delete()
-            else:
-                logger.error(f"[fetch failed: {res.status_code}] {res.url}")
-            # 30秒を超えたら一旦キューの処理をやめる
-            if pendulum.now().diff(begin).in_seconds() > 30:
+            # 合計時間が20秒を超えたら一旦キューの処理をやめる
+            if pendulum.now().diff(begin).in_seconds() > 20:
                 break
 
         # 最後に、取りこぼしのResourceをさらっておく
@@ -56,4 +55,6 @@ class ResourceQueueViewSet(
         """Collect empty resources into queue."""
         empties = models.Resource.objects.filter(file="")
         for instance in empties:
-            models.ResourceQueue.objects.create(resource=instance)
+            exists = models.ResourceQueue.objects.filter(resource=instance)
+            if len(exists) == 0:
+                models.ResourceQueue.objects.create(resource=instance)
