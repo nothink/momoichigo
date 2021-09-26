@@ -138,6 +138,7 @@ class TestResourceQueueView:
             "https://dqx9mbrpz1jhx.cloudfront.net/vcard/ratio20/images/card/ssr_sample/"
         )
 
+        # 150件のSSR mp4データ
         TARGETS = [
             f"{TARGET_TOP}01b10b69b1c62aa3f9895874be613eee.mp4",
             f"{TARGET_TOP}02ab15889ea2dbc8d5c92153e1c6f8c8.mp4",
@@ -351,3 +352,6 @@ class TestResourceQueueView:
         assert response.status_code == 202
         assert len(ResourceQueue.objects.all()) > 0
         assert len(ResourceQueue.objects.all()) < len(TARGETS)
+
+        # clean up local checked files.
+        shutil.rmtree(Resource.objects.all()[0].key.split("/")[0])
