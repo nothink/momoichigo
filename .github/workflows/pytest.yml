@@ -2,7 +2,9 @@ name: 'Pytest'
 
 on:
   push:
+    branches: [main]
   pull_request:
+    branches: [main]
 
 env:
   DEV: true
@@ -51,20 +53,8 @@ jobs:
           flags: unittests
           verbose: true
 
-      - uses: paambaati/codeclimate-action@v2.7.5
-        env:
-          CC_TEST_REPORTER_ID: ${{ secrets.CC_TEST_REPORTER_ID }}
-        with:
-          coverageCommand: poetry run coverage xml
-          coverageLocations: ${{github.workspace}}/*coverage.xml:coverage.py
-
       - uses: deepsourcelabs/test-coverage-action@master
         with:
           key: python
           coverage-file: coverage.xml
           dsn: ${{ secrets.DEEPSOURCE_DSN }}
-
-      - uses: codacy/codacy-coverage-reporter-action@v1
-        with:
-          project-token: ${{ secrets.CODACY_PROJECT_TOKEN }}
-          coverage-reports: coverage.xml
