@@ -3,6 +3,7 @@ from __future__ import annotations
 
 import io
 import logging
+from typing import Any
 
 import pendulum
 import requests
@@ -27,7 +28,9 @@ class ResourceQueueViewSet(
     queryset = models.ResourceQueue.objects.all().order_by("resource")
     serializer_class = serializers.ResourceQueueSerializer
 
-    def list(self: ResourceQueueViewSet, request: Request) -> Response:
+    def list(
+        self: ResourceQueueViewSet, request: Request, *args: Any, **kwargs: Any
+    ) -> Response:
         """Overwrite to 'list' method."""
         begin = pendulum.now()
         all_queues = models.ResourceQueue.objects.all().order_by("created")
@@ -51,7 +54,8 @@ class ResourceQueueViewSet(
 
         return Response(status=status.HTTP_202_ACCEPTED)
 
-    def __collect_empty(self: ResourceQueueViewSet) -> None:
+    @staticmethod
+    def __collect_empty() -> None:
         """Collect empty resources into queue."""
         empties = models.Resource.objects.filter(file="")
         for instance in empties:
