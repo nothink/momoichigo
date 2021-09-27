@@ -3,6 +3,7 @@ from __future__ import annotations
 
 import io
 import logging
+from collections.abc import Iterable
 from typing import Any
 
 import pendulum
@@ -10,7 +11,10 @@ import requests
 from rest_framework import mixins, status, viewsets
 from rest_framework.request import Request
 from rest_framework.response import Response
+from slack_sdk.errors import SlackApiError
+from slack_sdk.web.client import WebClient
 
+from momoichigo import settings
 from momoichigo.app import models, serializers
 
 logger = logging.getLogger(__name__)
@@ -38,16 +42,27 @@ class ResourceQueueViewSet(
             # 基本的にここに落ちるはず
             return Response(status=status.HTTP_204_NO_CONTENT)
 
+        collected: list[str] = []
         for queue in all_queues:
             # get method で対象リソースをfetchして格納
             res = requests.get(queue.resource.source)
             if res.status_code == 200 and len(res.content) > 0:
                 queue.resource.file.save(queue.resource.key, io.BytesIO(res.content))
                 logger.info("[fetch] " + queue.resource.source)
+                collected.append(queue.resource.source)
                 queue.delete()
             # 合計時間が20秒を超えたら一旦キューの処理をやめる
             if pendulum.now().diff(begin).in_seconds() > 20:
                 break
+
+        # slack メッセージを送信
+        try:
+            client = WebClient(token=settings.SLACK_API_TOKEN)
+            client.chat_postMessage(
+                text=self.__build_slack_msg(collected), channel="#resources"
+            )
+        except SlackApiError:
+            pass
 
         # 最後に、取りこぼしのResourceをさらっておく
         self.__collect_empty()
@@ -62,3 +77,8 @@ class ResourceQueueViewSet(
             exists = models.ResourceQueue.objects.filter(resource=instance)
             if len(exists) == 0:
                 models.ResourceQueue.objects.create(resource=instance)
+
+    @staticmethod
+    def __build_slack_msg(sources: Iterable[str]) -> str:
+        """Create message strings for send to slack."""
+        return ":strawberry: \n" + " \n".join(sources) + "\n :strawberry: "

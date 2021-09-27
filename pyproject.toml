@@ -86,7 +86,7 @@ ignore_errors = true
 #################################### poerty ####################################
 [tool.poetry]
 name = "momoichigo"
-version = "0.1.1"
+version = "0.1.2"
 description = "ICHIGO KOHINATA"
 authors = ["nothink <gakongakon@gmail.com>"]
 license = "MIT"
@@ -105,6 +105,7 @@ psycopg2 = "^2.9.1"
 requests = "^2.26.0"
 google-cloud-secret-manager = "^2.7.1"
 pendulum = "^2.1.2"
+slack-sdk = "^3.11.2"
 
 [tool.poetry.dev-dependencies]
 pytest = "^6.2.5"
