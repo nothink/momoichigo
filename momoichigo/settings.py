@@ -88,7 +88,7 @@ MIDDLEWARE = [
 ROOT_URLCONF = "momoichigo.urls"
 
 CORS_ALLOWED_ORIGINS = [
-    "https://vcard.ameba.jp'",
+    "https://vcard.ameba.jp",
 ]
 CORS_ALLOW_CREDENTIALS = True
 
