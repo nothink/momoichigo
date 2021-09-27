@@ -56,13 +56,15 @@ class ResourceQueueViewSet(
                 break
 
         # slack メッセージを送信
+        logger.info("collected: " + "/".join(collected))
         try:
             client = WebClient(token=settings.SLACK_API_TOKEN)
+            logger.info(self.__build_slack_msg(collected))
             client.chat_postMessage(
                 text=self.__build_slack_msg(collected), channel="#resources"
             )
-        except SlackApiError:
-            pass
+        except SlackApiError as e:
+            logger.error(e)
 
         # 最後に、取りこぼしのResourceをさらっておく
         self.__collect_empty()
