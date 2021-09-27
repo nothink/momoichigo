@@ -80,4 +80,5 @@ class ResourceQueueViewSet(
 
     @staticmethod
     def __build_slack_msg(sources: Iterable[str]) -> str:
+        """Create message strings for send to slack."""
         return ":strawberry: \n" + " \n".join(sources) + "\n :strawberry: "
