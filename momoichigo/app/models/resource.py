@@ -31,7 +31,7 @@ class Resource(models.Model):
     )
     # sa: https://docs.djangoproject.com/ja/3.2/topics/files/
     # sa: https://django-storages.readthedocs.io/en/latest/backends/amazon-S3.html#model
-    file = models.FileField()
+    file = models.FileField(max_length=1024)
     created = models.DateTimeField(auto_now_add=True)
     modified = models.DateTimeField(auto_now=True)
 
