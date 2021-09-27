@@ -112,7 +112,6 @@ jobs:
           region: asia-northeast1
           credentials: ${{ secrets.GCP_SA_KEY }}
           env_vars: SETTINGS_NAME=momoichigo
-          suffix: steps.create_image_tag.outputs.TAG
 
       - name: Use Output
         run: curl "${{ steps.deploy.outputs.url }}"
