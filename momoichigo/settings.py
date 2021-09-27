@@ -69,6 +69,7 @@ INSTALLED_APPS = [
     "django.contrib.sessions",
     "django.contrib.messages",
     "django.contrib.staticfiles",
+    "corsheaders",
     "rest_framework",
     "momoichigo.app",
 ]
@@ -76,6 +77,7 @@ INSTALLED_APPS = [
 MIDDLEWARE = [
     "django.middleware.security.SecurityMiddleware",
     "django.contrib.sessions.middleware.SessionMiddleware",
+    "corsheaders.middleware.CorsMiddleware",
     "django.middleware.common.CommonMiddleware",
     "django.middleware.csrf.CsrfViewMiddleware",
     "django.contrib.auth.middleware.AuthenticationMiddleware",
@@ -84,6 +86,11 @@ MIDDLEWARE = [
 ]
 
 ROOT_URLCONF = "momoichigo.urls"
+
+CORS_ALLOWED_ORIGINS = [
+    "https://vcard.ameba.jp'",
+]
+CORS_ALLOW_CREDENTIALS = True
 
 REST_FRAMEWORK = {
     # sa: https://www.django-rest-framework.org/api-guide/pagination/
