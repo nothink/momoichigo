@@ -1,6 +1,4 @@
-"""Tests for View and ViewSets."""
-# https://dev.to/sherlockcodes/pytest-with-django-rest-framework-from-zero-to-hero-8c4#viewsets
-
+"""Tests for ResourceViewSet."""
 from __future__ import annotations
 
 import json
@@ -15,13 +13,13 @@ from momoichigo.app.views import ResourceViewSet
 pytestmark = pytest.mark.django_db
 
 
-class TestResourceEndpoints:
+class TestResourceView:
     """Tests for '/resources/' ."""
 
     endpoint = "/api/resources/"
 
     def test_list_resources_ok(
-        self: TestResourceEndpoints,
+        self: TestResourceView,
         factory: APIRequestFactory,
         sources: list[str],
         resources: list[Any],
@@ -39,7 +37,7 @@ class TestResourceEndpoints:
         assert response_body["results"][0]["source"] == sources[0]
 
     def test_retrieve_resources_ok(
-        self: TestResourceEndpoints,
+        self: TestResourceView,
         client: Any,
         resources: list[Any],
     ) -> None:
@@ -59,7 +57,7 @@ class TestResourceEndpoints:
         assert response_body == expected_json
 
     def test_create_one_resource_ok(
-        self: TestResourceEndpoints,
+        self: TestResourceView,
         client: Any,
         sources: list[str],
     ) -> None:
@@ -76,7 +74,7 @@ class TestResourceEndpoints:
         assert response_body == [url_str]
 
     def test_create_multi_resource_ok(
-        self: TestResourceEndpoints,
+        self: TestResourceView,
         client: Any,
         sources: list[str],
     ) -> None:
@@ -95,7 +93,7 @@ class TestResourceEndpoints:
         assert response_body == sources
 
     def test_create_duplicate_one_resource_ok(
-        self: TestResourceEndpoints,
+        self: TestResourceView,
         client: Any,
         sources: list[str],
         resources: list[Any],
@@ -111,7 +109,7 @@ class TestResourceEndpoints:
         assert response.content == b""
 
     def test_create_duplicate_another_resource_ok(
-        self: TestResourceEndpoints,
+        self: TestResourceView,
         client: Any,
         sources: list[str],
     ) -> None:

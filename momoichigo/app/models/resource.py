@@ -33,6 +33,7 @@ class Resource(models.Model):
     # sa: https://django-storages.readthedocs.io/en/latest/backends/amazon-S3.html#model
     file = models.FileField()
     created = models.DateTimeField(auto_now_add=True)
+    modified = models.DateTimeField(auto_now=True)
 
     def __str__(self: Resource) -> str:
         """Return desscriptive string."""

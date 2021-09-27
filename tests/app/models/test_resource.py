@@ -21,7 +21,6 @@ class TestResource:
         url = urlparse(url_str)
 
         m = models.Resource.objects.create(source=url_str)
-        # signals上のスレッドがFetchし終わるまで sleep()
 
         assert m.__str__() == url_str
         assert m.key == url.path[1:]
