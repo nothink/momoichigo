@@ -29,7 +29,6 @@ env = environ.Env(
     DATABASE_URL=(str, "sqlite:////tmp/db.sqlite3"),
     ALLOWED_HOSTS=(list, []),
     STORAGE_TYPE=(str, "local"),
-    # GS_CREDENTIALS=(str, "/cred.json"),
     GS_BUCKET_NAME=(str, "bucket"),
 )
 

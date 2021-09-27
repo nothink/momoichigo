@@ -27,5 +27,4 @@ Because of using [django-environ](https://django-environ.readthedocs.io/en/lates
 |  `DATABASE_URL`  | str  | `sqlite:////tmp/db.sqlite3` | Database URL           |
 | `ALLOWED_HOSTS`  | list |             ``              | Django's allowed hosts |
 |  `STORAGE_TYPE`  | str  |           `local`           | `local` or `gcs`       |
-| `GS_CREDENTIALS` | str  |        `/cred.json`         | GCS's credential path  |
 | `GS_BUCKET_NAME` | str  |          `bucket`           | GCS's bucket name      |

@@ -108,8 +108,11 @@ jobs:
         with:
           service: momoichigo
           image: asia.gcr.io/${{ secrets.GCP_PROJECT_ID }}/${{ env.SERVICE_NAME }}:latest
+          project_id: seio-club-app
           region: asia-northeast1
           credentials: ${{ secrets.GCP_SA_KEY }}
+          env_vars: SETTINGS_NAME=momoichigo
+          suffix: steps.create_image_tag.outputs.TAG
 
       - name: Use Output
         run: curl "${{ steps.deploy.outputs.url }}"
