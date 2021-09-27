@@ -30,6 +30,7 @@ env = environ.Env(
     ALLOWED_HOSTS=(list, []),
     STORAGE_TYPE=(str, "local"),
     GS_BUCKET_NAME=(str, "bucket"),
+    SLACK_API_TOKEN=(str, ""),
 )
 
 # -------- cloudrun_django_secret_config --------
@@ -189,15 +190,12 @@ if env("STORAGE_TYPE") == "gcs":
     DEFAULT_FILE_STORAGE = "storages.backends.gcloud.GoogleCloudStorage"
     STATICFILES_STORAGE = "storages.backends.gcloud.GoogleCloudStorage"
 
-    GS_BUCKET_NAME = env.str("GS_BUCKET_NAME")
+    GS_BUCKET_NAME = env("GS_BUCKET_NAME")
     GS_DEFAULT_ACL = "publicRead"
     GS_FILE_OVERWRITE = True
     GS_MAX_MEMORY_SIZE = 134217728
 
-    # if need
-    # MEDIA_ROOT = "/"
-    # GS_URL = "https://storage.googleapis.com/" + str(GS_BUCKET_NAME)
-    # MEDIA_URL = GS_URL + MEDIA_ROOT
-
 elif env("STORAGE_TYPE") == "local":
     MEDIA_ROOT = str(BASE_DIR)
+
+SLACK_API_TOKEN: str = env("SLACK_API_TOKEN")  # type: ignore
