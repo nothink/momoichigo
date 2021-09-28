@@ -65,7 +65,7 @@ class ResourceQueueViewSet(
             logger.error(e)
 
         # 最後に、取りこぼしのResourceをさらっておく
-        self.__collect_empty()
+        # self.__collect_empty()    # Temporary hold
 
         return Response(status=status.HTTP_202_ACCEPTED)
 
