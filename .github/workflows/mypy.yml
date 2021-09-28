@@ -8,6 +8,7 @@ on:
 
 env:
   DEV: true
+  TZ: Asia/Tokyo
   RUNTIME: local
 
 jobs:
