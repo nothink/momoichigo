@@ -10,8 +10,9 @@ from typing import Any
 
 import environ
 import google.auth
+import google.cloud.logging
 from django.utils.crypto import get_random_string
-from google.cloud import secretmanager
+from google.cloud.secretmanager import SecretManagerServiceClient
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -49,7 +50,7 @@ if os.path.isfile(env_file):
 elif os.environ.get("GOOGLE_CLOUD_PROJECT", None):
     # Pull secrets from Secret Manager
     project_id = os.environ.get("GOOGLE_CLOUD_PROJECT")
-    client = secretmanager.SecretManagerServiceClient()
+    client = SecretManagerServiceClient()
     settings_name = os.environ.get("SETTINGS_NAME", "django_settings")
     name = f"projects/{project_id}/secrets/{settings_name}/versions/latest"
     version = client.access_secret_version(name=name)  # type: ignore
@@ -171,13 +172,26 @@ LOGGING = {
     "version": 1,
     "disable_existing_loggers": False,
     "handlers": {
+        "cloud_logging": {
+            "class": "google.cloud.logging.handlers.CloudLoggingHandler",
+            "client": google.cloud.logging.Client(),
+            "formatter": "verbose",
+        },
         "console": {
             "class": "logging.StreamHandler",
+            "formatter": "verbose",
         },
     },
     "root": {
-        "handlers": ["console"],
+        "handlers": ["cloud_logging", "console"],
         "level": "INFO",
+    },
+    "loggers": {
+        "django": {
+            "handlers": ["cloud_logging", "console"],
+            "level": "INFO",
+            "propagate": False,
+        },
     },
 }
 
