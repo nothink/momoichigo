@@ -29,7 +29,7 @@ env = environ.Env(
     SECRET_KEY=(str, __TMP_SECRET_KEY),
     DATABASE_URL=(str, "sqlite:////tmp/db.sqlite3"),
     ALLOWED_HOSTS=(list, []),
-    STORAGE_TYPE=(str, "local"),
+    RUNTIME=(str, "local"),
     GS_BUCKET_NAME=(str, "bucket"),
     SLACK_API_TOKEN=(str, ""),
 )
@@ -183,17 +183,20 @@ LOGGING = {
         },
     },
     "root": {
-        "handlers": ["cloud_logging", "console"],
+        "handlers": ["console"],
         "level": "INFO",
     },
     "loggers": {
         "django": {
-            "handlers": ["cloud_logging", "console"],
+            "handlers": ["console"],
             "level": "INFO",
             "propagate": False,
         },
     },
 }
+if env("RUNTIME") == "gcp":
+    LOGGING["root"]["handlers"] = ["cloud_logging"]  # type: ignore
+    LOGGING["loggers"]["django"]["handlers"] = ["cloud_logging"]  # type: ignore
 
 # https://docs.djangoproject.com/ja/3.2/topics/auth/passwords/#using-argon2-with-django
 PASSWORD_HASHERS = [
@@ -205,7 +208,7 @@ PASSWORD_HASHERS = [
 
 
 # storage
-if env("STORAGE_TYPE") == "gcs":
+if env("RUNTIME") == "gcp":
     # Google Cloud Storage using django-storages
     # https://django-storages.readthedocs.io/en/latest/backends/gcloud.html
     DEFAULT_FILE_STORAGE = "storages.backends.gcloud.GoogleCloudStorage"
@@ -216,7 +219,7 @@ if env("STORAGE_TYPE") == "gcs":
     GS_FILE_OVERWRITE = True
     GS_MAX_MEMORY_SIZE = 134217728
 
-elif env("STORAGE_TYPE") == "local":
+elif env("RUNTIME") == "local":
     MEDIA_ROOT = str(BASE_DIR)
 
 SLACK_API_TOKEN: str = env("SLACK_API_TOKEN")  # type: ignore

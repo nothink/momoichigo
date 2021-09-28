@@ -26,5 +26,5 @@ Because of using [django-environ](https://django-environ.readthedocs.io/en/lates
 |   `SECRET_KEY`   | str  |           random            | Django secret key      |
 |  `DATABASE_URL`  | str  | `sqlite:////tmp/db.sqlite3` | Database URL           |
 | `ALLOWED_HOSTS`  | list |             ``              | Django's allowed hosts |
-|  `STORAGE_TYPE`  | str  |           `local`           | `local` or `gcs`       |
-| `GS_BUCKET_NAME` | str  |          `bucket`           | GCS's bucket name      |
+|  `RUNTIME`   | str  |           `local`           | `local` or `gcp`       |
+| `GS_BUCKET_NAME` | str  |          `bucket`           | Bucket name (gs)       |
