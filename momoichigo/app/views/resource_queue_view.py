@@ -64,8 +64,9 @@ class ResourceQueueViewSet(
         except SlackApiError as e:
             logger.error(e)
 
-        # 最後に、取りこぼしのResourceをさらっておく
-        # self.__collect_empty()    # Temporary hold
+        # 開発環境のみ、最後に取りこぼしのResourceをさらっておく
+        if settings.DEBUG:
+            self.__collect_empty()
 
         return Response(status=status.HTTP_202_ACCEPTED)
 
