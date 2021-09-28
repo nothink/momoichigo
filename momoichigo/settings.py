@@ -174,7 +174,6 @@ LOGGING = {
     "handlers": {
         "console": {
             "class": "logging.StreamHandler",
-            "formatter": "verbose",
         },
     },
     "root": {
@@ -193,7 +192,6 @@ if env("RUNTIME") == "gcp":
     LOGGING["handlers"]["cloud_logging"] = {  # type: ignore
         "class": "google.cloud.logging.handlers.CloudLoggingHandler",
         "client": google.cloud.logging.Client(),
-        "formatter": "verbose",
     }
     LOGGING["root"]["handlers"] = ["cloud_logging"]  # type: ignore
     LOGGING["loggers"]["django"]["handlers"] = ["cloud_logging"]  # type: ignore
