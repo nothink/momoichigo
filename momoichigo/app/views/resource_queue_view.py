@@ -38,7 +38,7 @@ class ResourceQueueViewSet(
         """Overwrite to 'list' method."""
         begin = pendulum.now()
         # https://docs.djangoproject.com/ja/3.2/topics/db/queries/#limiting-querysets
-        all_queues = models.ResourceQueue.objects.all()[:100]
+        all_queues = models.ResourceQueue.objects.all()[:10000]
         if len(all_queues) == 0:
             # 基本的にここに落ちるはず
             return Response(status=status.HTTP_204_NO_CONTENT)
