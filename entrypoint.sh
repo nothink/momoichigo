@@ -6,7 +6,7 @@ python manage.py migrate
 echo "Collectstatic"
 python manage.py collectstatic --no-input
 
-if [ $DEV ]; then
+if [ $DEV = 'True' ]; then
     echo "DEVEROPMENT SERVER RUNNING..."
     python manage.py runserver 0.0.0.0:8000
 else
