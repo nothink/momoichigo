@@ -197,12 +197,12 @@ else:
         },
         "root": {
             "handlers": ["console"],
-            "level": "DEBUG",
+            "level": "INFO",
         },
         "loggers": {
             "django": {
                 "handlers": ["console"],
-                "level": os.getenv("DJANGO_LOG_LEVEL", "DEBUG"),
+                "level": os.getenv("DJANGO_LOG_LEVEL", "INFO"),
                 "propagate": False,
             },
         },
