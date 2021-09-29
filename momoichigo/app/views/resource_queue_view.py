@@ -57,13 +57,14 @@ class ResourceQueueViewSet(
                 break
 
         # slack メッセージを送信
-        try:
-            client = WebClient(token=settings.SLACK_API_TOKEN)
-            client.chat_postMessage(
-                text=self.__build_slack_msg(collected), channel="#resources"
-            )
-        except SlackApiError as e:
-            logger.error(e)
+        if len(collected) > 0:
+            try:
+                client = WebClient(token=settings.SLACK_API_TOKEN)
+                client.chat_postMessage(
+                    text=self.__build_slack_msg(collected), channel="#resources"
+                )
+            except SlackApiError as e:
+                logger.error(e)
 
         # 開発環境のみ、最後に取りこぼしのResourceをさらっておく
         if settings.DEBUG:
