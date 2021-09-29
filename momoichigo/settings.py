@@ -101,9 +101,13 @@ REST_FRAMEWORK = {
         # Renderers
         # https://www.django-rest-framework.org/api-guide/renderers/
         "rest_framework.renderers.JSONRenderer",
-        "rest_framework.renderers.BrowsableAPIRenderer",
     ],
 }
+if DEBUG:
+    REST_FRAMEWORK["DEFAULT_RENDERER_CLASSES"] = [
+        "rest_framework.renderers.JSONRenderer",
+        "rest_framework.renderers.BrowsableAPIRenderer",
+    ]
 
 TEMPLATES = [
     {
