@@ -190,7 +190,7 @@ bcrypt = ["bcrypt"]
 
 [[package]]
 name = "django-cors-headers"
-version = "3.8.0"
+version = "3.9.0"
 description = "django-cors-headers is a Django application for handling the server headers required for Cross-Origin Resource Sharing (CORS)."
 category = "main"
 optional = false
@@ -366,7 +366,7 @@ grpcio-gcp = ["grpcio-gcp (>=0.2.2)"]
 
 [[package]]
 name = "google-auth"
-version = "2.2.0"
+version = "2.2.1"
 description = "Google Authentication Library"
 category = "main"
 optional = false
@@ -1118,7 +1118,7 @@ testing = ["coverage (>=4)", "coverage-enable-subprocess (>=1)", "flaky (>=3)", 
 [metadata]
 lock-version = "1.1"
 python-versions = "^3.9"
-content-hash = "92bc8fe3224c5c4f03e7f124652e21eea4cb90dc4e00fd5f55bc6e795c7992dc"
+content-hash = "f8e84b086317b57fb89b62ee2b4d84ac5108ec29f43fe045e64408a675a9dd41"
 
 [metadata.files]
 argon2-cffi = [
@@ -1288,8 +1288,8 @@ django = [
     {file = "Django-3.2.7.tar.gz", hash = "sha256:95b318319d6997bac3595517101ad9cc83fe5672ac498ba48d1a410f47afecd2"},
 ]
 django-cors-headers = [
-    {file = "django-cors-headers-3.8.0.tar.gz", hash = "sha256:4b8e13bf8d3df50ac4b986bd87085c3073dd56402ede109222ea34a774f9ec1b"},
-    {file = "django_cors_headers-3.8.0-py3-none-any.whl", hash = "sha256:425c20ceffa42b9ac11b02611eece4ae6c5fef2ff0f039c14c1df20e00c80df8"},
+    {file = "django-cors-headers-3.9.0.tar.gz", hash = "sha256:dc121efc242ebd1acad5df5a3b9907f165beeca3eeb7f839990a71a3771ac4f5"},
+    {file = "django_cors_headers-3.9.0-py3-none-any.whl", hash = "sha256:c28f96b77300efed0ff6b937d9ad2a7e80a7cb3ae5ef14968e793d540600fcd3"},
 ]
 django-environ = [
     {file = "django-environ-0.7.0.tar.gz", hash = "sha256:b99bd3704221f8b717c8517d8146e53fdee509d9e99056be560060003b92213e"},
@@ -1340,8 +1340,8 @@ google-api-core = [
     {file = "google_api_core-2.0.1-py2.py3-none-any.whl", hash = "sha256:b8ad41f72a70dd709dd13a08478936172aecf5f2d34a18ab378efa6d2d6ab575"},
 ]
 google-auth = [
-    {file = "google-auth-2.2.0.tar.gz", hash = "sha256:4fa902dd577169dab41881db2b01293a41f3600d1520e4896eaaeb26e72c6eb9"},
-    {file = "google_auth-2.2.0-py2.py3-none-any.whl", hash = "sha256:c4b177443571b282dfc9236ec747da6e28669257efdb622a3b48daeaa0891442"},
+    {file = "google-auth-2.2.1.tar.gz", hash = "sha256:6dc8173abd50f25b6e62fc5b42802c96fc7cd9deb9bfeeb10a79f5606225cdf4"},
+    {file = "google_auth-2.2.1-py2.py3-none-any.whl", hash = "sha256:2a92b485afed5292946b324e91fcbe03db277ee4cb64c998c6cfa66d4af01dee"},
 ]
 google-cloud-appengine-logging = [
     {file = "google-cloud-appengine-logging-0.1.5.tar.gz", hash = "sha256:9d31647238a8ee05abd0a860bf333ccdda3d6540059fbf3c75c28cf58ee8dc4e"},

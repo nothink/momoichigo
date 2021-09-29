@@ -19,12 +19,13 @@ ICHIGO KOHINATA
 
 Because of using [django-environ](https://django-environ.readthedocs.io/en/latest/), you should set a `.env` file.
 
-|                  | type |           default           | descriptions           |
-| :--------------: | :--: | :-------------------------: | :--------------------- |
-|      `DEV`       | bool |           `FALSE`           | Development mode       |
-|       `TZ`       | str  |            `UTC`            | Timezone               |
-|   `SECRET_KEY`   | str  |           random            | Django secret key      |
-|  `DATABASE_URL`  | str  | `sqlite:////tmp/db.sqlite3` | Database URL           |
-| `ALLOWED_HOSTS`  | list |             ``              | Django's allowed hosts |
-|  `RUNTIME`   | str  |           `local`           | `local` or `gcp`       |
-| `GS_BUCKET_NAME` | str  |          `bucket`           | Bucket name (gs)       |
+|                   | type |           default           | descriptions           |
+| :---------------: | :--: | :-------------------------: | :--------------------- |
+|       `DEV`       | bool |           `FALSE`           | Development mode       |
+|       `TZ`        | str  |            `UTC`            | Timezone               |
+|   `SECRET_KEY`    | str  |           random            | Django secret key      |
+|  `DATABASE_URL`   | str  | `sqlite:////tmp/db.sqlite3` | Database URL           |
+|  `ALLOWED_HOSTS`  | list |             ``              | Django's allowed hosts |
+|     `RUNTIME`     | str  |           `local`           | `local` or `gcp`       |
+| `GS_BUCKET_NAME`  | str  |          `bucket`           | Bucket name (gs)       |
+| `SLACK_API_TOKEN` | str  |             ``              | Slack App API Token    |
