@@ -113,6 +113,9 @@ jobs:
           credentials: ${{ secrets.GCP_SA_KEY }}
           env_vars: SETTINGS_NAME=momoichigo
 
+      - name: Use Output (Production)
+        run: curl "${{ steps.deploy-prod.outputs.url }}"
+
       - name: Deploy to Cloud Run (Develop)
         id: deploy-dev
         uses: google-github-actions/deploy-cloudrun@main
@@ -124,8 +127,9 @@ jobs:
           credentials: ${{ secrets.GCP_SA_KEY }}
           env_vars: SETTINGS_NAME=momoichigo-dev
 
-      - name: Use Output
-        run: curl "${{ steps.deploy.outputs.url }}"
+      - name: Use Output (Develop)
+        run: curl "${{ steps.deploy-dev.outputs.url }}"
+
 
       - name: Create Release when Version is bumped
         if: steps.version_is_bumped.outputs.BUMPED == 'true'
