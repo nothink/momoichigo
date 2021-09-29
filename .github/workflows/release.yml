@@ -103,7 +103,7 @@ jobs:
             asia.gcr.io/${{ secrets.GCP_PROJECT_ID }}/${{ env.SERVICE_NAME }}:${{ steps.create_image_tag.outputs.TAG }}
 
       - name: Deploy to Cloud Run (Production)
-        id: deploy
+        id: deploy-prod
         uses: google-github-actions/deploy-cloudrun@main
         with:
           service: momoichigo
@@ -114,7 +114,7 @@ jobs:
           env_vars: SETTINGS_NAME=momoichigo
 
       - name: Deploy to Cloud Run (Develop)
-        id: deploy
+        id: deploy-dev
         uses: google-github-actions/deploy-cloudrun@main
         with:
           service: momoichigo-dev
