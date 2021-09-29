@@ -176,7 +176,6 @@ if env("RUNTIME") == "gcp":
             "cloud_logging": {
                 "class": "google.cloud.logging.handlers.CloudLoggingHandler",
                 "client": google.cloud.logging.Client(),
-                "formatter": "verbose",
             },
         },
         "loggers": {
