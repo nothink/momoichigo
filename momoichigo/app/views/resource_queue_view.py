@@ -29,7 +29,7 @@ class ResourceQueueViewSet(
     Allow: List(Get)
     """
 
-    queryset = models.ResourceQueue.objects.all().order_by("created")
+    queryset = models.ResourceQueue.objects.all()
     serializer_class = serializers.ResourceQueueSerializer
 
     def list(
@@ -38,7 +38,7 @@ class ResourceQueueViewSet(
         """Overwrite to 'list' method."""
         begin = pendulum.now()
         # https://docs.djangoproject.com/ja/3.2/topics/db/queries/#limiting-querysets
-        all_queues = models.ResourceQueue.objects.all()[:100].order_by("created")
+        all_queues = models.ResourceQueue.objects.all()[:100]
         if len(all_queues) == 0:
             # 基本的にここに落ちるはず
             return Response(status=status.HTTP_204_NO_CONTENT)
@@ -74,7 +74,7 @@ class ResourceQueueViewSet(
     @staticmethod
     def __collect_empty() -> None:
         """Collect empty resources into queue."""
-        empties = models.Resource.objects.filter(file="")[:100]
+        empties = models.Resource.objects.filter(file="")
         for instance in empties:
             exists = models.ResourceQueue.objects.filter(resource=instance)
             if len(exists) == 0:
