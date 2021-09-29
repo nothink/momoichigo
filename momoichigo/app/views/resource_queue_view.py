@@ -29,6 +29,7 @@ class ResourceQueueViewSet(
     Allow: List(Get)
     """
 
+    queryset = models.ResourceQueue.objects.all().order_by("created")
     serializer_class = serializers.ResourceQueueSerializer
 
     def list(
