@@ -168,33 +168,45 @@ STATIC_URL = "/static/"
 
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 
-LOGGING = {
-    "version": 1,
-    "disable_existing_loggers": False,
-    "handlers": {
-        "console": {
-            "class": "logging.StreamHandler",
+if env("RUNTIME") == "gcp":
+    LOGGING = {
+        "version": 1,
+        "disable_existing_loggers": False,
+        "handlers": {
+            "cloud_logging": {
+                "class": "google.cloud.logging.handlers.CloudLoggingHandler",
+                "client": google.cloud.logging.Client(),
+                "formatter": "verbose",
+            },
         },
-    },
-    "root": {
-        "handlers": ["console"],
-        "level": "INFO",
-    },
-    "loggers": {
-        "django": {
+        "loggers": {
+            "django": {
+                "handlers": ["cloud_logging"],
+                "level": "INFO",
+            },
+        },
+    }
+else:
+    LOGGING = {
+        "version": 1,
+        "disable_existing_loggers": False,
+        "handlers": {
+            "console": {
+                "class": "logging.StreamHandler",
+            },
+        },
+        "root": {
             "handlers": ["console"],
             "level": "INFO",
-            "propagate": False,
         },
-    },
-}
-if env("RUNTIME") == "gcp":
-    LOGGING["handlers"]["cloud_logging"] = {  # type: ignore
-        "class": "google.cloud.logging.handlers.CloudLoggingHandler",
-        "client": google.cloud.logging.Client(),
+        "loggers": {
+            "django": {
+                "handlers": ["console"],
+                "level": os.getenv("DJANGO_LOG_LEVEL", "INFO"),
+                "propagate": False,
+            },
+        },
     }
-    LOGGING["root"]["handlers"] = ["cloud_logging"]  # type: ignore
-    LOGGING["loggers"]["django"]["handlers"] = ["cloud_logging"]  # type: ignore
 
 # https://docs.djangoproject.com/ja/3.2/topics/auth/passwords/#using-argon2-with-django
 PASSWORD_HASHERS = [

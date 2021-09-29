@@ -5,8 +5,6 @@
 ![CodeQL](https://github.com/nothink/momoichigo/actions/workflows/codeql-analysis.yml/badge.svg)
 [![codecov](https://codecov.io/gh/nothink/momoichigo/branch/main/graph/badge.svg?token=o783r2x5Tp)](https://codecov.io/gh/nothink/momoichigo)
 [![DeepSource](https://deepsource.io/gh/nothink/momoichigo.svg/?label=active+issues&token=NhcwPGRXrmzAB8s6PLmU6fCI)](https://deepsource.io/gh/nothink/momoichigo/?ref=repository-badge)
-[![Total alerts](https://img.shields.io/lgtm/alerts/g/nothink/momoichigo.svg?logo=lgtm&logoWidth=18)](https://lgtm.com/projects/g/nothink/momoichigo/alerts/)
-[![Language grade: Python](https://img.shields.io/lgtm/grade/python/g/nothink/momoichigo.svg?logo=lgtm&logoWidth=18)](https://lgtm.com/projects/g/nothink/momoichigo/context:python)
 
 ICHIGO KOHINATA
 
