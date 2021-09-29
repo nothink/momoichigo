@@ -9,7 +9,7 @@ on:
 env:
   DEV: true
   TZ: Asia/Tokyo
-  STORAGE_TYPE: local
+  RUNTIME: local
 
 jobs:
   mypy:
