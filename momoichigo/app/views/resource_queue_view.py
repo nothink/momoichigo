@@ -37,7 +37,6 @@ class ResourceQueueViewSet(
     ) -> Response:
         """Overwrite to 'list' method."""
         begin = pendulum.now()
-        # https://docs.djangoproject.com/ja/3.2/topics/db/queries/#limiting-querysets
         all_queues = models.ResourceQueue.objects.all()
         if len(all_queues) == 0:
             # 基本的にここに落ちるはず
@@ -52,8 +51,8 @@ class ResourceQueueViewSet(
                 logger.info("[fetch] " + queue.resource.source)
                 collected.append(queue.resource.source)
                 queue.delete()
-            # 合計時間が20秒を超えたら一旦キューの処理をやめる
-            if pendulum.now().diff(begin).in_seconds() > 20:
+            # 合計時間が30秒を超えたら一旦キューの処理をやめる
+            if pendulum.now().diff(begin).in_seconds() > 30:
                 break
 
         # slack メッセージを送信

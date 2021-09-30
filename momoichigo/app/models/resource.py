@@ -24,6 +24,7 @@ class Resource(models.Model):
 
     source = models.URLField(
         unique=True,
+        db_index=True,
         null=False,
         blank=False,
         validators=[validate_vcard_host],

@@ -13,7 +13,7 @@ class ResourceQueue(models.Model):
         resource: URL of original sources
     """
 
-    resource = models.ForeignKey(Resource, on_delete=models.CASCADE)
+    resource = models.ForeignKey(Resource, unique=True, on_delete=models.CASCADE)
     created = models.DateTimeField(auto_now_add=True)
     modified = models.DateTimeField(auto_now=True)
 
