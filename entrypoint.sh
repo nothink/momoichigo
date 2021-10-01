@@ -6,13 +6,12 @@ python manage.py migrate
 echo "Collectstatic"
 python manage.py collectstatic --no-input
 
-if [ $DEV = 'True' ]; then
-    echo "DEVEROPMENT SERVER RUNNING..."
-    python manage.py runserver 0.0.0.0:8000
+if [ $DEBUG ]; then
+    echo "Debug Server RUNNING..."
+    python manage.py runserver 0.0.0.0:${PORT}
 else
-    echo "PRODUCTION SERVER RUNNING..."
+    echo "Production Server RUNNING..."
     # use uvicorn worker over the gunicorn
     # https://docs.djangoproject.com/en/3.2/howto/deployment/asgi/uvicorn/
-    # https://stackoverflow.com/questions/62543342/gunicorn-gevent-workers-vs-uvicorn-asgi
-    gunicorn --bind :8000 --workers 4 momoichigo.asgi:application -k uvicorn.workers.UvicornWorker
+    gunicorn --bind :${PORT} --workers 4 momoichigo.asgi:application -k uvicorn.workers.UvicornWorker
 fi

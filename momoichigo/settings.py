@@ -3,7 +3,6 @@ Django settings for momoichigo project.
 
 sa: https://docs.djangoproject.com/en/3.2/ref/settings/
 """
-import io
 import os
 from pathlib import Path
 from typing import Any
@@ -12,7 +11,6 @@ import environ
 import google.auth
 import google.cloud.logging
 from django.utils.crypto import get_random_string
-from google.cloud.secretmanager import SecretManagerServiceClient
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -24,7 +22,7 @@ __TMP_SECRET_KEY = get_random_string(50, __CHARS)
 
 # Django environ
 env = environ.Env(
-    DEV=(bool, False),
+    DEBUG=(bool, False),
     TZ=(str, "UTC"),
     SECRET_KEY=(str, __TMP_SECRET_KEY),
     DATABASE_URL=(str, "sqlite:////tmp/db.sqlite3"),
@@ -34,37 +32,17 @@ env = environ.Env(
     SLACK_API_TOKEN=(str, ""),
 )
 
-# -------- cloudrun_django_secret_config --------
-# https://cloud.google.com/python/django/run#understand_the_code
-# Attempt to load the Project ID into the environment, safely failing on error.
-try:
-    _, proj = google.auth.default()
-    if isinstance(proj, str):
-        os.environ["GOOGLE_CLOUD_PROJECT"] = proj
-except google.auth.exceptions.DefaultCredentialsError:  # type: ignore
-    pass
-
 if os.path.isfile(env_file):
     # Use a local secret file, if provided ".env"
     env.read_env(env_file)
-elif os.environ.get("GOOGLE_CLOUD_PROJECT", None):
-    # Pull secrets from Secret Manager
-    project_id = os.environ.get("GOOGLE_CLOUD_PROJECT")
-    client = SecretManagerServiceClient()
-    settings_name = os.environ.get("SETTINGS_NAME", "django_settings")
-    name = f"projects/{project_id}/secrets/{settings_name}/versions/latest"
-    version = client.access_secret_version(name=name)  # type: ignore
-    payload = version.payload.data.decode("UTF-8")
-    env.read_env(io.StringIO(payload))
 
 SECRET_KEY = env("SECRET_KEY")
-DEBUG = env("DEV")
+DEBUG = env("DEBUG")
 ALLOWED_HOSTS = env("ALLOWED_HOSTS")
 
 # Application definition
 
 INSTALLED_APPS = [
-    "django.contrib.admin",
     "django.contrib.auth",
     "django.contrib.contenttypes",
     "django.contrib.sessions",
@@ -74,6 +52,8 @@ INSTALLED_APPS = [
     "rest_framework",
     "momoichigo.app",
 ]
+if DEBUG:
+    INSTALLED_APPS.insert(0, "django.contrib.admin")
 
 MIDDLEWARE = [
     "django.middleware.security.SecurityMiddleware",
@@ -89,6 +69,7 @@ MIDDLEWARE = [
 ROOT_URLCONF = "momoichigo.urls"
 
 CORS_ALLOWED_ORIGINS = [
+    "https://seio.club",
     "https://vcard.ameba.jp",
 ]
 CORS_ALLOW_CREDENTIALS = True
