@@ -6,8 +6,12 @@ The `urlpatterns` list routes URLs to views. For more information please see:
 from django.contrib import admin
 from django.urls import include, path
 
+from .settings import DEBUG
+
 urlpatterns = [
-    path("admin/", admin.site.urls),
     path("api-auth/", include("rest_framework.urls", namespace="rest_framework")),
     path("api/", include("momoichigo.app.urls")),
 ]
+
+if DEBUG:
+    urlpatterns.append(path("admin/", admin.site.urls))

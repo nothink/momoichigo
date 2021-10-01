@@ -7,7 +7,7 @@ on:
     branches: [main]
 
 env:
-  DEV: true
+  DEBUG: true
   TZ: Asia/Tokyo
   RUNTIME: local
 

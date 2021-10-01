@@ -111,7 +111,7 @@ jobs:
           project_id: seio-club-app
           region: asia-northeast1
           credentials: ${{ secrets.GCP_SA_KEY }}
-          env_vars: SETTINGS_NAME=momoichigo
+          env_vars: DEBUG=FALSE
 
       - name: Use Output (Production)
         run: curl "${{ steps.deploy-prod.outputs.url }}"
@@ -125,11 +125,10 @@ jobs:
           project_id: seio-club-app
           region: asia-northeast1
           credentials: ${{ secrets.GCP_SA_KEY }}
-          env_vars: SETTINGS_NAME=momoichigo-dev
+          env_vars: DEBUG=TRUE
 
       - name: Use Output (Develop)
         run: curl "${{ steps.deploy-dev.outputs.url }}"
-
 
       - name: Create Release when Version is bumped
         if: steps.version_is_bumped.outputs.BUMPED == 'true'

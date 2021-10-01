@@ -19,7 +19,6 @@ ENV PYTHONUNBUFFERED=1
 
 SHELL ["/bin/bash", "-o", "pipefail", "-c"]
 WORKDIR /app
-EXPOSE 8000/tcp
 
 RUN --mount=type=cache,target=/var/cache/apt \
     --mount=type=cache,target=/var/lib/apt/lists \
