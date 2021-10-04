@@ -71,7 +71,7 @@ CORS_ORIGIN_ALLOW_ALL = True
 # CORS_ALLOWED_ORIGINS = [
 #     "https://seio.club",
 #     "https://vcard.ameba.jp",
-#     "chrome-extension://*",
+#     "chrome-extension://kmnkhbeopljmckjloiidahnagfhgbiio",
 # ]
 # CORS_ALLOW_CREDENTIALS = True
 # CSRF_TRUSTED_ORIGINS = [
