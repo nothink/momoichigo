@@ -117,6 +117,12 @@ WSGI_APPLICATION = "momoichigo.wsgi.application"
 # Database
 # https://django-environ.readthedocs.io/en/latest/
 DATABASES: dict[str, dict[str, Any]] = {"default": env.db()}
+CACHES = {
+    "default": {
+        "BACKEND": "django.core.cache.backends.db.DatabaseCache",
+        "LOCATION": "app_cache",
+    }
+}
 # If the flag as been set, configure to use proxy
 if os.getenv("USE_CLOUD_SQL_AUTH_PROXY", None):
     DATABASES["default"]["HOST"] = "127.0.0.1"
@@ -169,7 +175,7 @@ if env("RUNTIME") == "gcp":
             },
         },
         "loggers": {
-            "django": {
+            __name__: {
                 "handlers": ["cloud_logging"],
                 "level": "INFO",
             },
@@ -189,7 +195,7 @@ else:
             "level": "INFO",
         },
         "loggers": {
-            "django": {
+            __name__: {
                 "handlers": ["console"],
                 "level": os.getenv("DJANGO_LOG_LEVEL", "INFO"),
                 "propagate": False,

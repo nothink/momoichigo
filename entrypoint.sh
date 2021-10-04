@@ -3,6 +3,8 @@
 # migrations
 echo "Apply database migrations"
 python manage.py migrate
+echo "Create Cache Table"
+python manage.py createcachetable
 echo "Collectstatic"
 python manage.py collectstatic --no-input
 
