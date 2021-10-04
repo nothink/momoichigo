@@ -86,7 +86,7 @@ ignore_errors = true
 #################################### poerty ####################################
 [tool.poetry]
 name = "momoichigo"
-version = "0.1.4"
+version = "0.1.5"
 description = "ICHIGO KOHINATA"
 authors = ["nothink <gakongakon@gmail.com>"]
 license = "MIT"
@@ -111,7 +111,7 @@ google-cloud-logging = "^2.6.0"
 
 [tool.poetry.dev-dependencies]
 pytest = "^6.2.5"
-pytest-cov = "^2.12.1"
+pytest-cov = "^3.0.0"
 pytest-django = "^4.4.0"
 black = "*"
 isort = {extras = ["pyproject"], version = "^5.9.3"}
