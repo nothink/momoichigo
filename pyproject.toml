@@ -86,7 +86,7 @@ ignore_errors = true
 #################################### poerty ####################################
 [tool.poetry]
 name = "momoichigo"
-version = "0.1.4"
+version = "0.1.5"
 description = "ICHIGO KOHINATA"
 authors = ["nothink <gakongakon@gmail.com>"]
 license = "MIT"
