@@ -67,11 +67,17 @@ MIDDLEWARE = [
 
 ROOT_URLCONF = "momoichigo.urls"
 
-CORS_ALLOWED_ORIGINS = [
-    "https://seio.club",
-    "https://vcard.ameba.jp",
-]
-CORS_ALLOW_CREDENTIALS = True
+CORS_ORIGIN_ALLOW_ALL = True
+# CORS_ALLOWED_ORIGINS = [
+#     "https://seio.club",
+#     "https://vcard.ameba.jp",
+#     "chrome-extension://*",
+# ]
+# CORS_ALLOW_CREDENTIALS = True
+# CSRF_TRUSTED_ORIGINS = [
+#     "seio.club",
+#     "vcard.ameba.jp",
+# ]
 
 REST_FRAMEWORK = {
     # sa: https://www.django-rest-framework.org/api-guide/pagination/
