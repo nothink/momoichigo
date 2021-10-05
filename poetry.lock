@@ -193,7 +193,7 @@ bcrypt = ["bcrypt"]
 
 [[package]]
 name = "django-cors-headers"
-version = "3.9.0"
+version = "3.10.0"
 description = "django-cors-headers is a Django application for handling the server headers required for Cross-Origin Resource Sharing (CORS)."
 category = "main"
 optional = false
@@ -1120,7 +1120,7 @@ testing = ["coverage (>=4)", "coverage-enable-subprocess (>=1)", "flaky (>=3)", 
 [metadata]
 lock-version = "1.1"
 python-versions = "^3.9"
-content-hash = "48e8d862f5943dae8e56a8c9918c3725d78431f3e44d8489506d38665fb88d14"
+content-hash = "b65cccde554a556f7aa7f1780912a89140b39d83adc1dc5ca7204a5fa9025d6b"
 
 [metadata.files]
 argon2-cffi = [
@@ -1273,8 +1273,8 @@ django = [
     {file = "Django-3.2.7.tar.gz", hash = "sha256:95b318319d6997bac3595517101ad9cc83fe5672ac498ba48d1a410f47afecd2"},
 ]
 django-cors-headers = [
-    {file = "django-cors-headers-3.9.0.tar.gz", hash = "sha256:dc121efc242ebd1acad5df5a3b9907f165beeca3eeb7f839990a71a3771ac4f5"},
-    {file = "django_cors_headers-3.9.0-py3-none-any.whl", hash = "sha256:c28f96b77300efed0ff6b937d9ad2a7e80a7cb3ae5ef14968e793d540600fcd3"},
+    {file = "django-cors-headers-3.10.0.tar.gz", hash = "sha256:cd6f4360f5246569c149dc1c40c907c191f1ec45551e10d2a2e2e68512652f78"},
+    {file = "django_cors_headers-3.10.0-py3-none-any.whl", hash = "sha256:cba6e99659abb0e47cc4aaabb8fcde03f193e6bb3b92ba47c5185ec4cedc5d9e"},
 ]
 django-environ = [
     {file = "django-environ-0.7.0.tar.gz", hash = "sha256:b99bd3704221f8b717c8517d8146e53fdee509d9e99056be560060003b92213e"},
