@@ -1,6 +1,6 @@
 ################################################################################
 # requirements: stage for generating requirements.txt
-FROM acidrain/python-poetry:3.9-slim as requirements
+FROM acidrain/python-poetry:3.10-slim as requirements
 
 SHELL ["/bin/bash", "-o", "pipefail", "-c"]
 WORKDIR /root
