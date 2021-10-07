@@ -96,7 +96,7 @@ python = "^3.9"
 Django = {extras = ["argon2"], version = "^3.2.7"}
 djangorestframework = "^3.12.4"
 django-environ = "^0.7.0"
-django-storages = {extras = ["google"], version = "^1.11.1"}
+django-storages = {extras = ["google"], version = "^1.12"}
 django-cors-headers = "^3.9.0"
 PyYAML = "^5.4.1"
 uritemplate = "^3.0.1"
