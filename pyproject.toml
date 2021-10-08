@@ -93,11 +93,11 @@ license = "MIT"
 
 [tool.poetry.dependencies]
 python = "^3.9"
-Django = {extras = ["argon2"], version = "^3.2.7"}
+Django = {extras = ["argon2"], version = "^3.2.8"}
 djangorestframework = "^3.12.4"
 django-environ = "^0.7.0"
-django-storages = {extras = ["google"], version = "^1.11.1"}
-django-cors-headers = "^3.9.0"
+django-storages = {extras = ["google"], version = "^1.12"}
+django-cors-headers = "^3.10.0"
 PyYAML = "^5.4.1"
 uritemplate = "^3.0.1"
 uvicorn = "^0.15.0"

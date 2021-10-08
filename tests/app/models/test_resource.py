@@ -22,5 +22,7 @@ class TestResource:
 
         m = models.Resource.objects.create(source=url_str)
 
-        assert m.__str__() == url_str
-        assert m.key == url.path[1:]
+        expected_key = url.path[1:]
+
+        assert m.__str__() == expected_key
+        assert m.key == expected_key
