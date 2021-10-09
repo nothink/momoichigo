@@ -1,6 +1,6 @@
 ################################################################################
 # requirements: stage for generating requirements.txt
-FROM acidrain/python-poetry:3.9-slim as requirements
+FROM acidrain/python-poetry:3.10-slim as requirements
 
 SHELL ["/bin/bash", "-o", "pipefail", "-c"]
 WORKDIR /root
@@ -11,7 +11,7 @@ RUN poetry export -f requirements.txt --output /root/requirements.txt
 
 ################################################################################
 # production: stage for production release
-FROM python:3.9.7-slim-bullseye as production
+FROM python:3.10.0-slim-bullseye as production
 
 # surpress block buffering for stdout and stderr
 # see also: https://docs.python.org/ja/3/using/cmdline.html#envvar-PYTHONUNBUFFERED
@@ -34,9 +34,9 @@ COPY --from=requirements /root/requirements.txt ./
 RUN --mount=type=cache,target=/root/.cache \
     --mount=type=cache,target=/var/cache/apt \
     --mount=type=cache,target=/var/lib/apt/lists \
-    apt-get install -y --no-install-recommends build-essential=12.\* libpq-dev=13.3\* && \
+    apt-get install -y --no-install-recommends build-essential=12.\* libpq-dev=13.3\* libffi-dev=3.3\* && \
     pip install -r requirements.txt && \
-    apt-get remove --purge -y build-essential libpq-dev && \
+    apt-get remove --purge -y build-essential libpq-dev libffi-dev && \
     apt-get autoremove -y && \
     find / -type d -name __pycache__ | xargs rm -rf
 

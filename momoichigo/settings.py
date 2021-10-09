@@ -8,8 +8,6 @@ from pathlib import Path
 from typing import Any
 
 import environ
-import google.auth
-import google.cloud.logging
 from django.utils.crypto import get_random_string
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
@@ -165,44 +163,26 @@ STATIC_URL = "/static/"
 
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 
-if env("RUNTIME") == "gcp":
-    LOGGING = {
-        "version": 1,
-        "disable_existing_loggers": False,
-        "handlers": {
-            "cloud_logging": {
-                "class": "google.cloud.logging.handlers.CloudLoggingHandler",
-                "client": google.cloud.logging.Client(),
-            },
+LOGGING = {
+    "version": 1,
+    "disable_existing_loggers": False,
+    "handlers": {
+        "console": {
+            "class": "logging.StreamHandler",
         },
-        "loggers": {
-            __name__: {
-                "handlers": ["cloud_logging"],
-                "level": "INFO",
-            },
-        },
-    }
-else:
-    LOGGING = {
-        "version": 1,
-        "disable_existing_loggers": False,
-        "handlers": {
-            "console": {
-                "class": "logging.StreamHandler",
-            },
-        },
-        "root": {
+    },
+    "root": {
+        "handlers": ["console"],
+        "level": "INFO",
+    },
+    "loggers": {
+        __name__: {
             "handlers": ["console"],
-            "level": "INFO",
+            "level": os.getenv("DJANGO_LOG_LEVEL", "INFO"),
+            "propagate": False,
         },
-        "loggers": {
-            __name__: {
-                "handlers": ["console"],
-                "level": os.getenv("DJANGO_LOG_LEVEL", "INFO"),
-                "propagate": False,
-            },
-        },
-    }
+    },
+}
 
 # https://docs.djangoproject.com/ja/3.2/topics/auth/passwords/#using-argon2-with-django
 PASSWORD_HASHERS = [
