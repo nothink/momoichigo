@@ -4,6 +4,7 @@ from __future__ import annotations
 import io
 import logging
 from typing import Any, List, Tuple
+from urllib.parse import urlparse
 
 import pendulum
 import requests
@@ -103,9 +104,10 @@ class ResourceQueueViewSet(
 
             res = requests.get(url)
             if res.status_code == 200 and len(res.content) > 0:
+                path = urlparse(url).path[1:]
 
                 # ファイル配置先はストレージのキー生成ルールに則る
-                instance.file.save(instance.key, io.BytesIO(res.content))
+                instance.file.save(path, io.BytesIO(res.content))
                 logger.info("[fetch] " + instance.source)
 
                 instance.full_clean(validate_unique=True)
