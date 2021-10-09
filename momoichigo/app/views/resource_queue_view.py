@@ -3,7 +3,7 @@ from __future__ import annotations
 
 import io
 import logging
-from typing import Any
+from typing import Any, List, Tuple
 
 import pendulum
 import requests
@@ -30,7 +30,12 @@ class ResourceQueueViewSet(
     def get_serializer(
         self: ResourceQueueViewSet, *args: Any, **kwargs: Any
     ) -> Serializer:
-        """Get serializers."""
+        """Get serializers.
+
+        Overwrites for using custom ListSerializers.
+        sa: https://medium.com/swlh/f73da6af7ddc
+        ** warning: this overwrite makes BrowsableAPI bad. **
+        """
         kwargs["context"] = self.get_serializer_context()
         if "data" in kwargs and isinstance(kwargs["data"], list):
             kwargs["many"] = True
@@ -58,9 +63,28 @@ class ResourceQueueViewSet(
         if len(sources) == 0:
             return Response(data=sources, status=status.HTTP_204_NO_CONTENT)
 
+        collected, covered = self.__fetch_resources(sources)
+        # 収集しきれなかった分は再度追加
+        remains = list(set(sources) - set(collected) - set(covered))
+        remain_modles = [models.ResourceQueue(source=r) for r in remains]
+        models.ResourceQueue.objects.bulk_create(remain_modles)
+
+        if len(collected) == 0:
+            return Response(data=collected, status=status.HTTP_204_NO_CONTENT)
+
+        return Response(data=collected, status=status.HTTP_201_CREATED)
+
+    # ----------------- utility functions -----------------
+    @staticmethod
+    def __fetch_resources(urls: List[str]) -> Tuple[List[str], List[str]]:
+        """Fetch and create Resource instance from source path.
+
+        limit: 30 sec.
+        """
         begin = pendulum.now()
         collected = []
-        for url in sources:
+        covered = []
+        for url in urls:
             # Resource レコードを作成
             # その状態で get method で対象リソースをfetch
             instance = models.Resource()
@@ -68,6 +92,8 @@ class ResourceQueueViewSet(
                 instance.source = url
                 instance.validate_unique(exclude=["file"])
             except ValidationError:
+                # ValidationErrorが出たなら既出なので無視対象
+                covered.append(instance.source)
                 continue
 
             res = requests.get(url)
@@ -84,8 +110,5 @@ class ResourceQueueViewSet(
             # 合計時間が30秒を超えたら一旦キューの処理をやめる
             if pendulum.now().diff(begin).in_seconds() > 30:
                 break
-
-        if len(collected) == 0:
-            return Response(data=collected, status=status.HTTP_204_NO_CONTENT)
-
-        return Response(data=collected, status=status.HTTP_201_CREATED)
+        # 収集結果と無視対象を返す
+        return (collected, covered)

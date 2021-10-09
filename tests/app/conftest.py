@@ -324,3 +324,13 @@ def resource_queues() -> list[Any]:
         model = baker.make("app.ResourceQueue", source=url)
         queues.append(model)
     return queues
+
+
+@pytest.fixture
+def heavy_queues() -> list[Any]:
+    """Return baked ResourceQueue models for Heavy tests."""
+    queues = []
+    for url in HEAVY_SOURCE_URLS:
+        model = baker.make("app.ResourceQueue", source=url)
+        queues.append(model)
+    return queues

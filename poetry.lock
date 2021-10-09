@@ -993,8 +993,8 @@ testing = ["coverage (>=4)", "coverage-enable-subprocess (>=1)", "flaky (>=3)", 
 
 [metadata]
 lock-version = "1.1"
-python-versions = "^3.9"
-content-hash = "f6402582f7f28774b4f3692b6b645d453465d2ee32b2cf86befc065740783539"
+python-versions = "^3.10"
+content-hash = "261f34871d17ea75cbf3c012a6116fe4366e6fdf04bfbd24cf6471813476b167"
 
 [metadata.files]
 argon2-cffi = [

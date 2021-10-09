@@ -11,7 +11,7 @@ from rest_framework import status
 from rest_framework.reverse import reverse
 from rest_framework.test import APIRequestFactory
 
-from momoichigo.app import views
+from momoichigo.app import models, views
 
 pytestmark = pytest.mark.django_db
 
@@ -106,3 +106,34 @@ class TestResourceQueueView:
         response_body = json.loads(response.content)
 
         assert len(response_body) == 0
+
+    def test_list_queues_heavy_ok(
+        self: TestResourceQueueView,
+        factory: APIRequestFactory,
+        heavy_queues: list[Any],
+    ) -> None:
+        """Test for list (GET) normally."""
+        request = factory.get(reverse("resource-queue-list"))
+        response = views.ResourceQueueViewSet.as_view({"get": "list"})(request)
+
+        assert response.status_code == status.HTTP_201_CREATED
+
+        response.render()
+        response_body = json.loads(response.content)
+
+        remain_queue = models.ResourceQueue.objects.all()
+
+        assert len(response_body) == len(heavy_queues) - len(remain_queue)
+        response_sources = sorted(response_body)
+        expected_sources = sorted(
+            list(
+                set([q.source for q in heavy_queues])
+                - set([q.source for q in remain_queue])
+            )
+        )
+        for i in range(len(response_sources)):
+            assert response_sources[i] == expected_sources[i]
+
+        # clean up
+        dir_path = urlparse(response_sources[0]).path
+        shutil.rmtree(dir_path.split("/")[1])
