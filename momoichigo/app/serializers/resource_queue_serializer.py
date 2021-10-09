@@ -18,6 +18,14 @@ class ResourceQueueListSerializer(serializers.ListSerializer):
         queues = [models.ResourceQueue(**item) for item in validated_data]
         return models.ResourceQueue.objects.bulk_create(queues)
 
+    def update(
+        self: ResourceQueueListSerializer,
+        instances: list[Any],
+        validated_data: list[Any],
+    ) -> list[Any]:
+        """Update is not implemented."""
+        raise NotImplementedError("ResourceQueue is not able to update.")
+
 
 class ResourceQueueSerializer(serializers.ModelSerializer):
     """Serializer for ResourceQueue models."""

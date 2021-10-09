@@ -120,6 +120,7 @@ class ResourceQueueViewSet(
 
     @staticmethod
     def __send_slack_message(body: str) -> None:
+        """Send messages to slack."""
         try:
             client = WebClient(token=settings.SLACK_API_TOKEN)
             client.chat_postMessage(text=body, channel="#resources")
