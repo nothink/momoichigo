@@ -63,7 +63,7 @@ class TestResourceQueueView:
         request = factory.get(reverse("resource-queue-list"))
         response = views.ResourceQueueViewSet.as_view({"get": "list"})(request)
 
-        assert response.status_code == status.HTTP_204_NO_CONTENT
+        assert response.status_code == status.HTTP_200_OK
 
     @staticmethod
     def test_list_queues_normally_ok(
@@ -99,7 +99,7 @@ class TestResourceQueueView:
         request = factory.get(reverse("resource-queue-list"))
         response = views.ResourceQueueViewSet.as_view({"get": "list"})(request)
 
-        assert response.status_code == status.HTTP_204_NO_CONTENT
+        assert response.status_code == status.HTTP_200_OK
 
         response.render()
         response_body = json.loads(response.content)

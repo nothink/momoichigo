@@ -65,7 +65,7 @@ class ResourceQueueViewSet(
             self.queryset.delete()
         # 要素なしならおしまい
         if len(sources) == 0:
-            return Response(status=status.HTTP_204_NO_CONTENT)
+            return Response(data=sources, status=status.HTTP_200_OK)
 
         collected, covered = self.__fetch_resources(sources)
         # 収集しきれなかった分は再度追加
@@ -74,7 +74,7 @@ class ResourceQueueViewSet(
         models.ResourceQueue.objects.bulk_create(remain_modles)
 
         if len(collected) == 0:
-            return Response(data=collected, status=status.HTTP_204_NO_CONTENT)
+            return Response(data=collected, status=status.HTTP_200_OK)
 
         self.__send_slack_message(self.__build_slack_msg(collected))
 
