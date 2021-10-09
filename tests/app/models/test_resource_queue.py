@@ -15,10 +15,9 @@ class TestResourceQueue:
 
     @staticmethod
     def test_model_has_valid_str(sources: list[str]) -> None:
-        """Test that __str__  is valid."""
+        """Test that __str__  and key is valid."""
         url_str = sources[random.randrange(len(sources))]
 
-        r = models.Resource.objects.create(source=url_str)
-        m = models.ResourceQueue.objects.create(resource=r)
+        m = models.ResourceQueue.objects.create(source=url_str)
 
         assert m.__str__() == url_str

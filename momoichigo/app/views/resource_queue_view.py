@@ -3,14 +3,16 @@ from __future__ import annotations
 
 import io
 import logging
-from collections.abc import Iterable
-from typing import Any
+from typing import Any, List, Tuple
 
 import pendulum
 import requests
+from django.core.exceptions import ValidationError
+from django.db import transaction
 from rest_framework import mixins, status, viewsets
 from rest_framework.request import Request
 from rest_framework.response import Response
+from rest_framework.serializers import Serializer
 from slack_sdk.errors import SlackApiError
 from slack_sdk.web.client import WebClient
 
@@ -21,66 +23,111 @@ logger = logging.getLogger(__name__)
 
 
 class ResourceQueueViewSet(
-    mixins.ListModelMixin,
-    viewsets.GenericViewSet,
+    mixins.ListModelMixin, mixins.CreateModelMixin, viewsets.GenericViewSet
 ):
-    """API endpoints for resource_queues.
-
-    Allow: List(Get)
-    """
+    """Request Queue Views."""
 
     queryset = models.ResourceQueue.objects.all()
     serializer_class = serializers.ResourceQueueSerializer
 
+    def get_serializer(
+        self: ResourceQueueViewSet, *args: Any, **kwargs: Any
+    ) -> Serializer:
+        """Get serializers.
+
+        Overwrites for using custom ListSerializers.
+        sa: https://medium.com/swlh/f73da6af7ddc
+        ** warning: this overwrite makes BrowsableAPI bad. **
+        """
+        kwargs["context"] = self.get_serializer_context()
+        if "data" in kwargs and isinstance(kwargs["data"], list):
+            kwargs["many"] = True
+            data = []
+            for item in kwargs["data"]:
+                if isinstance(item, str):
+                    data.append({"source": item})
+                else:
+                    data.append(item)
+            kwargs["data"] = data
+
+        return self.get_serializer_class()(*args, **kwargs)
+
     def list(
         self: ResourceQueueViewSet, request: Request, *args: Any, **kwargs: Any
     ) -> Response:
-        """Overwrite to 'list' method."""
-        begin = pendulum.now()
-        all_queues = models.ResourceQueue.objects.all()
-        if len(all_queues) == 0:
-            # 基本的にここに落ちるはず
-            return Response(status=status.HTTP_204_NO_CONTENT)
+        """List method's overwrite."""
+        with transaction.atomic():
+            sources = [q.source for q in self.queryset]
+            # 重複除去
+            sources = list(set(sources))
+            # クリーンアップ
+            self.queryset.delete()
+        # 要素なしならおしまい
+        if len(sources) == 0:
+            return Response(data=sources, status=status.HTTP_204_NO_CONTENT)
 
-        collected: list[str] = []
-        for queue in all_queues:
-            # get method で対象リソースをfetchして格納
-            res = requests.get(queue.resource.source)
+        collected, covered = self.__fetch_resources(sources)
+        # 収集しきれなかった分は再度追加
+        remains = list(set(sources) - set(collected) - set(covered))
+        remain_modles = [models.ResourceQueue(source=r) for r in remains]
+        models.ResourceQueue.objects.bulk_create(remain_modles)
+
+        if len(collected) == 0:
+            return Response(data=collected, status=status.HTTP_204_NO_CONTENT)
+
+        self.__send_slack_message(self.__build_slack_msg(collected))
+
+        return Response(data=collected, status=status.HTTP_201_CREATED)
+
+    # ----------------- utility functions -----------------
+    @staticmethod
+    def __fetch_resources(urls: List[str]) -> Tuple[List[str], List[str]]:
+        """Fetch and create Resource instance from source path.
+
+        limit: 30 sec.
+        """
+        begin = pendulum.now()
+        collected = []
+        covered = []
+        for url in urls:
+            # Resource レコードを作成
+            # その状態で get method で対象リソースをfetch
+            instance = models.Resource()
+            try:
+                instance.source = url
+                instance.validate_unique(exclude=["file"])
+            except ValidationError:
+                # ValidationErrorが出たなら既出なので無視対象
+                covered.append(instance.source)
+                continue
+
+            res = requests.get(url)
             if res.status_code == 200 and len(res.content) > 0:
-                queue.resource.file.save(queue.resource.key, io.BytesIO(res.content))
-                logger.info("[fetch] " + queue.resource.source)
-                collected.append(queue.resource.source)
-                queue.delete()
+
+                # ファイル配置先はストレージのキー生成ルールに則る
+                instance.file.save(instance.key, io.BytesIO(res.content))
+                logger.info("[fetch] " + instance.source)
+
+                instance.full_clean(validate_unique=True)
+                instance.save()
+
+                collected.append(instance.source)
             # 合計時間が30秒を超えたら一旦キューの処理をやめる
             if pendulum.now().diff(begin).in_seconds() > 30:
                 break
-
-        # slack メッセージを送信
-        if len(collected) > 0:
-            try:
-                client = WebClient(token=settings.SLACK_API_TOKEN)
-                client.chat_postMessage(
-                    text=self.__build_slack_msg(collected), channel="#resources"
-                )
-            except SlackApiError as e:
-                logger.error(e)
-
-        # 開発環境のみ、最後に取りこぼしのResourceをさらっておく
-        if settings.DEBUG:
-            self.__collect_empty()
-
-        return Response(status=status.HTTP_202_ACCEPTED)
+        # 収集結果と無視対象を返す
+        return (collected, covered)
 
     @staticmethod
-    def __collect_empty() -> None:
-        """Collect empty resources into queue."""
-        empties = models.Resource.objects.filter(file="")
-        for instance in empties:
-            exists = models.ResourceQueue.objects.filter(resource=instance)
-            if len(exists) == 0:
-                models.ResourceQueue.objects.create(resource=instance)
+    def __send_slack_message(body: str) -> None:
+        """Send messages to slack."""
+        try:
+            client = WebClient(token=settings.SLACK_API_TOKEN)
+            client.chat_postMessage(text=body, channel="#resources")
+        except SlackApiError as e:
+            logger.error(e)
 
     @staticmethod
-    def __build_slack_msg(sources: Iterable[str]) -> str:
+    def __build_slack_msg(sources: List[str]) -> str:
         """Create message strings for send to slack."""
         return ":strawberry: \n" + " \n".join(sources) + "\n :strawberry: "

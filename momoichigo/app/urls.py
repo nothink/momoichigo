@@ -6,8 +6,10 @@ from rest_framework.schemas import get_schema_view
 from momoichigo.app import views
 
 router = routers.DefaultRouter()
-router.register(r"resources", views.ResourceViewSet)
-router.register(r"resource_queues", views.ResourceQueueViewSet)
+router.register(
+    r"resources/queues", views.ResourceQueueViewSet, basename="resource-queue"
+)
+router.register(r"resources", views.ResourceViewSet, basename="resource")
 
 
 urlpatterns = [

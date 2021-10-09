@@ -13,7 +13,8 @@ class Resource(models.Model):
     fields:
         source: URL of original sources
         file: FieldFile of this resource
-        created: created timestamp
+        created: created datetime
+        modified: modified datetime
     """
 
     # validator: the source url is a resources at https://vcard.ameba.jp/
@@ -38,7 +39,7 @@ class Resource(models.Model):
 
     def __str__(self: Resource) -> str:
         """Return desscriptive string."""
-        return self.source
+        return self.key
 
     @property
     def key(self: Resource) -> str:

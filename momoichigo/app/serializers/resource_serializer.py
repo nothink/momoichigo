@@ -5,12 +5,11 @@ from rest_framework import serializers
 from momoichigo.app import models
 
 
-class ResourceSerializer(serializers.HyperlinkedModelSerializer):
+class ResourceSerializer(serializers.ModelSerializer):
     """Serializer for Resource models."""
 
     class Meta:
         """Meta class for ResourceSerializer."""
 
         model = models.Resource
-        fields = ["source", "file", "created"]
-        read_only_fields = ["file", "created"]
+        fields = "__all__"
