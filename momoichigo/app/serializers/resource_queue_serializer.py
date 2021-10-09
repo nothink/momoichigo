@@ -9,7 +9,7 @@ from momoichigo.app import models
 
 
 class ResourceQueueListSerializer(serializers.ListSerializer):
-    """ListSerializer."""
+    """ListSerializer for ResourceQueue."""
 
     def create(
         self: ResourceQueueListSerializer, validated_data: list[Any]

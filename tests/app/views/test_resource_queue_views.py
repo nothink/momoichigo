@@ -43,10 +43,9 @@ class TestResourceQueueView:
         sources: list[str],
     ) -> None:
         """Test for create (POST) with list[str]."""
-        data = [x for x in sources]
         expected_data = [{"source": x} for x in sources]
 
-        request = factory.post(reverse("resource-queue-list"), data, format="json")
+        request = factory.post(reverse("resource-queue-list"), sources, format="json")
         response = views.ResourceQueueViewSet.as_view({"post": "create"})(request)
 
         assert response.status_code == status.HTTP_201_CREATED
@@ -126,13 +125,10 @@ class TestResourceQueueView:
         assert len(response_body) == len(heavy_queues) - len(remain_queue)
         response_sources = sorted(response_body)
         expected_sources = sorted(
-            list(
-                set([q.source for q in heavy_queues])
-                - set([q.source for q in remain_queue])
-            )
+            list({q.source for q in heavy_queues} - {q.source for q in remain_queue})
         )
-        for i in range(len(response_sources)):
-            assert response_sources[i] == expected_sources[i]
+        for i, elem in enumerate(response_sources):
+            assert elem == expected_sources[i]
 
         # clean up
         dir_path = urlparse(response_sources[0]).path
