@@ -7,7 +7,7 @@ from momoichigo.app import views
 
 router = routers.DefaultRouter()
 router.register(
-    r"resources/queues", views.ResourceQueueViewSet, basename="resource-queue"
+    r"resource-queues", views.ResourceQueueViewSet, basename="resource-queue"
 )
 router.register(r"resources", views.ResourceViewSet, basename="resource")
 
