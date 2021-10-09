@@ -6,7 +6,6 @@ import logging
 from typing import Any, List, Tuple
 from urllib.parse import urlparse
 
-
 import pendulum
 import requests
 from django.core.exceptions import ValidationError
