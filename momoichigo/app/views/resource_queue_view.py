@@ -65,7 +65,7 @@ class ResourceQueueViewSet(
             self.queryset.delete()
         # 要素なしならおしまい
         if len(sources) == 0:
-            return Response(data=sources, status=status.HTTP_204_NO_CONTENT)
+            return Response(status=status.HTTP_204_NO_CONTENT)
 
         collected, covered = self.__fetch_resources(sources)
         # 収集しきれなかった分は再度追加
