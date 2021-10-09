@@ -18,8 +18,8 @@ pytestmark = pytest.mark.django_db
 class TestResourceView:
     """Tests for '/resources/' endpoint View."""
 
+    @staticmethod
     def test_list_resources_ok(
-        self: TestResourceView,
         factory: APIRequestFactory,
         sources: list[str],
         resources: list[Any],
@@ -37,8 +37,8 @@ class TestResourceView:
         for i in range(len(resources)):
             assert response_body["results"][i]["source"] == sorted(sources)[i]
 
+    @staticmethod
     def test_retrieve_resources_ok(
-        self: TestResourceView,
         factory: APIRequestFactory,
         resources: list[Any],
     ) -> None:

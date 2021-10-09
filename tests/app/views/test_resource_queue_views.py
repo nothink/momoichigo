@@ -19,8 +19,8 @@ pytestmark = pytest.mark.django_db
 class TestResourceQueueView:
     """Tests for '/resources/queues/' endpoint View."""
 
+    @staticmethod
     def test_create_queues_dict_ok(
-        self: TestResourceQueueView,
         factory: APIRequestFactory,
         sources: list[str],
     ) -> None:
@@ -37,8 +37,8 @@ class TestResourceQueueView:
 
         assert response_body == data
 
+    @staticmethod
     def test_create_queues_str_ok(
-        self: TestResourceQueueView,
         factory: APIRequestFactory,
         sources: list[str],
     ) -> None:
@@ -56,8 +56,8 @@ class TestResourceQueueView:
 
         assert response_body == expected_data
 
+    @staticmethod
     def test_list_queues_empty_ok(
-        self: TestResourceQueueView,
         factory: APIRequestFactory,
     ) -> None:
         """Test for list (GET) normally."""
@@ -66,8 +66,8 @@ class TestResourceQueueView:
 
         assert response.status_code == status.HTTP_204_NO_CONTENT
 
+    @staticmethod
     def test_list_queues_normally_ok(
-        self: TestResourceQueueView,
         factory: APIRequestFactory,
         resource_queues: list[Any],
     ) -> None:
@@ -90,8 +90,8 @@ class TestResourceQueueView:
         dir_path = urlparse(response_sources[0]).path
         shutil.rmtree(dir_path.split("/")[1])
 
+    @staticmethod
     def test_list_queues_all_dup_ok(
-        self: TestResourceQueueView,
         factory: APIRequestFactory,
         resources: list[Any],
         resource_queues: list[Any],
@@ -107,8 +107,8 @@ class TestResourceQueueView:
 
         assert len(response_body) == 0
 
+    @staticmethod
     def test_list_queues_heavy_ok(
-        self: TestResourceQueueView,
         factory: APIRequestFactory,
         heavy_queues: list[Any],
     ) -> None:

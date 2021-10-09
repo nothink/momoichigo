@@ -13,7 +13,10 @@ from rest_framework import mixins, status, viewsets
 from rest_framework.request import Request
 from rest_framework.response import Response
 from rest_framework.serializers import Serializer
+from slack_sdk.errors import SlackApiError
+from slack_sdk.web.client import WebClient
 
+from momoichigo import settings
 from momoichigo.app import models, serializers
 
 logger = logging.getLogger(__name__)
@@ -72,6 +75,8 @@ class ResourceQueueViewSet(
         if len(collected) == 0:
             return Response(data=collected, status=status.HTTP_204_NO_CONTENT)
 
+        self.__send_slack_message(self.__build_slack_msg(collected))
+
         return Response(data=collected, status=status.HTTP_201_CREATED)
 
     # ----------------- utility functions -----------------
@@ -112,3 +117,16 @@ class ResourceQueueViewSet(
                 break
         # 収集結果と無視対象を返す
         return (collected, covered)
+
+    @staticmethod
+    def __send_slack_message(body: str) -> None:
+        try:
+            client = WebClient(token=settings.SLACK_API_TOKEN)
+            client.chat_postMessage(text=body, channel="#resources")
+        except SlackApiError as e:
+            logger.error(e)
+
+    @staticmethod
+    def __build_slack_msg(sources: List[str]) -> str:
+        """Create message strings for send to slack."""
+        return ":strawberry: \n" + " \n".join(sources) + "\n :strawberry: "
