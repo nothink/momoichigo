@@ -8,7 +8,9 @@ from pathlib import Path
 from typing import Any
 
 import environ
+import sentry_sdk
 from django.utils.crypto import get_random_string
+from sentry_sdk.integrations.django import DjangoIntegration
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -28,6 +30,7 @@ env = environ.Env(
     RUNTIME=(str, "local"),
     GS_BUCKET_NAME=(str, "bucket"),
     SLACK_API_TOKEN=(str, ""),
+    SENTRY_DSN=(str, ""),
 )
 
 if os.path.isfile(env_file):
@@ -66,17 +69,15 @@ MIDDLEWARE = [
 
 ROOT_URLCONF = "momoichigo.urls"
 
-CORS_ORIGIN_ALLOW_ALL = True
-# CORS_ALLOWED_ORIGINS = [
-#     "https://seio.club",
-#     "https://vcard.ameba.jp",
-#     "chrome-extension://kmnkhbeopljmckjloiidahnagfhgbiio",
-# ]
-# CORS_ALLOW_CREDENTIALS = True
-# CSRF_TRUSTED_ORIGINS = [
-#     "seio.club",
-#     "vcard.ameba.jp",
-# ]
+CORS_ALLOWED_ORIGINS = [
+    "https://seio.club",
+    "https://vcard.ameba.jp",
+]
+CORS_ALLOW_CREDENTIALS = True
+CSRF_TRUSTED_ORIGINS = [
+    "seio.club",
+    "vcard.ameba.jp",
+]
 
 REST_FRAMEWORK = {
     # sa: https://www.django-rest-framework.org/api-guide/pagination/
@@ -123,10 +124,6 @@ CACHES = {
         "LOCATION": "app_cache",
     }
 }
-# If the flag as been set, configure to use proxy
-if os.getenv("USE_CLOUD_SQL_AUTH_PROXY", None):
-    DATABASES["default"]["HOST"] = "127.0.0.1"
-    DATABASES["default"]["PORT"] = 5432
 
 # Password validation
 AUTH_PASSWORD_VALIDATORS = [
@@ -164,27 +161,6 @@ STATIC_URL = "/static/"
 
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 
-LOGGING = {
-    "version": 1,
-    "disable_existing_loggers": False,
-    "handlers": {
-        "console": {
-            "class": "logging.StreamHandler",
-        },
-    },
-    "root": {
-        "handlers": ["console"],
-        "level": "INFO",
-    },
-    "loggers": {
-        __name__: {
-            "handlers": ["console"],
-            "level": os.getenv("DJANGO_LOG_LEVEL", "INFO"),
-            "propagate": False,
-        },
-    },
-}
-
 # https://docs.djangoproject.com/ja/3.2/topics/auth/passwords/#using-argon2-with-django
 PASSWORD_HASHERS = [
     "django.contrib.auth.hashers.Argon2PasswordHasher",
@@ -210,3 +186,15 @@ elif env("RUNTIME") == "local":
     MEDIA_ROOT = str(BASE_DIR)
 
 SLACK_API_TOKEN: str = env("SLACK_API_TOKEN")  # type: ignore
+
+sentry_sdk.init(
+    dsn=env("SENTRY_DSN"),
+    integrations=[DjangoIntegration()],
+    # Set traces_sample_rate to 1.0 to capture 100%
+    # of transactions for performance monitoring.
+    # We recommend adjusting this value in production.
+    traces_sample_rate=1.0,
+    # If you wish to associate users to errors (assuming you are using
+    # django.contrib.auth) you may enable sending PII data.
+    send_default_pii=True,
+)
