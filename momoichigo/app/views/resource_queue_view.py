@@ -58,9 +58,10 @@ class ResourceQueueViewSet(
     ) -> Response:
         """List method's overwrite."""
         with transaction.atomic():
-            sources = [q.source for q in self.queryset]
-            # 重複除去
-            sources = list(set(sources))
+            # source 重複除去
+            sources = [
+                q for q in self.queryset.distinct().values_list("source", flat=True)
+            ]
             # クリーンアップ
             self.queryset.delete()
         # 要素なしならおしまい
