@@ -1,8 +1,7 @@
 # momoichigo
 
-![Pytest](https://github.com/nothink/momoichigo/actions/workflows/pytest.yml/badge.svg)
-![Trivy](https://github.com/nothink/momoichigo/actions/workflows/trivy.yml/badge.svg)
-![CodeQL](https://github.com/nothink/momoichigo/actions/workflows/codeql-analysis.yml/badge.svg)
+[![Pytest](https://github.com/nothink/momoichigo/actions/workflows/pytest.yml/badge.svg)](https://github.com/nothink/momoichigo/actions/workflows/pytest.yml)
+[![Trivy](https://github.com/nothink/momoichigo/actions/workflows/trivy.yml/badge.svg)](https://github.com/nothink/momoichigo/actions/workflows/trivy.yml)
 [![codecov](https://codecov.io/gh/nothink/momoichigo/branch/main/graph/badge.svg?token=o783r2x5Tp)](https://codecov.io/gh/nothink/momoichigo)
 [![DeepSource](https://deepsource.io/gh/nothink/momoichigo.svg/?label=active+issues&token=NhcwPGRXrmzAB8s6PLmU6fCI)](https://deepsource.io/gh/nothink/momoichigo/?ref=repository-badge)
 
