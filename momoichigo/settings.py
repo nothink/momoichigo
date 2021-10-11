@@ -51,10 +51,19 @@ INSTALLED_APPS = [
     "django.contrib.sessions",
     "django.contrib.messages",
     "django.contrib.staticfiles",
+    "django.contrib.sites",
     "corsheaders",
     "rest_framework",
+    "rest_framework.authtoken",
+    "allauth",
+    "allauth.account",
+    "allauth.socialaccount",
+    "allauth.socialaccount.providers.twitter",
+    "dj_rest_auth",
+    "dj_rest_auth.registration",
     "momoichigo.app",
 ]
+SITE_ID = 1
 
 MIDDLEWARE = [
     "django.middleware.security.SecurityMiddleware",
@@ -88,6 +97,9 @@ REST_FRAMEWORK = {
         # https://www.django-rest-framework.org/api-guide/renderers/
         "rest_framework.renderers.JSONRenderer",
     ],
+    "DEFAULT_AUTHENTICATION_CLASSES": (
+        "dj_rest_auth.jwt_auth.JWTCookieAuthentication",
+    ),
 }
 if DEBUG:
     REST_FRAMEWORK["DEFAULT_RENDERER_CLASSES"] = [
@@ -95,6 +107,10 @@ if DEBUG:
         "rest_framework.renderers.AdminRenderer",
         "rest_framework.renderers.BrowsableAPIRenderer",
     ]
+
+REST_USE_JWT = True
+JWT_AUTH_COOKIE = "momoichigo-auth"
+JWT_AUTH_REFRESH_COOKIE = "momoichigo-refresh-token"
 
 TEMPLATES = [
     {
