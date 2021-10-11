@@ -9,7 +9,7 @@ from django.urls import include, path
 from .settings import DEBUG
 
 urlpatterns = [
-    path("api-auth/", include("rest_framework.urls", namespace="rest_framework")),
+    # path("api-auth/", include("rest_framework.urls", namespace="rest_framework")),
     path("api/", include("momoichigo.app.urls")),
 ]
 

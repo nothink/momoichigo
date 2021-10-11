@@ -99,6 +99,8 @@ django-cors-headers = "^3.10.0"
 django-environ = "^0.7.0"
 django-jazzmin = "^2.4.8"
 django-storages = {extras = ["google"], version = "^1.12"}
+dj-rest-auth = {extras = ["with_social"], version = "^2.1.11"}
+djangorestframework-simplejwt = "^4.8.0"
 PyYAML = "^5.4.1"
 uritemplate = "^3.0.1"
 uvicorn = "^0.15.0"
