@@ -98,7 +98,7 @@ REST_FRAMEWORK = {
         "rest_framework.renderers.JSONRenderer",
     ],
     "DEFAULT_AUTHENTICATION_CLASSES": (
-        "rest_framework_simplejwt.authentication.JWTCookieAuthentication",
+        "dj_rest_auth.jwt_auth.JWTCookieAuthentication",
     ),
 }
 if DEBUG:
