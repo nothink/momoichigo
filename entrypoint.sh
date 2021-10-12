@@ -1,13 +1,13 @@
 #!/bin/sh
 
-# migrations
-echo "Apply database migrations"
-python manage.py migrate
+# # migrations
+# echo "Apply database migrations"
+# python manage.py migrate
 
-echo "Create Cache Table"
-python manage.py createcachetable
-echo "Collectstatic"
-python manage.py collectstatic --no-input
+# echo "Create Cache Table"
+# python manage.py createcachetable
+# echo "Collectstatic"
+# python manage.py collectstatic --no-input
 
 echo "Server RUNNING..."
 # use uvicorn worker over the gunicorn
