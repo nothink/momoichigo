@@ -1,0 +1,10 @@
+[
+    {
+      "origin": ["https://api.seio.club","https://dev.seio.club"],
+      "responseHeader": [
+        "Content-Type", "Access-Control-Allow-Origin"
+      ],
+      "method": ["GET"],
+      "maxAgeSeconds": 3600
+    }
+]
