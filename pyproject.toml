@@ -119,7 +119,7 @@ isort = {extras = ["pyproject"], version = "^5.9.3"}
 flake8 = "^3.9.2"
 flake8-django = "^1.1.2"
 flake8-black = "^0.2.3"
-flake8-isort = "^4.0.0"
+flake8-isort = "^4.1.1"
 flake8-print = "^4.0.0"
 flake8-annotations = "^2.6.2"
 flake8-docstrings = "^1.6.0"
