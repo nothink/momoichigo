@@ -95,6 +95,9 @@ REST_FRAMEWORK = {
     # sa: https://www.django-rest-framework.org/api-guide/pagination/
     "DEFAULT_PAGINATION_CLASS": "rest_framework.pagination.LimitOffsetPagination",
     "PAGE_SIZE": 1000,
+    "DEFAULT_PARSER_CLASSES": [
+        "rest_framework.parsers.JSONParser",
+    ],
     "DEFAULT_RENDERER_CLASSES": [
         # Renderers
         # https://www.django-rest-framework.org/api-guide/renderers/
