@@ -2,7 +2,7 @@ name: Build, Release, Deploy
 
 on:
   push:
-    branches: [main]
+    branches: ["main", "dev"]
 
 env:
   # Name of Docker images

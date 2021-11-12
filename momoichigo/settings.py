@@ -82,11 +82,13 @@ ROOT_URLCONF = "momoichigo.urls"
 CORS_ALLOWED_ORIGINS = [
     "https://seio.club",
     "https://vcard.ameba.jp",
+    "https://dqx9mbrpz1jhx.cloudfront.net",
 ]
 CORS_ALLOW_CREDENTIALS = True
 CSRF_TRUSTED_ORIGINS = [
     "seio.club",
     "vcard.ameba.jp",
+    "dqx9mbrpz1jhx.cloudfront.net",
 ]
 
 REST_FRAMEWORK = {

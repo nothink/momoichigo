@@ -86,13 +86,13 @@ ignore_errors = true
 #################################### poerty ####################################
 [tool.poetry]
 name = "momoichigo"
-version = "0.2.2"
+version = "0.2.3"
 description = "ICHIGO KOHINATA"
 authors = ["nothink <gakongakon@gmail.com>"]
 license = "MIT"
 
 [tool.poetry.dependencies]
-python = "^3.10"
+python = "^3.9, <3.10"
 Django = {extras = ["argon2"], version = "^3.2.8"}
 djangorestframework = "^3.12.4"
 django-cors-headers = "^3.10.0"
