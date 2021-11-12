@@ -74,10 +74,7 @@ pathspec = ">=0.9.0,<1"
 platformdirs = ">=2"
 regex = ">=2020.1.8"
 tomli = ">=0.2.6,<2.0.0"
-typing-extensions = [
-    {version = ">=3.10.0.0", markers = "python_version < \"3.10\""},
-    {version = "!=3.10.0.1", markers = "python_version >= \"3.10\""},
-]
+typing-extensions = ">=3.10.0.0"
 
 [package.extras]
 colorama = ["colorama (>=0.4.3)"]
@@ -287,7 +284,7 @@ Django = ">=2.2"
 
 [[package]]
 name = "django-environ"
-version = "0.7.0"
+version = "0.8.1"
 description = "A package that allows you to utilize 12factor inspired environment variables to configure your Django application."
 category = "main"
 optional = false
@@ -1317,8 +1314,8 @@ testing = ["coverage (>=4)", "coverage-enable-subprocess (>=1)", "flaky (>=3)", 
 
 [metadata]
 lock-version = "1.1"
-python-versions = "^3.9"
-content-hash = "f67231189bd9d31488bc861be1d8cb0f5f9d06ce7578f1b3bd31e87d3976ede7"
+python-versions = "^3.9, <3.10"
+content-hash = "abf747b75f9603246a8c9089a53eaa5b5214cf31e3cbdcbb5b8e6679b511abb8"
 
 [metadata.files]
 argon2-cffi = [
@@ -1532,8 +1529,8 @@ django-cors-headers = [
     {file = "django_cors_headers-3.10.0-py3-none-any.whl", hash = "sha256:cba6e99659abb0e47cc4aaabb8fcde03f193e6bb3b92ba47c5185ec4cedc5d9e"},
 ]
 django-environ = [
-    {file = "django-environ-0.7.0.tar.gz", hash = "sha256:b99bd3704221f8b717c8517d8146e53fdee509d9e99056be560060003b92213e"},
-    {file = "django_environ-0.7.0-py2.py3-none-any.whl", hash = "sha256:20a5a3570333d3718c0a7ca834290ef850e2b96237ae4ca0a05823b3a0cb3363"},
+    {file = "django-environ-0.8.1.tar.gz", hash = "sha256:6f0bc902b43891656b20486938cba0861dc62892784a44919170719572a534cb"},
+    {file = "django_environ-0.8.1-py2.py3-none-any.whl", hash = "sha256:42593bee519a527602a467c7b682aee1a051c2597f98c45f4f4f44169ecdb6e5"},
 ]
 django-jazzmin = [
     {file = "django-jazzmin-2.4.8.tar.gz", hash = "sha256:355b8ff5939555a7dbecaa364a54bbdbcc20f028605abedd6d9e2b6a4d1532b4"},
