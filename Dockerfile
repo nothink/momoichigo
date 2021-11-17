@@ -11,7 +11,7 @@ RUN poetry export -f requirements.txt --output /root/requirements.txt
 
 ################################################################################
 # production: stage for production release
-FROM python:3.9.8-slim-bullseye as production
+FROM python:3.9.9-slim-bullseye as production
 
 # surpress block buffering for stdout and stderr
 # see also: https://docs.python.org/ja/3/using/cmdline.html#envvar-PYTHONUNBUFFERED
@@ -23,7 +23,7 @@ WORKDIR /app
 RUN --mount=type=cache,target=/var/cache/apt \
     --mount=type=cache,target=/var/lib/apt/lists \
     apt-get update && \
-    apt-get install -y --no-install-recommends tzdata=2021a-\* libpq5=13.4\* libffi7=3.3\* libssl1.1=1.1.1\* && \
+    apt-get install -y --no-install-recommends tzdata=2021a-\* libpq5=13.5\* libffi7=3.3\* libssl1.1=1.1.1\* && \
     apt-get clean
 
 # copy requirements.txt from the requirements stage
@@ -34,7 +34,7 @@ COPY --from=requirements /root/requirements.txt ./
 RUN --mount=type=cache,target=/root/.cache \
     --mount=type=cache,target=/var/cache/apt \
     --mount=type=cache,target=/var/lib/apt/lists \
-    apt-get install -y --no-install-recommends build-essential=12.\* libpq-dev=13.4\* libffi-dev=3.3\* && \
+    apt-get install -y --no-install-recommends build-essential=12.\* libpq-dev=13.5\* libffi-dev=3.3\* && \
     pip install -r requirements.txt && \
     apt-get remove --purge -y build-essential libpq-dev libffi-dev && \
     apt-get autoremove -y && \
