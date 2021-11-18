@@ -25,4 +25,3 @@ ICHIGO KOHINATA
 |     `RUNTIME`     | str  |           `local`           | `local` or `gcp`       |
 | `GS_BUCKET_NAME`  | str  |          `bucket`           | Bucket name (gs)       |
 | `SLACK_API_TOKEN` | str  |             ``              | Slack App API Token    |
-|   `SENTRY_DSN`    | str  |             ``              | Sentry DNS for logging |
