@@ -8,9 +8,7 @@ from pathlib import Path
 from typing import Any
 
 import environ
-import sentry_sdk
 from django.utils.crypto import get_random_string
-from sentry_sdk.integrations.django import DjangoIntegration
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -30,7 +28,6 @@ env = environ.Env(
     RUNTIME=(str, "local"),
     GS_BUCKET_NAME=(str, "bucket"),
     SLACK_API_TOKEN=(str, ""),
-    SENTRY_DSN=(str, ""),
 )
 
 if os.path.isfile(env_file):
@@ -210,15 +207,3 @@ elif env("RUNTIME") == "local":
     MEDIA_ROOT = str(BASE_DIR)
 
 SLACK_API_TOKEN: str = env("SLACK_API_TOKEN")  # type: ignore
-
-sentry_sdk.init(
-    dsn=env("SENTRY_DSN"),
-    integrations=[DjangoIntegration()],
-    # Set traces_sample_rate to 1.0 to capture 100%
-    # of transactions for performance monitoring.
-    # We recommend adjusting this value in production.
-    traces_sample_rate=1.0,
-    # If you wish to associate users to errors (assuming you are using
-    # django.contrib.auth) you may enable sending PII data.
-    send_default_pii=True,
-)
