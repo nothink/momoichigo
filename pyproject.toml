@@ -86,7 +86,7 @@ ignore_errors = true
 #################################### poerty ####################################
 [tool.poetry]
 name = "momoichigo"
-version = "0.2.5"
+version = "0.2.6"
 description = "ICHIGO KOHINATA"
 authors = ["nothink <gakongakon@gmail.com>"]
 license = "MIT"
@@ -107,7 +107,7 @@ gunicorn = "^20.1.0"
 psycopg2 = "^2.9.2"
 requests = "^2.26.0"
 pendulum = "^2.1.2"
-slack-sdk = "^3.11.2"
+slack-sdk = "^3.12.0"
 
 [tool.poetry.dev-dependencies]
 pytest = "^6.2.5"
@@ -123,7 +123,7 @@ flake8-annotations = "^2.7.0"
 flake8-docstrings = "^1.6.0"
 pre-commit = "^2.15.0"
 mypy = "*"
-types-requests = "^2.26.0"
+types-requests = "^2.26.1"
 model-bakery = "^1.3.3"
 
 [build-system]
