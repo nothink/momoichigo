@@ -104,30 +104,33 @@ jobs:
             asia.gcr.io/${{ secrets.GCP_PROJECT_ID }}/${{ env.SERVICE_NAME }}:latest
             asia.gcr.io/${{ secrets.GCP_PROJECT_ID }}/${{ env.SERVICE_NAME }}:${{ steps.create_image_tag.outputs.TAG }}
 
+      - id: 'auth'
+        uses: 'google-github-actions/auth@v0.4.0'
+        with:
+          credentials_json: '${{ secrets.GCP_SA_KEY }}'
+
       - name: Deploy to Cloud Run (Production)
         id: deploy-prod
-        uses: google-github-actions/deploy-cloudrun@main
+        uses: google-github-actions/deploy-cloudrun@v0.6.0
         with:
           service: momoichigo
           image: asia.gcr.io/${{ secrets.GCP_PROJECT_ID }}/${{ env.SERVICE_NAME }}:latest
           project_id: seio-club-app
           region: asia-northeast1
-          credentials: ${{ secrets.GCP_SA_KEY }}
           env_vars: DEBUG=FALSE
-
-      - name: Use Output (Production)
-        run: curl "${{ steps.deploy-prod.outputs.url }}"
 
       - name: Deploy to Cloud Run (Develop)
         id: deploy-dev
-        uses: google-github-actions/deploy-cloudrun@main
+        uses: google-github-actions/deploy-cloudrun@v0.6.0
         with:
           service: momoichigo-dev
           image: asia.gcr.io/${{ secrets.GCP_PROJECT_ID }}/${{ env.SERVICE_NAME }}:latest
           project_id: seio-club-app
           region: asia-northeast1
-          credentials: ${{ secrets.GCP_SA_KEY }}
           env_vars: DEBUG=TRUE
+
+      - name: Use Output (Production)
+        run: curl "${{ steps.deploy-prod.outputs.url }}"
 
       - name: Use Output (Develop)
         run: curl "${{ steps.deploy-dev.outputs.url }}"
