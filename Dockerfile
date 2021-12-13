@@ -1,17 +1,18 @@
 ################################################################################
 # requirements: stage for generating requirements.txt
-FROM acidrain/python-poetry:3.9-slim as requirements
+FROM python:3.10.1-slim-bullseye as requirements
 
 SHELL ["/bin/bash", "-o", "pipefail", "-c"]
 WORKDIR /root
 
 # generate requirements.txt from poerty.lock, pyproject.toml (only productions)
+RUN pip install poetry
 COPY poetry.lock pyproject.toml ./
 RUN poetry export -f requirements.txt --output /root/requirements.txt
 
 ################################################################################
 # production: stage for production release
-FROM python:3.9.9-slim-bullseye as production
+FROM python:3.10.1-slim-bullseye as production
 
 # surpress block buffering for stdout and stderr
 # see also: https://docs.python.org/ja/3/using/cmdline.html#envvar-PYTHONUNBUFFERED
