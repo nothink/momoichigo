@@ -345,7 +345,7 @@ sftp = ["paramiko"]
 
 [[package]]
 name = "djangorestframework"
-version = "3.13.0"
+version = "3.13.1"
 description = "Web APIs for Django, made easy."
 category = "main"
 optional = false
@@ -1343,7 +1343,7 @@ python-versions = ">=3.7"
 [metadata]
 lock-version = "1.1"
 python-versions = "^3.10"
-content-hash = "ccf88f0ec9a579dbf078e725217e089a29ec0e0d9d20a8911dff1fea750e073f"
+content-hash = "9c114616b0b2a8528f963cefb52e7f185ab29331ddc8e3bbfab7553586a2a210"
 
 [metadata.files]
 argon2-cffi = [
@@ -1584,8 +1584,8 @@ django-storages = [
     {file = "django_storages-1.12.3-py3-none-any.whl", hash = "sha256:204a99f218b747c46edbfeeb1310d357f83f90fa6a6024d8d0a3f422570cee84"},
 ]
 djangorestframework = [
-    {file = "djangorestframework-3.13.0-py3-none-any.whl", hash = "sha256:48e64f08244fa0df9e2b8fbd405edec263d8e1251112a06d0073b546b7c86b9c"},
-    {file = "djangorestframework-3.13.0.tar.gz", hash = "sha256:8b987d5683f5b3553dd946d4972048d3117fc526cb0bc01a3f021e81af53f39e"},
+    {file = "djangorestframework-3.13.1-py3-none-any.whl", hash = "sha256:24c4bf58ed7e85d1fe4ba250ab2da926d263cd57d64b03e8dcef0ac683f8b1aa"},
+    {file = "djangorestframework-3.13.1.tar.gz", hash = "sha256:0c33407ce23acc68eca2a6e46424b008c9c02eceb8cf18581921d0092bc1f2ee"},
 ]
 djangorestframework-simplejwt = [
     {file = "djangorestframework_simplejwt-5.0.0-py3-none-any.whl", hash = "sha256:ddcbeef51155d1e71410dde44b581c7e04cfb74776f5337661ac3ef4c0c367e6"},
