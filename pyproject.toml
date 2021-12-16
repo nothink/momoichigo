@@ -70,7 +70,7 @@ DJANGO_SETTINGS_MODULE = "momoichigo.settings"
 
 #################################### mypy ####################################
 [tool.mypy]
-python_version = 3.9
+python_version = 3.10
 ignore_missing_imports = true
 disallow_untyped_defs = true
 # warn_return_any = true
@@ -94,7 +94,7 @@ license = "MIT"
 [tool.poetry.dependencies]
 python = "^3.10"
 Django = {extras = ["argon2"], version = "^4.0"}
-djangorestframework = "^3.13.0"
+djangorestframework = "^3.13.1"
 django-cors-headers = "^3.10.1"
 django-environ = "^0.8.1"
 django-jazzmin = "^2.4.8"
