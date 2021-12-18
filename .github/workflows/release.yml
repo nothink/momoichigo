@@ -21,7 +21,7 @@ jobs:
       - name: Set up Python 3.9
         uses: actions/setup-python@v2
         with:
-          python-version: '3.10'
+          python-version: '3.9'
 
       - name: Install Poetry
         run: |
@@ -116,7 +116,6 @@ jobs:
           service: momoichigo
           image: asia.gcr.io/${{ secrets.GCP_PROJECT_ID }}/${{ env.SERVICE_NAME }}:latest
           project_id: seio-club-app
-          region: asia-northeast1
           env_vars: DEBUG=FALSE
 
       - name: Deploy to Cloud Run (Develop)
@@ -127,7 +126,6 @@ jobs:
           image: asia.gcr.io/${{ secrets.GCP_PROJECT_ID }}/${{ env.SERVICE_NAME }}:latest
           project_id: seio-club-app
           region: asia-northeast1
-          env_vars: DEBUG=TRUE
 
       - name: Use Output (Production)
         run: curl "${{ steps.deploy-prod.outputs.url }}"
