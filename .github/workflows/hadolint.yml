@@ -1,0 +1,24 @@
+name: 'Hadolint'
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+env:
+  DEBUG: true
+  TZ: Asia/Tokyo
+  RUNTIME: local
+
+jobs:
+  flake8:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v2
+      - uses: actions/checkout@v2 
+      - uses: hadolint/hadolint-action@v1.6.0
+        with:
+          dockerfile: Dockerfile
+          ignore: DL3009 DL3042 
