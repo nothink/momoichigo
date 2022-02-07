@@ -8,7 +8,7 @@ WORKDIR /root
 # generate requirements.txt from poerty.lock, pyproject.toml (only productions)
 RUN pip install poetry==1.1.12
 COPY poetry.lock pyproject.toml ./
-RUN poetry export -f requirements.txt --output /root/requirements.txt
+RUN poetry export --format requirements.txt --output /root/requirements.txt
 
 ################################################################################
 # production: stage for production release
