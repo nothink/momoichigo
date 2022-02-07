@@ -38,8 +38,7 @@ RUN --mount=type=cache,target=/root/.cache \
     apt-get install -y --no-install-recommends build-essential=12.\* libpq-dev=13.5\* libffi-dev=3.3\* && \
     pip install -r requirements.txt && \
     apt-get remove --purge -y build-essential libpq-dev libffi-dev && \
-    apt-get autoremove -y && \
-    find / -type d -name __pycache__ | xargs rm -rf
+    apt-get autoremove -y
 
 COPY ./manage.py ./entrypoint.sh /app/
 COPY ./momoichigo/ /app/momoichigo/
