@@ -24,8 +24,7 @@ WORKDIR /app
 RUN --mount=type=cache,target=/var/cache/apt \
     --mount=type=cache,target=/var/lib/apt/lists \
     apt-get update && \
-    apt-get install -y --no-install-recommends tzdata=2021a-\* libpq5=13.5\* libffi7=3.3\* libssl1.1=1.1.1\* && \
-    apt-get clean
+    apt-get install -y --no-install-recommends tzdata=2021a-\* libpq5=13.5\* libffi7=3.3\* libssl1.1=1.1.1\*
 
 # copy requirements.txt from the requirements stage
 COPY --from=requirements /root/requirements.txt ./
@@ -38,8 +37,7 @@ RUN --mount=type=cache,target=/root/.cache \
     apt-get install -y --no-install-recommends build-essential=12.\* libpq-dev=13.5\* libffi-dev=3.3\* && \
     pip install -r requirements.txt && \
     apt-get remove --purge -y build-essential libpq-dev libffi-dev && \
-    apt-get autoremove -y && \
-    find / -type d -name __pycache__ | xargs rm -rf
+    apt-get autoremove -y
 
 COPY ./manage.py ./entrypoint.sh /app/
 COPY ./momoichigo/ /app/momoichigo/
