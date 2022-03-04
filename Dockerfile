@@ -43,6 +43,7 @@ RUN --mount=type=cache,target=/root/.cache \
             build-essential=12.\* \
             libpq-dev=13.5\* \
             libffi-dev=3.3\* && \
+    pip install --upgrade pip setuptools && \
     pip install -r requirements.txt && \
     apt-get remove --purge -y \
             build-essential \
