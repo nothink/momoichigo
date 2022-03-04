@@ -12,7 +12,7 @@ env:
   RUNTIME: local
 
 jobs:
-  flake8:
+  hadolint:
     runs-on: ubuntu-latest
 
     steps:
