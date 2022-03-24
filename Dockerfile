@@ -1,6 +1,6 @@
 ################################################################################
 # requirements: stage for generating requirements.txt
-FROM python:3.10.3-slim-bullseye as requirements
+FROM python:3.11.0a6-slim-bullseye as requirements
 
 SHELL ["/bin/bash", "-o", "pipefail", "-c"]
 WORKDIR /root
@@ -12,7 +12,7 @@ RUN poetry export -f requirements.txt --output /root/requirements.txt
 
 ################################################################################
 # production: stage for production release
-FROM python:3.10.3-slim-bullseye as production
+FROM python:3.11.0a6-slim-bullseye as production
 
 # surpress block buffering for stdout and stderr
 # see also: https://docs.python.org/ja/3/using/cmdline.html#envvar-PYTHONUNBUFFERED
