@@ -1,8 +1,10 @@
+FROM python:3.10.4-slim-bullseye as base
+SHELL ["/bin/bash", "-o", "pipefail", "-c"]
+
 ################################################################################
 # requirements: stage for generating requirements.txt
-FROM python:3.10.3-slim-bullseye as requirements
+FROM base as requirements
 
-SHELL ["/bin/bash", "-o", "pipefail", "-c"]
 WORKDIR /root
 
 # generate requirements.txt from poerty.lock, pyproject.toml (only productions)
@@ -12,13 +14,12 @@ RUN poetry export -f requirements.txt --output /root/requirements.txt
 
 ################################################################################
 # production: stage for production release
-FROM python:3.10.3-slim-bullseye as production
+FROM base as production
 
 # surpress block buffering for stdout and stderr
 # see also: https://docs.python.org/ja/3/using/cmdline.html#envvar-PYTHONUNBUFFERED
 ENV PYTHONUNBUFFERED=1
 
-SHELL ["/bin/bash", "-o", "pipefail", "-c"]
 WORKDIR /app
 
 RUN --mount=type=cache,target=/var/cache/apt \
