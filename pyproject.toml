@@ -1,6 +1,6 @@
 #################################### black ####################################
 [tool.black]
-target-version = ['py39']
+target-version = ['py310']
 exclude = '''
 (
     migrations
@@ -86,7 +86,7 @@ ignore_errors = true
 #################################### poerty ####################################
 [tool.poetry]
 name = "momoichigo"
-version = "0.2.9"
+version = "0.2.10"
 description = "ICHIGO KOHINATA"
 authors = ["nothink <gakongakon@gmail.com>"]
 license = "MIT"
