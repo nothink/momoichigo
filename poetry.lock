@@ -241,7 +241,7 @@ python-versions = "*"
 
 [[package]]
 name = "dj-rest-auth"
-version = "2.2.3"
+version = "2.2.4"
 description = "Authentication and Registration in Django Rest Framework"
 category = "main"
 optional = false
@@ -249,11 +249,11 @@ python-versions = ">=3.5"
 
 [package.dependencies]
 Django = ">=2.0"
-django-allauth = {version = ">=0.40.0,<0.48.0", optional = true, markers = "extra == \"with_social\""}
+django-allauth = {version = ">=0.40.0,<0.51.0", optional = true, markers = "extra == \"with_social\""}
 djangorestframework = ">=3.7.0"
 
 [package.extras]
-with_social = ["django-allauth (>=0.40.0,<0.48.0)"]
+with_social = ["django-allauth (>=0.40.0,<0.51.0)"]
 
 [[package]]
 name = "django"
@@ -1375,7 +1375,7 @@ python-versions = ">=3.7"
 [metadata]
 lock-version = "1.1"
 python-versions = "^3.10"
-content-hash = "e9818a0b5e63fbaf534fbc41c6aefcea90424637ae720a7d948d36271be9c339"
+content-hash = "af45fdb1b2ba4a75f39ce6930b6f967668446a9993f57d35625a33b6d4dcfd0f"
 
 [metadata.files]
 anyio = [
@@ -1604,7 +1604,7 @@ distlib = [
     {file = "distlib-0.3.4.zip", hash = "sha256:e4b58818180336dc9c529bfb9a0b58728ffc09ad92027a3f30b7cd91e3458579"},
 ]
 dj-rest-auth = [
-    {file = "dj-rest-auth-2.2.3.tar.gz", hash = "sha256:f292f3dffb8fc896da10adf47e94a254fb8bf42e672a066e63566363d764ad42"},
+    {file = "dj-rest-auth-2.2.4.tar.gz", hash = "sha256:cf15155756b60a02842c54af62a213975c4eed250a2cce5d31b80dc6cf8592f1"},
 ]
 django = [
     {file = "Django-4.0.3-py3-none-any.whl", hash = "sha256:1239218849e922033a35d2a2f777cb8bee18bd725416744074f455f34ff50d0c"},
