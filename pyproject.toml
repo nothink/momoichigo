@@ -124,7 +124,7 @@ flake8-docstrings = "^1.6.0"
 pre-commit = "^2.18"
 mypy = "*"
 types-requests = "^2.27"
-model-bakery = "^1.4.0"
+model-bakery = "^1.5.0"
 
 [build-system]
 requires = ["poetry-core>=1.0.0"]
