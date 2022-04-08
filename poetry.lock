@@ -509,7 +509,7 @@ grpcio-gcp = ["grpcio-gcp (>=0.2.2)"]
 
 [[package]]
 name = "google-auth"
-version = "2.6.2"
+version = "2.6.3"
 description = "Google Authentication Library"
 category = "main"
 optional = false
@@ -735,7 +735,7 @@ python-versions = "*"
 
 [[package]]
 name = "model-bakery"
-version = "1.4.0"
+version = "1.5.0"
 description = "Smart object creation facility for Django."
 category = "dev"
 optional = false
@@ -1376,7 +1376,7 @@ python-versions = ">=3.7"
 [metadata]
 lock-version = "1.1"
 python-versions = "^3.10"
-content-hash = "2872d4fa286b54523de066a9786716d63bac85a4ed319b5829d3f67c8228b5a9"
+content-hash = "7cb327c6e8f2bb590116b1fd41ce114524ce91cd7223245e8e7269638ed75c0c"
 
 [metadata.files]
 anyio = [
@@ -1675,8 +1675,8 @@ google-api-core = [
     {file = "google_api_core-2.7.1-py3-none-any.whl", hash = "sha256:6be1fc59e2a7ba9f66808bbc22f976f81e4c3e7ab20fa0620ce42686288787d0"},
 ]
 google-auth = [
-    {file = "google-auth-2.6.2.tar.gz", hash = "sha256:60d449f8142c742db760f4c0be39121bc8d9be855555d784c252deaca1ced3f5"},
-    {file = "google_auth-2.6.2-py2.py3-none-any.whl", hash = "sha256:3ba4d63cb29c1e6d5ffcc1c0623c03cf02ede6240a072f213084749574e691ab"},
+    {file = "google-auth-2.6.3.tar.gz", hash = "sha256:d65bb0e3701eaaa64fd2aa85e1325580524b0bddc6dc5db3ab89c481b6a20141"},
+    {file = "google_auth-2.6.3-py2.py3-none-any.whl", hash = "sha256:5e079eb4d21df1853d55cf2b6766b77ef36f7f7bdaf7d4a70434aa97c7578d60"},
 ]
 google-cloud-core = [
     {file = "google-cloud-core-2.2.3.tar.gz", hash = "sha256:89d2f7189bc6dc74de128d423ea52cc8719f0a5dbccd9ca80433f6504a20255c"},
@@ -1862,8 +1862,8 @@ mccabe = [
     {file = "mccabe-0.6.1.tar.gz", hash = "sha256:dd8d182285a0fe56bace7f45b5e7d1a6ebcbf524e8f3bd87eb0f125271b8831f"},
 ]
 model-bakery = [
-    {file = "model_bakery-1.4.0-py2.py3-none-any.whl", hash = "sha256:a89befaae667380f5e2352981d45fed36747941f5c3e9dffa962fc6ba8d661d1"},
-    {file = "model_bakery-1.4.0.tar.gz", hash = "sha256:c29fb821c81cda2c37dfbdcb1dd2218cda179ecb96c6edb6cd9cdaa146706d92"},
+    {file = "model_bakery-1.5.0-py2.py3-none-any.whl", hash = "sha256:e4e09e1c536e3b7d5e7a827d4d1ccd4540dea56062d766b506d86067d3a94dea"},
+    {file = "model_bakery-1.5.0.tar.gz", hash = "sha256:ed533de56df7af4f08f786f82532802f994e2ef01d8366ec4fe6d588585d8ac7"},
 ]
 mypy = [
     {file = "mypy-0.942-cp310-cp310-macosx_10_9_universal2.whl", hash = "sha256:5bf44840fb43ac4074636fd47ee476d73f0039f4f54e86d7265077dc199be24d"},
