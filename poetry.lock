@@ -477,16 +477,15 @@ test = ["pytest-cov"]
 
 [[package]]
 name = "flake8-print"
-version = "4.0.0"
+version = "5.0.0"
 description = "print statement checker plugin for flake8"
 category = "dev"
 optional = false
-python-versions = ">=3.6"
+python-versions = ">=3.7"
 
 [package.dependencies]
 flake8 = ">=3.0"
 pycodestyle = "*"
-six = "*"
 
 [[package]]
 name = "google-api-core"
@@ -1376,7 +1375,7 @@ python-versions = ">=3.7"
 [metadata]
 lock-version = "1.1"
 python-versions = "^3.10"
-content-hash = "f268255cb2e853a9761d175c5c5364c53079499bed4aef9d20dfac7e9b617e60"
+content-hash = "496272cf69bb2e782ca33c44fad0d721a90788fc064cf24e12bf30fa1fb10ea8"
 
 [metadata.files]
 anyio = [
@@ -1669,8 +1668,8 @@ flake8-isort = [
     {file = "flake8_isort-4.1.1-py3-none-any.whl", hash = "sha256:c4e8b6dcb7be9b71a02e6e5d4196cefcef0f3447be51e82730fb336fff164949"},
 ]
 flake8-print = [
-    {file = "flake8-print-4.0.0.tar.gz", hash = "sha256:5afac374b7dc49aac2c36d04b5eb1d746d72e6f5df75a6ecaecd99e9f79c6516"},
-    {file = "flake8_print-4.0.0-py3-none-any.whl", hash = "sha256:6c0efce658513169f96d7a24cf136c434dc711eb00ebd0a985eb1120103fe584"},
+    {file = "flake8-print-5.0.0.tar.gz", hash = "sha256:76915a2a389cc1c0879636c219eb909c38501d3a43cc8dae542081c9ba48bdf9"},
+    {file = "flake8_print-5.0.0-py3-none-any.whl", hash = "sha256:84a1a6ea10d7056b804221ac5e62b1cee1aefc897ce16f2e5c42d3046068f5d8"},
 ]
 google-api-core = [
     {file = "google-api-core-2.7.2.tar.gz", hash = "sha256:65480309a7437f739e4476da037af02a3ec8263f1d1f89f72bbdc8f54fe402d2"},
