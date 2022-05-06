@@ -9,6 +9,9 @@ env:
   USER_NAME: nothink
   SERVICE_NAME: momoichigo
 
+permissions:
+  id-token: write
+
 jobs:
   build:
     runs-on: ubuntu-latest
