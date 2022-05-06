@@ -84,7 +84,8 @@ jobs:
         uses: google-github-actions/auth@v0
         with:
           token_format: 'access_token'
-          credentials_json: '${{ secrets.GCP_SA_KEY }}'
+          workload_identity_provider: 'projects/900227677832/locations/global/workloadIdentityPools/seio-pool/providers/seio-provider'
+          service_account: 'seio-club@seio-club-app.iam.gserviceaccount.com'
 
       - name: Login to Google Artifact Registry (GAR)
         uses: docker/login-action@v2
