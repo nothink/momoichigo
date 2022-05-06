@@ -43,8 +43,6 @@ minversion = "6.0"
 addopts = [
     "-ra",
     "-vv",
-#    "-x",
-#    "--lf",
     "--durations=5",
     "--durations-min=0.3",
     "--cov",
@@ -107,7 +105,7 @@ gunicorn = "^20.1.0"
 psycopg2 = "^2.9.3"
 requests = "^2.27"
 pendulum = "^2.1.2"
-slack-sdk = "^3.15.2"
+slack-sdk = "^3.16"
 
 [tool.poetry.dev-dependencies]
 pytest = "^7"
@@ -121,7 +119,7 @@ flake8-isort = "^4.1.1"
 flake8-print = "^5.0.0"
 flake8-annotations = "^2.9.0"
 flake8-docstrings = "^1.6.0"
-pre-commit = "^2.18"
+pre-commit = "^2.19"
 mypy = "*"
 types-requests = "^2.27"
 model-bakery = "^1.5.0"
