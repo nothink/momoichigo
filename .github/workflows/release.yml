@@ -80,9 +80,10 @@ jobs:
           password: ${{ secrets.GITHUB_TOKEN }}
 
       - id: 'auth'
-        name: Auth of Google Cloud Platform (GCP)
+        name: Authenticate to Google Cloud Platform (GCP)
         uses: google-github-actions/auth@v0
         with:
+          token_format: 'access_token'
           credentials_json: '${{ secrets.GCP_SA_KEY }}'
 
       - name: Login to Google Artifact Registry (GAR)
