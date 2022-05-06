@@ -18,7 +18,7 @@ jobs:
         with:
           fetch-depth: 0
 
-      - name: Set up Python 3.9
+      - name: Set up Python 3.10
         uses: actions/setup-python@v3
         with:
           python-version: '3.10'
@@ -82,7 +82,7 @@ jobs:
       - name: Login to Google Container Registry
         uses: docker/login-action@v2
         with:
-          registry: asia-northeast1-docker.pkg.dev
+          registry: asia.gcr.io
           username: _json_key
           password: ${{ secrets.GCR_JSON_KEY }}
 
@@ -101,8 +101,8 @@ jobs:
           tags: |
             ghcr.io/${{ env.USER_NAME }}/${{ env.SERVICE_NAME }}:latest
             ghcr.io/${{ env.USER_NAME }}/${{ env.SERVICE_NAME }}:${{ steps.create_image_tag.outputs.TAG }}
-            asia-northeast1-docker.pkg.dev/${{ secrets.GCP_PROJECT_ID }}/${{ env.SERVICE_NAME }}:latest
-            asia-northeast1-docker.pkg.dev/${{ secrets.GCP_PROJECT_ID }}/${{ env.SERVICE_NAME }}:${{ steps.create_image_tag.outputs.TAG }}
+            asia.gcr.io/${{ secrets.GCP_PROJECT_ID }}/${{ env.SERVICE_NAME }}:latest
+            asia.gcr.io/${{ secrets.GCP_PROJECT_ID }}/${{ env.SERVICE_NAME }}:${{ steps.create_image_tag.outputs.TAG }}
 
       - id: 'auth'
         uses: google-github-actions/auth@v0.7.1
@@ -114,7 +114,7 @@ jobs:
         uses: google-github-actions/deploy-cloudrun@v0.10.0
         with:
           service: momoichigo
-          image: asia-northeast1-docker.pkg.dev/${{ secrets.GCP_PROJECT_ID }}/${{ env.SERVICE_NAME }}:latest
+          image: asia.gcr.io/${{ secrets.GCP_PROJECT_ID }}/${{ env.SERVICE_NAME }}:latest
           project_id: seio-club-app
           region: asia-northeast1
 
@@ -123,7 +123,7 @@ jobs:
         uses: google-github-actions/deploy-cloudrun@v0.10.0
         with:
           service: momoichigo-dev
-          image: asia-northeast1-docker.pkg.dev/${{ secrets.GCP_PROJECT_ID }}/${{ env.SERVICE_NAME }}:latest
+          image: asia.gcr.io/${{ secrets.GCP_PROJECT_ID }}/${{ env.SERVICE_NAME }}:latest
           project_id: seio-club-app
           region: asia-northeast1
 
