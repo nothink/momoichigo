@@ -80,6 +80,7 @@ jobs:
           password: ${{ secrets.GITHUB_TOKEN }}
 
       - id: 'auth'
+        name: Auth of Google Cloud Platform (GCP)
         uses: google-github-actions/auth@v0
         with:
           credentials_json: '${{ secrets.GCP_SA_KEY }}'
@@ -104,11 +105,10 @@ jobs:
         with:
           push: true
           tags: |
-            # ghcr.io/${{ env.USER_NAME }}/${{ env.SERVICE_NAME }}:latest
-            # ghcr.io/${{ env.USER_NAME }}/${{ env.SERVICE_NAME }}:${{ steps.create_image_tag.outputs.TAG }}
-            # asia-northeast1-docker.pkg.dev/${{ secrets.GCP_PROJECT_ID }}/${{ env.SERVICE_NAME }}:latest
-            # asia-northeast1-docker.pkg.dev/${{ secrets.GCP_PROJECT_ID }}/${{ env.SERVICE_NAME }}:${{ steps.create_image_tag.outputs.TAG }}
-            asia-northeast1-docker.pkg.dev/${{ secrets.GCP_PROJECT_ID }}/${{ env.SERVICE_NAME }}:hoge
+            ghcr.io/${{ env.USER_NAME }}/${{ env.SERVICE_NAME }}:latest
+            ghcr.io/${{ env.USER_NAME }}/${{ env.SERVICE_NAME }}:${{ steps.create_image_tag.outputs.TAG }}
+            asia-northeast1-docker.pkg.dev/${{ secrets.GCP_PROJECT_ID }}/${{ env.SERVICE_NAME }}:latest
+            asia-northeast1-docker.pkg.dev/${{ secrets.GCP_PROJECT_ID }}/${{ env.SERVICE_NAME }}:${{ steps.create_image_tag.outputs.TAG }}
 
       - name: Deploy to Cloud Run (Production)
         id: deploy-prod
