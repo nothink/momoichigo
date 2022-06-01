@@ -91,7 +91,7 @@ license = "MIT"
 
 [tool.poetry.dependencies]
 python = "^3.10"
-Django = {extras = ["argon2"], version = "^4.0.4"}
+Django = {extras = ["argon2"], version = "^4.0.5"}
 djangorestframework = "^3.13.1"
 django-cors-headers = "^3.12.0"
 django-environ = "^0.8.1"
