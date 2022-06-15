@@ -94,7 +94,7 @@ python = "^3.10"
 Django = {extras = ["argon2"], version = "^4.0"}
 djangorestframework = "^3.13"
 django-cors-headers = "^3.13"
-django-environ = "^0.8"
+django-environ = "^0.9"
 django-jazzmin = "^2.5"
 django-storages = {extras = ["google"], version = "^1.12"}
 dj-rest-auth = {extras = ["with_social"], version = "^2.2"}
