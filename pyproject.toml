@@ -121,7 +121,7 @@ flake8-annotations = "^2.9.0"
 flake8-docstrings = "^1.6.0"
 pre-commit = "^2.19"
 mypy = "*"
-types-requests = "^2.27"
+types-requests = "^2.28"
 model-bakery = "^1.6"
 
 [build-system]
