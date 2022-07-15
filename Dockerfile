@@ -10,7 +10,7 @@ WORKDIR /root
 # generate requirements.txt from poerty.lock, pyproject.toml (only productions)
 RUN pip install poetry==1.1.13
 COPY poetry.lock pyproject.toml ./
-RUN poetry export -f requirements.txt --output /root/requirements.txt
+RUN poetry export -f requirements.txt --without-hashes --output /root/requirements.txt
 
 ################################################################################
 # production: stage for production release
@@ -27,9 +27,9 @@ RUN --mount=type=cache,target=/var/cache/apt \
     apt-get update && \
     apt-get install -y --no-install-recommends \
             tzdata=2021a-\* \
-            libpq5=13.5\* \
+            libpq5=13.7\* \
             libffi7=3.3\* \
-            libssl1.1=1.1.1\* && \
+            libssl1.1=1.1\* && \
     apt-get autoremove -y
 
 # copy requirements.txt from the requirements stage
@@ -42,7 +42,7 @@ RUN --mount=type=cache,target=/root/.cache \
     --mount=type=cache,target=/var/lib/apt/lists \
     apt-get install -y --no-install-recommends \
             build-essential=12.\* \
-            libpq-dev=13.5\* \
+            libpq-dev=13.7\* \
             libffi-dev=3.3\* && \
     pip install -r requirements.txt && \
     apt-get remove --purge -y \
