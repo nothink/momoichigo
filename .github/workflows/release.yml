@@ -111,7 +111,7 @@ jobs:
 
       - name: Deploy to Cloud Run (Production)
         id: deploy-prod
-        uses: google-github-actions/deploy-cloudrun@v0.10.0
+        uses: google-github-actions/deploy-cloudrun@v0.10.1
         with:
           service: momoichigo
           image: asia.gcr.io/${{ secrets.GCP_PROJECT_ID }}/${{ env.SERVICE_NAME }}:latest
@@ -120,7 +120,7 @@ jobs:
 
       - name: Deploy to Cloud Run (Develop)
         id: deploy-dev
-        uses: google-github-actions/deploy-cloudrun@v0.10.0
+        uses: google-github-actions/deploy-cloudrun@v0.10.1
         with:
           service: momoichigo-dev
           image: asia.gcr.io/${{ secrets.GCP_PROJECT_ID }}/${{ env.SERVICE_NAME }}:latest
